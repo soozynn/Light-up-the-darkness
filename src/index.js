@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import platformImage from "./img/platform/platform.png";
+import backgroundImage from "./img/background/stage_01.png";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 
 const gravity = 0.5;
 
@@ -44,24 +45,64 @@ class Player {
 }
 
 class Platform {
-	constructor(x, y) {
+	constructor({ x, y, image }) {
 		this.position = {
 			x,
 			y,
 		};
 
-		this.width = 200;
-		this.height = 20;
+		this.image = image;
+		this.width = image.width;
+		this.height = image.height;
 	}
 
 	draw() {
-		ctx.fillStyle = "blue";
-		ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.image, this.position.x, this.position.y);
 	}
 }
 
+class GenericObject {
+	constructor({ x, y, image }) {
+		this.position = {
+			x,
+			y,
+		};
+
+		this.image = image;
+		this.width = image.width;
+		this.height = image.height;
+	}
+
+	draw() {
+		ctx.drawImage(this.image, this.position.x, this.position.y);
+	}
+}
+
+function createImage(imageSrc) {
+	const image = new Image();
+	image.src = platformImage;
+	return image;
+}
+
+const platformImg = createImage(platformImage);
+
 const player = new Player();
-const platforms = [new Platform(200, 100), new Platform(500, 200), new Platform(800, 300)];
+const platforms = [
+	new Platform({ x: -1, y: 470, image: platformImg }),
+	new Platform({
+		x: createImage(platformImage).width - 3,
+		y: 470,
+		image: platformImg,
+	}),
+	// new Platform(800, 300, image),
+];
+const genericObjects = [
+	new GenericObject({
+		x: 0,
+		y: 0,
+		image: createImage(backgroundImage),
+	}),
+];
 
 const keys = {
 	right: {
@@ -76,11 +117,15 @@ let scrollOffSet = 0;
 
 function animate() {
 	requestAnimationFrame(animate);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	player.update();
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	padObjects.forEach(padObject => {});
 	platforms.forEach(platform => {
 		platform.draw();
 	});
+
+	player.update();
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = 5;
