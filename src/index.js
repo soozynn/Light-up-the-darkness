@@ -5,10 +5,14 @@ import smallPlatformImage from "./img/platform/smallPlatform.png";
 import backgroundImage from "./img/background/stage_01.png";
 import doorImage from "./img/door/door.png";
 
-import spriteRunRightrImage from "./img/player/runRight.png";
-import spriteRunLeftImage from "./img/player/runLeft.png";
-import spriteStandRightImage from "./img/player/rightIdle.png";
-import spriteStandLeftImage from "./img/player/leftIdle.png";
+import spriteRunRightImage from "./img/player/runToTheRight.png";
+import spriteRunLeftImage from "./img/player/runToTheLeft.png";
+import spriteStandRightImage from "./img/player/idleRight.png";
+import spriteStandLeftImage from "./img/player/idleLeft.png";
+import spriteJumpingRightImage from "./img/player/jumpingRight.png";
+import spriteJumpingLeftImage from "./img/player/jumpingLeft.png";
+import spriteSingingRightImage from "./img/player/singingRight.png";
+import spriteSingingLeftImage from "./img/player/singingLeft.png";
 
 import spriteGreenMonster from "./img/monster/walk/green.png";
 
@@ -39,7 +43,7 @@ class Player {
 		this.image = createImage(spriteStandRightImage);
 		this.frames = 0;
 		this.frameSpeed = 0;
-		this.staggerFrames = 14;
+		this.staggerFrames = 18;
 		this.sprites = {
 			stand: {
 				right: createImage(spriteStandRightImage),
@@ -48,8 +52,20 @@ class Player {
 				width: 64,
 			},
 			run: {
-				right: createImage(spriteRunRightrImage),
+				right: createImage(spriteRunRightImage),
 				left: createImage(spriteRunLeftImage),
+				cropWidth: 32,
+				width: 64,
+			},
+			jump: {
+				right: createImage(spriteJumpingRightImage),
+				left: createImage(spriteJumpingLeftImage),
+				cropWidth: 32,
+				width: 64,
+			},
+			sing: {
+				right: createImage(spriteSingingRightImage),
+				left: createImage(spriteSingingLeftImage),
 				cropWidth: 32,
 				width: 64,
 			},
@@ -76,20 +92,29 @@ class Player {
 	update() {
 		if (this.frameSpeed % this.staggerFrames === 0) {
 			this.frames++;
+		}
 
-			if (
-				(this.frames > 3.5 && this.currentSprite === this.sprites.stand.right) ||
-				this.currentSprite === this.sprites.stand.left
-			) {
-				this.frames = 0;
-			}
+		if (
+			this.frames > 3.5 &&
+			(this.currentSprite === this.sprites.stand.right ||
+				this.currentSprite === this.sprites.stand.left)
+		) {
+			this.frames = 0;
+		}
 
-			if (
-				(this.frames > 5.5 && this.currentSprite === this.sprites.run.right) ||
-				this.currentSprite === this.sprites.run.left
-			) {
-				this.frames = 0;
-			}
+		if (
+			this.frames > 5.5 &&
+			(this.currentSprite === this.sprites.run.right ||
+				this.currentSprite === this.sprites.run.left)
+		) {
+			this.frames = 0;
+		}
+
+		if (
+			this.currentSprite === this.sprites.jump.right ||
+			this.currentSprite === this.sprites.jump.left
+		) {
+			this.frames = 0;
 		}
 
 		this.frameSpeed++;
@@ -155,7 +180,14 @@ class Door {
 }
 
 class Monster {
-	constructor({ position, velocity }) {
+	constructor({
+		position,
+		velocity,
+		distance = {
+			limit: 50,
+			traveled: 0,
+		},
+	}) {
 		this.position = {
 			x: position.x,
 			y: position.y,
@@ -172,16 +204,18 @@ class Monster {
 		this.image = createImage(spriteGreenMonster);
 		this.frames = 0;
 		this.frameSpeed = 0;
-		this.staggerFrames = 16;
+		this.staggerFrames = 14;
+
+		this.distance = distance;
 	}
 
 	draw() {
 		ctx.drawImage(
 			this.image,
-			370 * this.frames,
+			360 * this.frames,
 			0,
 			370,
-			360,
+			380,
 			this.position.x,
 			this.position.y,
 			this.width,
@@ -205,9 +239,37 @@ class Monster {
 
 		if (this.position.y + this.height + this.velocity.y <= canvas.height) {
 			this.velocity.y += gravity;
+
+			// walk the monster back and forth
+			this.distance.traveled += Math.abs(this.velocity.x);
+
+			if (this.distance.traveled > this.distance.limit) {
+				this.distance.traveled = 0;
+				this.velocity.x = -this.velocity.x;
+			}
 		}
 	}
 }
+
+// class Particle {
+// 	constructor() {
+// 		this.position = {
+// 			x: 0,
+// 			y: 0,
+// 		};
+
+// 		this.velocity = {
+// 			x: 0,
+// 			y: 0,
+// 		};
+
+// 		this.radius = 0;
+
+// 		draw() {
+// 			ctx.arc(this.position.x, this.position.y, this.radius, 0, )
+// 		}
+// 	}
+// }
 
 function createImage(imageSrc) {
 	const image = new Image();
@@ -272,7 +334,21 @@ async function init() {
 	monsters = [
 		new Monster({
 			position: {
-				x: 800,
+				x: 1000,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 1600,
 				y: 100,
 			},
 			velocity: {
@@ -284,7 +360,7 @@ async function init() {
 
 	platforms = [
 		new Platform({
-			x: platformImg.width * 4 + 300 - 2 + platformImg.width - smallPlatformImg.width,
+			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
 			y: 270,
 			image: smallPlatformImg,
 		}),
@@ -296,11 +372,11 @@ async function init() {
 		}),
 		new Platform({ x: platformImg.width * 2 + 100, y: 470, image: platformImg }),
 		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg }),
-		new Platform({ x: platformImg.width * 5 + 680 - 2, y: 470, image: platformImg }),
-		new Platform({ x: platformImg.width * 6 + 680 - 2, y: 480, image: platformImg }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg }),
+		new Platform({ x: platformImg.width * 6 + 480, y: 430, image: platformImg }),
 		new Door({
-			x: platformImg.width * 7 + 680 - 2,
-			y: 480,
+			x: platformImg.width * 7 + 750,
+			y: 460,
 			image: createImage(doorImage),
 			width: 250,
 			height: 280,
@@ -333,7 +409,7 @@ function animate() {
 		monster.update();
 
 		if (killMoster({ object1: player, object2: monster })) {
-			player.velocity.y -= 40;
+			player.velocity.y -= 25;
 
 			setTimeout(() => {
 				monsters.splice(index, 1);
@@ -393,41 +469,47 @@ function animate() {
 		});
 	});
 
-	if (
-		keys.right.pressed &&
-		lastKey === "right" &&
-		player.currentSprite !== player.sprites.run.right
-	) {
-		player.frames = 1;
-		player.currentSprite = player.sprites.run.right;
-		player.currentCropWidth = player.sprites.run.cropWidth;
-		player.width = player.sprites.run.width;
-	}
+	if (player.velocity.y === 0) {
+		if (
+			keys.right.pressed &&
+			lastKey === "right" &&
+			player.currentSprite !== player.sprites.run.right
+		) {
+			player.frames = 1;
+			player.currentSprite = player.sprites.run.right;
+			player.currentCropWidth = player.sprites.run.cropWidth;
+			player.width = player.sprites.run.width;
+		}
 
-	if (keys.left.pressed && lastKey === "left" && player.currentSprite !== player.sprites.run.left) {
-		player.currentSprite = player.sprites.run.left;
-		player.currentCropWidth = player.sprites.run.cropWidth;
-		player.width = player.sprites.run.width;
-	}
+		if (
+			keys.left.pressed &&
+			lastKey === "left" &&
+			player.currentSprite !== player.sprites.run.left
+		) {
+			player.currentSprite = player.sprites.run.left;
+			player.currentCropWidth = player.sprites.run.cropWidth;
+			player.width = player.sprites.run.width;
+		}
 
-	if (
-		!keys.left.pressed &&
-		lastKey === "left" &&
-		player.currentSprite !== player.sprites.stand.left
-	) {
-		player.currentSprite = player.sprites.stand.left;
-		player.currentCropWidth = player.sprites.stand.cropWidth;
-		player.width = player.sprites.stand.width;
-	}
+		if (
+			!keys.left.pressed &&
+			lastKey === "left" &&
+			player.currentSprite !== player.sprites.stand.left
+		) {
+			player.currentSprite = player.sprites.stand.left;
+			player.currentCropWidth = player.sprites.stand.cropWidth;
+			player.width = player.sprites.stand.width;
+		}
 
-	if (
-		!keys.right.pressed &&
-		lastKey === "right" &&
-		player.currentSprite !== player.sprites.stand.right
-	) {
-		player.currentSprite = player.sprites.stand.right;
-		player.currentCropWidth = player.sprites.stand.cropWidth;
-		player.width = player.sprites.stand.width;
+		if (
+			!keys.right.pressed &&
+			lastKey === "right" &&
+			player.currentSprite !== player.sprites.stand.right
+		) {
+			player.currentSprite = player.sprites.stand.right;
+			player.currentCropWidth = player.sprites.stand.cropWidth;
+			player.width = player.sprites.stand.width;
+		}
 	}
 
 	if (platformImg && scrollOffSet > 2000) {
@@ -456,7 +538,18 @@ addEventListener("keydown", event => {
 			break;
 
 		case "w":
-			player.velocity.y -= 15;
+			if (player.velocity.y === 0) {
+				player.velocity.y -= 18;
+			}
+
+			if (lastKey === "right") {
+				player.currentSprite = player.sprites.jump.right;
+			}
+
+			if (lastKey === "left") {
+				player.currentSprite = player.sprites.jump.left;
+			}
+
 			break;
 
 		// no default
