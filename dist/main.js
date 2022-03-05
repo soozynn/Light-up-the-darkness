@@ -247,6 +247,68 @@ eval("var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!\n *  h
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"audio\": () => (/* binding */ audio)\n/* harmony export */ });\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! howler */ \"./node_modules/howler/dist/howler.js\");\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _audio_AudioMonsterSquash_mp3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./audio/AudioMonsterSquash.mp3 */ \"./src/audio/AudioMonsterSquash.mp3\");\n/* harmony import */ var _audio_audioGameOver_mp3__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./audio/audioGameOver.mp3 */ \"./src/audio/audioGameOver.mp3\");\n/* harmony import */ var _audio_audioGameWin_mp3__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./audio/audioGameWin.mp3 */ \"./src/audio/audioGameWin.mp3\");\n/* harmony import */ var _audio_audioBackground01_mp3__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./audio/audioBackground01.mp3 */ \"./src/audio/audioBackground01.mp3\");\n/* harmony import */ var _audio_audioFalling_wav__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./audio/audioFalling.wav */ \"./src/audio/audioFalling.wav\");\n/* harmony import */ var _audio_audioHurt_wav__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./audio/audioHurt.wav */ \"./src/audio/audioHurt.wav\");\n\n\n\n\n\n\n\n\nconst audio = {\n\tgameOver: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_audioGameOver_mp3__WEBPACK_IMPORTED_MODULE_2__[\"default\"]],\n\t\tvolume: 0.2,\n\t}),\n\tgameWin: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_audioGameWin_mp3__WEBPACK_IMPORTED_MODULE_3__[\"default\"]],\n\t\tvolume: 0.2,\n\t}),\n\tstage1: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_audioBackground01_mp3__WEBPACK_IMPORTED_MODULE_4__[\"default\"]],\n\t\tvolume: 0.5,\n\t}),\n\tmonsterSquash: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_AudioMonsterSquash_mp3__WEBPACK_IMPORTED_MODULE_1__[\"default\"]],\n\t\tvolume: 0.2,\n\t}),\n\tfalling: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_audioFalling_wav__WEBPACK_IMPORTED_MODULE_5__[\"default\"]],\n\t\tvolume: 0.3,\n\t}),\n\thurt: new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\n\t\tsrc: [_audio_audioHurt_wav__WEBPACK_IMPORTED_MODULE_6__[\"default\"]],\n\t\tvolume: 0.5,\n\t}),\n};\n\n\n//# sourceURL=webpack:///./src/audio.js?");
+=======
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"idleRight.png?789dcafd9f15582606054a96a39fceeb\");\n\n//# sourceURL=webpack:///./src/img/player/idleRight.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/jumpingLeft.png":
+/*!****************************************!*\
+  !*** ./src/img/player/jumpingLeft.png ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"jumpingLeft.png?663b1234c0e755a65a365cb109611088\");\n\n//# sourceURL=webpack:///./src/img/player/jumpingLeft.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/jumpingRight.png":
+/*!*****************************************!*\
+  !*** ./src/img/player/jumpingRight.png ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"jumpingRight.png?71fb23b4a466b05dff892d8ca4d5cba3\");\n\n//# sourceURL=webpack:///./src/img/player/jumpingRight.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/runToTheLeft.png":
+/*!*****************************************!*\
+  !*** ./src/img/player/runToTheLeft.png ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"runToTheLeft.png?2af7b8203bc2b01b8fad9e2d6a5b629e\");\n\n//# sourceURL=webpack:///./src/img/player/runToTheLeft.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/runToTheRight.png":
+/*!******************************************!*\
+  !*** ./src/img/player/runToTheRight.png ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"runToTheRight.png?73f09519ead3fcff8905c29c8c398f1e\");\n\n//# sourceURL=webpack:///./src/img/player/runToTheRight.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/singingLeft.png":
+/*!****************************************!*\
+  !*** ./src/img/player/singingLeft.png ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"singingLeft.png?5e3db6f9637178e1a6546c69c7c0b95e\");\n\n//# sourceURL=webpack:///./src/img/player/singingLeft.png?");
+
+/***/ }),
+
+/***/ "./src/img/player/singingRight.png":
+/*!*****************************************!*\
+  !*** ./src/img/player/singingRight.png ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"singingRight.png?36c093a72b42b2a050301b8de300c7ab\");\n\n//# sourceURL=webpack:///./src/img/player/singingRight.png?");
 
 /***/ }),
 
