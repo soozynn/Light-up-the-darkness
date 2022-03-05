@@ -14,10 +14,13 @@ import spriteJumpingLeftImage from "./img/player/jumpingLeft.png";
 import spriteSingingRightImage from "./img/player/singingRight.png";
 import spriteSingingLeftImage from "./img/player/singingLeft.png";
 
-import spriteGreenMonster from "./img/monster/walk/green.png";
+import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
+import spriteHurtGreenMonster from "./img/monster/hurt/hurtGreen.png";
+
+import { audio } from "./audio";
 
 // import KEY_CODE from "./constants/constants";
-
+// audio.stage1.play();
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
@@ -202,6 +205,13 @@ class Monster {
 		this.height = 110;
 
 		this.image = createImage(spriteGreenMonster);
+		this.sprites = {
+			hurt: {
+				image: createImage(spriteHurtGreenMonster),
+				cropWidth: 32,
+				width: 64,
+			},
+		};
 		this.frames = 0;
 		this.frameSpeed = 0;
 		this.staggerFrames = 14;
@@ -414,12 +424,15 @@ function animate() {
 			setTimeout(() => {
 				monsters.splice(index, 1);
 			}, 0);
+
+			audio.monsterSquash.play();
 		} else if (
 			player.position.x + player.width >= monster.position.x &&
 			player.position.y + player.height >= monster.position.y &&
 			player.position.x <= monster.position.x + monster.width
 		) {
 			init();
+			audio.hurt.play();
 		}
 	});
 
@@ -512,12 +525,13 @@ function animate() {
 		}
 	}
 
-	if (platformImg && scrollOffSet > 2000) {
-		console.log("win");
+	if (platformImg && scrollOffSet === 3000) {
+		audio.gameWin.play();
 		// 게임 오버 함수 띄우기
 	}
 
 	if (player.position.y > canvas.height) {
+		audio.falling.play();
 		init();
 	}
 }
@@ -526,18 +540,18 @@ init();
 animate();
 
 addEventListener("keydown", event => {
-	switch (event.key) {
-		case "a":
+	switch (event.code) {
+		case "KeyA":
 			keys.left.pressed = true;
 			lastKey = "left";
 			break;
 
-		case "d":
+		case "KeyD":
 			keys.right.pressed = true;
 			lastKey = "right";
 			break;
 
-		case "w":
+		case "KeyW":
 			if (player.velocity.y === 0) {
 				player.velocity.y -= 18;
 			}
@@ -557,16 +571,16 @@ addEventListener("keydown", event => {
 });
 
 addEventListener("keyup", event => {
-	switch (event.key) {
-		case "a":
+	switch (event.code) {
+		case "KeyA":
 			keys.left.pressed = false;
 			break;
 
-		case "d":
+		case "KeyD":
 			keys.right.pressed = false;
 			break;
 
-		case "w":
+		case "KeyW":
 			break;
 
 		// no default
