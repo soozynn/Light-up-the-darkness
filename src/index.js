@@ -261,6 +261,42 @@ class Monster {
 	}
 }
 
+class Particle {
+	constructor({ position, velocity, radius }) {
+		this.position = {
+			x: position.x,
+			y: position.y,
+		};
+
+		this.velocity = {
+			x: velocity.x,
+			y: velocity.y,
+		};
+
+		this.radius = radius;
+		this.timeTheLess = 300;
+	}
+
+	draw() {
+		ctx.beginPath();
+		ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
+		ctx.fillStyle = "red";
+		ctx.fill();
+		ctx.closePath();
+	}
+
+	update() {
+		this.timeTheLess--;
+		this.draw();
+		this.position.x += this.velocity.x;
+		this.position.y += this.velocity.y;
+
+		if (this.position.y + this.radius + this.velocity.y <= canvas.height) {
+			this.velocity.y += gravity * 0.4;
+		}
+	}
+}
+
 function createImage(imageSrc) {
 	const image = new Image();
 	image.src = imageSrc;
@@ -285,6 +321,7 @@ let player = new Player();
 let platforms = [];
 let genericObjects = [];
 let monsters = [];
+let particles = [];
 
 let lastKey;
 const keys = {
@@ -313,6 +350,15 @@ function killMoster({ object1, object2 }) {
 		object1.position.y + object1.height + object1.velocity.y >= object2.position.y &&
 		object1.position.x + object1.width >= object2.position.x &&
 		object1.position.x <= object2.position.x + object2.width
+	);
+}
+
+function isOnTopOfPlatformCircle({ object, platform }) {
+	return (
+		object.position.y + object.radius <= platform.position.y &&
+		object.position.y + object.radius + object.velocity.y >= platform.position.y &&
+		object.position.x + object.radius >= platform.position.x &&
+		object.position.x <= platform.position.x + platform.width
 	);
 }
 
@@ -348,6 +394,7 @@ async function init() {
 		}),
 	];
 
+	particles = [];
 	platforms = [
 		new Platform({
 			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
@@ -399,8 +446,23 @@ function animate() {
 		monster.update();
 
 		if (killMoster({ object1: player, object2: monster })) {
-			player.velocity.y -= 25;
+			for (let i = 0; i < 50; i++) {
+				particles.push(
+					new Particle({
+						position: {
+							x: monster.position.x + monster.width / 2,
+							y: monster.position.y + monster.height / 2,
+						},
+						velocity: {
+							x: (Math.random() - 0.5) * 7,
+							y: (Math.random() - 0.5) * 15,
+						},
+						radius: Math.random() * 3,
+					}),
+				);
+			}
 
+			player.velocity.y -= 25;
 			setTimeout(() => {
 				monsters.splice(index, 1);
 			}, 0);
@@ -416,6 +478,9 @@ function animate() {
 		}
 	});
 
+	particles.forEach(particle => {
+		particle.update();
+	});
 	player.update();
 
 	if (keys.right.pressed && player.position.x < 400) {
@@ -434,8 +499,13 @@ function animate() {
 			platforms.forEach(platform => {
 				platform.position.x -= player.speed;
 			});
+
 			monsters.forEach(monster => {
 				monster.position.x -= player.speed;
+			});
+
+			particles.forEach(particle => {
+				particle.position.x -= player.speed;
 			});
 		} else if (keys.left.pressed && scrollOffSet > 0) {
 			scrollOffSet -= player.speed;
@@ -443,8 +513,13 @@ function animate() {
 			platforms.forEach(platform => {
 				platform.position.x += player.speed;
 			});
+
 			monsters.forEach(monster => {
 				monster.position.x += player.speed;
+			});
+
+			particles.forEach(particle => {
+				particle.position.x += player.speed;
 			});
 		}
 	}
@@ -454,6 +529,22 @@ function animate() {
 		if (isOnTopOfPlatform({ object: player, platform })) {
 			player.velocity.y = 0;
 		}
+
+		particles.forEach((particle, index) => {
+			if (isOnTopOfPlatformCircle({ object: particle, platform })) {
+				player.velocity.y = -particle.velocity.y * 0.9;
+
+				if (particle.radius - 0.4 < 0) {
+					particles.splice(index, 1);
+				} else {
+					particle.radius -= 0.4;
+				}
+			}
+
+			if (particle.timeTheLess < 0) {
+				particles.splice(index, 1);
+			}
+		});
 
 		monsters.forEach(monster => {
 			if (isOnTopOfPlatform({ object: monster, platform })) {
@@ -533,6 +624,7 @@ addEventListener("keydown", event => {
 
 		case "KeyW":
 			if (player.velocity.y === 0) {
+				audio.jump.play();
 				player.velocity.y -= 18;
 			}
 
