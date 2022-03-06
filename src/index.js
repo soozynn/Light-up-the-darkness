@@ -455,7 +455,14 @@ addEventListener("keydown", event => {
 			break;
 
 		case "KeyW":
+<<<<<<< HEAD
 			player.velocity.y -= 10;
+=======
+			if (player.velocity.y === 0) {
+				audio.jump.play();
+				player.velocity.y -= 18;
+			}
+>>>>>>> c40242e (Merged main fixed conflict.)
 
 			if (lastKey === "right") {
 				player.currentSprite = player.sprites.jump.right;

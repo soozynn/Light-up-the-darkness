@@ -198,6 +198,7 @@
 
 		/***/ "./src/audio/audioBackground01.mp3":
 			/*!*****************************************!*\
+>>>>>>> bb8cfde (Feat: 몬스터 폭발 motion)
   !*** ./src/audio/audioBackground01.mp3 ***!
   \*****************************************/
 			/***/ (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -312,7 +313,6 @@
 
 				/***/
 			},
->>>>>>> d903efd (Feat: motion 별 음향 추가)
 
 		/***/ "./src/index.js":
 			/*!**********************!*\
