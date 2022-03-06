@@ -625,7 +625,6 @@ addEventListener("keydown", event => {
 		case "KeyW":
 			if (player.velocity.y === 0) {
 				audio.jump.play();
-
 				player.velocity.y -= 18;
 			}
 
