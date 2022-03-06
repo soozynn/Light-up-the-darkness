@@ -7,11 +7,21 @@ import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
 import Particle from "../gameObjects/Particle";
 
+<<<<<<< HEAD
 import platformImage from "../img/platform/platform.png";
 import smallPlatformImage from "../img/platform/smallPlatform.png";
 import iceSmallPlatformImage from "../img/platform/ice/iceSmallPlatform.png";
 import icePlatfromImage from "../img/platform/ice/icePlatform.png";
 
+=======
+import Player from "../gameObjects/Player";
+import Platform from "../gameObjects/Platform";
+import GenericObject from "../gameObjects/GenericObject";
+import Monster from "../gameObjects/Monster";
+
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+>>>>>>> 440e789 (Feat: motion 별 음향 추가)
 import backgroundImage from "../img/background/stage_01.png";
 import obstacleImage from "../img/obstacle/obstacle.png";
 import flagImage from "../img/flag/flag.png";
@@ -19,7 +29,12 @@ import flagImage from "../img/flag/flag.png";
 import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
+<<<<<<< HEAD
 // import { audio } from "./audio";
+=======
+// import { audio } from "./js/audio";
+import { images } from "./image";
+>>>>>>> 440e789 (Feat: motion 별 음향 추가)
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -159,7 +174,7 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 6900 + 600,
+		x: 100,
 		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
