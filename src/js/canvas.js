@@ -2,6 +2,20 @@
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
 
+import Player from "../gameObjects/Player";
+import Platform from "../gameObjects/Platform";
+import GenericObject from "../gameObjects/GenericObject";
+import Monster from "../gameObjects/Monster";
+
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+import backgroundImage from "../img/background/stage_01.png";
+import obstacleImage from "../img/obstacle/obstacle.png";
+import flagImage from "../img/flag/flag.png";
+
+import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
+
 // import { audio } from "./js/audio";
 import { images } from "./image";
 import {
@@ -14,20 +28,6 @@ import {
 	hitSideOfPlatform,
 	objectsTouch,
 } from "./utils";
-import Player from "../gameObjects/Player";
-import Platform from "../gameObjects/Platform";
-import GenericObject from "../gameObjects/GenericObject";
-import Monster from "../gameObjects/Monster";
-
-import platformImage from "../img/platform/platform.png";
-import smallPlatformImage from "../img/platform/smallPlatform.png";
-import backgroundImage from "../img/background/stage_01.png";
-import obstacleImage from "../img/obstacle/obstacle.png";
-import flagImage from "../img/flag/flag.png";
-import backgroundLevel2 from "../img/background/stage_02.png";
-
-import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
-import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
@@ -249,7 +249,7 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 6900 + 600,
+		x: 100,
 		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
