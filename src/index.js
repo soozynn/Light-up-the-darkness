@@ -297,6 +297,26 @@ class Particle {
 	}
 }
 
+// class Particle {
+// 	constructor() {
+// 		this.position = {
+// 			x: 0,
+// 			y: 0,
+// 		};
+
+// 		this.velocity = {
+// 			x: 0,
+// 			y: 0,
+// 		};
+
+// 		this.radius = 0;
+
+// 		draw() {
+// 			ctx.arc(this.position.x, this.position.y, this.radius, 0, )
+// 		}
+// 	}
+// }
+
 function createImage(imageSrc) {
 	const image = new Image();
 	image.src = imageSrc;
@@ -625,6 +645,7 @@ addEventListener("keydown", event => {
 		case "KeyW":
 			if (player.velocity.y === 0) {
 				audio.jump.play();
+
 				player.velocity.y -= 18;
 			}
 
