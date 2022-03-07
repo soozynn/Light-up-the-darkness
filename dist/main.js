@@ -22,7 +22,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "stage_01.png?7abe9d89720eb44b8c2dda369b701ef1");\n\n//# sourceURL=webpack:///./src/img/background/stage_01.png?',
 				);
-
 				/***/
 			},
 
@@ -58,7 +57,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "walkGreen.png?04cbc34fd8291ba971afc38c25792759");\n\n//# sourceURL=webpack:///./src/img/monster/walk/walkGreen.png?',
 				);
-
 				/***/
 			},
 
@@ -97,7 +95,6 @@
 
 				/***/
 			},
-
 		/***/ "./src/img/player/idleLeft.png":
 			/*!*************************************!*\
   !*** ./src/img/player/idleLeft.png ***!
@@ -130,7 +127,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "jumpingLeft.png?663b1234c0e755a65a365cb109611088");\n\n//# sourceURL=webpack:///./src/img/player/jumpingLeft.png?',
 				);
-
 				/***/
 			},
 
@@ -154,7 +150,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "runToTheLeft.png?2af7b8203bc2b01b8fad9e2d6a5b629e");\n\n//# sourceURL=webpack:///./src/img/player/runToTheLeft.png?',
 				);
-
 				/***/
 			},
 
