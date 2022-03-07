@@ -9,10 +9,8 @@ import platformImage from "./img/platform/platform.png";
 import smallPlatformImage from "./img/platform/smallPlatform.png";
 import backgroundImage from "./img/background/stage_01.png";
 import obstacleImage from "./img/obstacle/obstacle.png";
-<<<<<<< HEAD
 import flagImage from "./img/flag/flag.png";
-=======
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
+
 import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 
@@ -30,7 +28,6 @@ import {
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
 
-<<<<<<< HEAD
 const modal = document.querySelector(".modal");
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".game-explain");
@@ -47,9 +44,6 @@ function startGame() {
 howToPlayButton.addEventListener("click", openHowToPlayModal);
 playButton.addEventListener("click", startGame);
 
-=======
-const startButton = document.querySelector("start-button");
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
@@ -57,14 +51,16 @@ const gravity = 0.5;
 canvas.width = 10;
 canvas.height = 10;
 
-<<<<<<< HEAD
 startButton.addEventListener("click", () => {
 	const background = document.createElement("div");
 	background.classList.add("background");
 });
 
-=======
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
+startButton.addEventListener("click", () => {
+	const background = document.createElement("div");
+	background.classList.add("background");
+});
+
 class Particle {
 	constructor({ position, velocity, radius }) {
 		this.position = {
@@ -122,17 +118,13 @@ const keys = {
 };
 
 let scrollOffSet = 0;
-<<<<<<< HEAD
 let flag;
 let flagImg;
-=======
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
 
 async function init() {
 	platformImg = await createImageAsync(platformImage);
 	smallPlatformImg = await createImageAsync(smallPlatformImage);
 	obstacleImg = await createImageAsync(obstacleImage);
-<<<<<<< HEAD
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
@@ -140,9 +132,6 @@ async function init() {
 		y: canvas.height - platformImg.height - flagImg.height + 60,
 		image: flagImg,
 	});
-=======
-
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
 	player = new Player(createImage);
 	monsters = [
 		new Monster({
@@ -226,11 +215,6 @@ function animate() {
 		platform.velocity.x = 0;
 	});
 
-<<<<<<< HEAD
-	// flag.update(ctx);
-
-=======
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
 
@@ -475,18 +459,10 @@ addEventListener("keydown", event => {
 			break;
 
 		case "KeyW":
-<<<<<<< HEAD
-<<<<<<< HEAD
-			player.velocity.y -= 10;
-=======
 			if (player.velocity.y === 0) {
 				audio.jump.play();
 				player.velocity.y -= 18;
 			}
->>>>>>> c40242e (Merged main fixed conflict.)
-=======
-			player.velocity.y -= 10;
->>>>>>> d01d364 (Feat: 장애물 지형 인식)
 
 			if (lastKey === "right") {
 				player.currentSprite = player.sprites.jump.right;
