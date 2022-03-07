@@ -228,9 +228,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "smallPlatform.png?0587f9be8e442eb74b2fe283bbf1a947");\n\n//# sourceURL=webpack:///./src/img/platform/smallPlatform.png?',
 				);
 
+<<<<<<< HEAD
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"smallPlatform.png?f522b4879b249ddd98dea0af7764db87\");\n\n//# sourceURL=webpack:///./src/img/platform/smallPlatform.png?");
 
+=======
+				/***/
+			},
+>>>>>>> ecb12b2 (Feat: 시작페이지)
 		/***/ "./src/img/player/idleLeft.png":
 			/*!*************************************!*\
   !*** ./src/img/player/idleLeft.png ***!
@@ -263,9 +268,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "jumpingLeft.png?663b1234c0e755a65a365cb109611088");\n\n//# sourceURL=webpack:///./src/img/player/jumpingLeft.png?',
 				);
+<<<<<<< HEAD
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"jumpingLeft.png?663b1234c0e755a65a365cb109611088\");\n\n//# sourceURL=webpack:///./src/img/player/jumpingLeft.png?");
+=======
+				/***/
+			},
+>>>>>>> ecb12b2 (Feat: 시작페이지)
 
 		/***/ "./src/img/player/jumpingRight.png":
 			/*!*****************************************!*\

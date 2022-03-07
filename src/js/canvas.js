@@ -19,6 +19,7 @@ import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
 
+<<<<<<< HEAD
 import platformImage from "../img/platform/platform.png";
 import smallPlatformImage from "../img/platform/smallPlatform.png";
 >>>>>>> 440e789 (Feat: motion 별 음향 추가)
@@ -28,6 +29,15 @@ import flagImage from "../img/flag/flag.png";
 
 import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
+=======
+import platformImage from "./img/platform/platform.png";
+import smallPlatformImage from "./img/platform/smallPlatform.png";
+import backgroundImage from "./img/background/stage_01.png";
+import obstacleImage from "./img/obstacle/obstacle.png";
+import flagImage from "./img/flag/flag.png";
+import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
+>>>>>>> ecb12b2 (Feat: 시작페이지)
 
 <<<<<<< HEAD
 // import { audio } from "./audio";
@@ -48,13 +58,58 @@ import {
 
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+console.log(images);
+=======
+
+<<<<<<< HEAD:src/js/canvas.js
+=======
+const modal = document.querySelector(".modal");
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".game-explain");
+const playButton = document.querySelector(".play-button");
+
+function openHowToPlayModal() {
+	modal.classList.add("open");
+}
+
+function startGame() {
+	modal.classList.remove("open");
+}
+
+howToPlayButton.addEventListener("click", openHowToPlayModal);
+playButton.addEventListener("click", startGame);
+
+>>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
+>>>>>>> 365e046 (Feat: 시작페이지)
+>>>>>>> ecb12b2 (Feat: 시작페이지)
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
+<<<<<<< HEAD
 canvas.width = 1000;
+=======
+<<<<<<< HEAD
+canvas.width = 1024;
+=======
+<<<<<<< HEAD:src/js/canvas.js
+canvas.width = 1000;
+>>>>>>> 365e046 (Feat: 시작페이지)
+>>>>>>> ecb12b2 (Feat: 시작페이지)
 canvas.height = innerHeight;
+=======
+canvas.width = 10;
+canvas.height = 10;
+
+startButton.addEventListener("click", () => {
+	const background = document.createElement("div");
+	background.classList.add("background");
+});
+>>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 
 let platformImg = createImage(platformImage);
 let smallPlatformImg;
@@ -79,7 +134,10 @@ const keys = {
 let scrollOffSet = 0;
 let flag;
 let flagImg;
+<<<<<<< HEAD:src/js/canvas.js
 let game;
+=======
+>>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 
 async function initLevel1() {
 	game = {
@@ -174,8 +232,13 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
+<<<<<<< HEAD:src/js/canvas.js
 		x: 100,
 		y: canvas.height - platformImg.height - flagImg.height,
+=======
+		x: 500,
+		y: canvas.height - platformImg.height - flagImg.height + 60,
+>>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -343,6 +406,7 @@ function animate() {
 		platform.velocity.x = 0;
 	});
 
+<<<<<<< HEAD:src/js/canvas.js
 	if (flag) {
 		flag.update(ctx);
 		flag.velocity.x = 0;
@@ -364,6 +428,9 @@ function animate() {
 			});
 		}
 	}
+=======
+	// flag.update(ctx);
+>>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
