@@ -227,10 +227,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "smallPlatform.png?0587f9be8e442eb74b2fe283bbf1a947");\n\n//# sourceURL=webpack:///./src/img/platform/smallPlatform.png?',
 				);
+<<<<<<< HEAD
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"smallPlatform.png?f522b4879b249ddd98dea0af7764db87\");\n\n//# sourceURL=webpack:///./src/img/platform/smallPlatform.png?");
 
+=======
+				/***/
+			},
+>>>>>>> 792b1f7 (conflict)
 		/***/ "./src/img/player/idleLeft.png":
 			/*!*************************************!*\
   !*** ./src/img/player/idleLeft.png ***!
