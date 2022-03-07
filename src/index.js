@@ -9,10 +9,11 @@ import platformImage from "./img/platform/platform.png";
 import smallPlatformImage from "./img/platform/smallPlatform.png";
 import backgroundImage from "./img/background/stage_01.png";
 import obstacleImage from "./img/obstacle/obstacle.png";
+import flagImage from "./img/flag/flag.png";
 import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 
-import { audio } from "./js/audio";
+// import { audio } from "./js/audio";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -26,13 +27,33 @@ import {
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
 
-const startButton = document.querySelector("start-button");
+const modal = document.querySelector(".modal");
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".game-explain");
+const playButton = document.querySelector(".play-button");
+
+function openHowToPlayModal() {
+	modal.classList.add("open");
+}
+
+function startGame() {
+	modal.classList.remove("open");
+}
+
+howToPlayButton.addEventListener("click", openHowToPlayModal);
+playButton.addEventListener("click", startGame);
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 1500;
-canvas.height = innerHeight;
+canvas.width = 10;
+canvas.height = 10;
+
+startButton.addEventListener("click", () => {
+	const background = document.createElement("div");
+	background.classList.add("background");
+});
 
 class Particle {
 	constructor({ position, velocity, radius }) {
@@ -91,12 +112,20 @@ const keys = {
 };
 
 let scrollOffSet = 0;
+let flag;
+let flagImg;
 
 async function init() {
 	platformImg = await createImageAsync(platformImage);
 	smallPlatformImg = await createImageAsync(smallPlatformImage);
 	obstacleImg = await createImageAsync(obstacleImage);
+	flagImg = await createImageAsync(flagImage);
 
+	flag = new GenericObject({
+		x: 500,
+		y: canvas.height - platformImg.height - flagImg.height + 60,
+		image: flagImg,
+	});
 	player = new Player(createImage);
 	monsters = [
 		new Monster({
@@ -179,6 +208,8 @@ function animate() {
 		platform.update(ctx);
 		platform.velocity.x = 0;
 	});
+
+	// flag.update(ctx);
 
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
