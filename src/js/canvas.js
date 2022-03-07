@@ -59,6 +59,7 @@ import {
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 <<<<<<< HEAD
@@ -86,10 +87,14 @@ playButton.addEventListener("click", startGame);
 >>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 >>>>>>> 365e046 (Feat: 시작페이지)
 >>>>>>> ecb12b2 (Feat: 시작페이지)
+=======
+
+>>>>>>> af58507 (Feat: 주석 제거)
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 canvas.width = 1000;
 =======
@@ -100,16 +105,57 @@ canvas.width = 1024;
 canvas.width = 1000;
 >>>>>>> 365e046 (Feat: 시작페이지)
 >>>>>>> ecb12b2 (Feat: 시작페이지)
-canvas.height = innerHeight;
 =======
+canvas.width = 1024;
+>>>>>>> af58507 (Feat: 주석 제거)
+canvas.height = innerHeight;
+
 canvas.width = 10;
 canvas.height = 10;
 
+<<<<<<< HEAD
 startButton.addEventListener("click", () => {
 	const background = document.createElement("div");
 	background.classList.add("background");
 });
 >>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
+=======
+class Particle {
+	constructor({ position, velocity, radius }) {
+		this.position = {
+			x: position.x,
+			y: position.y,
+		};
+
+		this.velocity = {
+			x: velocity.x,
+			y: velocity.y,
+		};
+
+		this.radius = radius;
+		this.timeTheLess = 300;
+	}
+
+	draw() {
+		ctx.beginPath();
+		ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
+		ctx.fillStyle = "red";
+		ctx.fill();
+		ctx.closePath();
+	}
+
+	update() {
+		this.timeTheLess--;
+		this.draw();
+		this.position.x += this.velocity.x;
+		this.position.y += this.velocity.y;
+
+		if (this.position.y + this.radius + this.velocity.y <= canvas.height) {
+			this.velocity.y += gravity * 0.4;
+		}
+	}
+}
+>>>>>>> af58507 (Feat: 주석 제거)
 
 let platformImg = createImage(platformImage);
 let smallPlatformImg;
@@ -134,10 +180,7 @@ const keys = {
 let scrollOffSet = 0;
 let flag;
 let flagImg;
-<<<<<<< HEAD:src/js/canvas.js
 let game;
-=======
->>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 
 async function initLevel1() {
 	game = {
@@ -232,13 +275,8 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-<<<<<<< HEAD:src/js/canvas.js
 		x: 100,
 		y: canvas.height - platformImg.height - flagImg.height,
-=======
-		x: 500,
-		y: canvas.height - platformImg.height - flagImg.height + 60,
->>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -406,7 +444,6 @@ function animate() {
 		platform.velocity.x = 0;
 	});
 
-<<<<<<< HEAD:src/js/canvas.js
 	if (flag) {
 		flag.update(ctx);
 		flag.velocity.x = 0;
@@ -428,9 +465,6 @@ function animate() {
 			});
 		}
 	}
-=======
-	// flag.update(ctx);
->>>>>>> 04bf67d (Feat: 시작페이지):src/index.js
 
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
