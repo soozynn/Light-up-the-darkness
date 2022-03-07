@@ -33,7 +33,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "flag.png?abb72d67128f294fff1d04b557fc31dd");\n\n//# sourceURL=webpack:///./src/img/flag/flag.png?',
 				);
-
 				/***/
 			},
 
@@ -80,7 +79,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "platform.png?2536cba6acc1f185a46aaca3e9faecd4");\n\n//# sourceURL=webpack:///./src/img/platform/platform.png?',
 				);
-
 				/***/
 			},
 
@@ -92,7 +90,6 @@
 				eval(
 					'__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "smallPlatform.png?0587f9be8e442eb74b2fe283bbf1a947");\n\n//# sourceURL=webpack:///./src/img/platform/smallPlatform.png?',
 				);
-
 				/***/
 			},
 		/***/ "./src/img/player/idleLeft.png":
@@ -235,7 +232,6 @@
 				);
 
 				/***/
-			},
 
 		/***/ "./src/gameObjects/Player.js":
 			/*!***********************************!*\
