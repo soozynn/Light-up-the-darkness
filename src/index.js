@@ -13,7 +13,7 @@ import flagImage from "./img/flag/flag.png";
 import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 
-// import { audio } from "./js/audio";
+import { audio } from "./js/audio";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
