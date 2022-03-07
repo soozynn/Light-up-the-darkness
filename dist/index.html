@@ -2,12 +2,37 @@
 <html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="index.css" type="text/html" />
+		<link rel="stylesheet" href="index.css" />
 		<link rel="shortcut icon" href="#" />
+		<link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Acme&family=Caveat:wght@600&family=Gochi+Hand&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Quintessential&display=swap"
+			rel="stylesheet"
+		/>
 		<title>Light up the darkness</title>
 	<script defer src="main.js"></script></head>
 	<body>
-		<button type="button" class="start-button">Start Game</button>
+		<div class="start-page">
+			<div class="game-title">Louder!</div>
+			<div class="button-container">
+				<button type="button" class="start-button">Start Game</button>
+				<button type="button" class="game-explain">How to play</button>
+			</div>
+		</div>
+		<div class="modal-container">
+			<div class="modal">
+				<p class="modal-title">How To Play</p>
+				<div class="modal-content">
+					<div>부드러운 목소리는 캐릭터를 앞으로 걷게 할 수 있습니다.</div>
+					<div>큰 목소리는 장애물을 뛰어넘을 수 있습니다</div>
+					<div>목소리가 커질수록 더 높이 뛸 수 있습니다</div>
+					<div>목소리 볼륨을 조절하여 장애물을 피해 깃발이 있는 곳 까지 완주해주세요!</div>
+				</div>
+				<button type="button" class="play-button">Play</button>
+			</div>
+		</div>
 		<canvas></canvas>
 		<script src="../dist//main.js"></script>
 	</body>
