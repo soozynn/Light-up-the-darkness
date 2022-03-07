@@ -8,8 +8,8 @@ import Monster from "./gameObjects/Monster";
 import platformImage from "./img/platform/platform.png";
 import smallPlatformImage from "./img/platform/smallPlatform.png";
 import backgroundImage from "./img/background/stage_01.png";
+import obstacleImage from "./img/obstacle/obstacle.png";
 import flagImage from "./img/flag/flag.png";
-
 import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 
@@ -47,8 +47,8 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 1500;
-canvas.height = innerHeight;
+canvas.width = 10;
+canvas.height = 10;
 
 startButton.addEventListener("click", () => {
 	const background = document.createElement("div");
@@ -208,6 +208,8 @@ function animate() {
 		platform.update(ctx);
 		platform.velocity.x = 0;
 	});
+
+	// flag.update(ctx);
 
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
