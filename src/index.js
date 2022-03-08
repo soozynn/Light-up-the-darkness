@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
+import gsap from "gsap";
 import Player from "./gameObjects/Player";
 import Platform from "./gameObjects/Platform";
 import GenericObject from "./gameObjects/GenericObject";
@@ -14,7 +15,7 @@ import flagImage from "./img/flag/flag.png";
 import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 
-import { audio } from "./js/audio";
+// import { audio } from "./js/audio";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -23,43 +24,18 @@ import {
 	createImageAsync,
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
+	objectsTouch,
 } from "./js/utils";
 
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
 
-const modal = document.querySelector(".modal");
-const startButton = document.querySelector(".start-button");
-const howToPlayButton = document.querySelector(".game-explain");
-const playButton = document.querySelector(".play-button");
-
-function openHowToPlayModal() {
-	modal.classList.add("open");
-}
-
-function startGame() {
-	modal.classList.remove("open");
-}
-
-howToPlayButton.addEventListener("click", openHowToPlayModal);
-playButton.addEventListener("click", startGame);
-
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 10;
-canvas.height = 10;
-
-startButton.addEventListener("click", () => {
-	const background = document.createElement("div");
-	background.classList.add("background");
-});
-
-startButton.addEventListener("click", () => {
-	const background = document.createElement("div");
-	background.classList.add("background");
-});
+canvas.width = 1000;
+canvas.height = innerHeight;
 
 class Particle {
 	constructor({ position, velocity, radius }) {
@@ -120,16 +96,21 @@ const keys = {
 let scrollOffSet = 0;
 let flag;
 let flagImg;
+let game;
 
 async function init() {
+	game = {
+		disableUserInput: false,
+	};
+
 	platformImg = await createImageAsync(platformImage);
 	smallPlatformImg = await createImageAsync(smallPlatformImage);
 	obstacleImg = await createImageAsync(obstacleImage);
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 500,
-		y: canvas.height - platformImg.height - flagImg.height + 60,
+		x: 6900 + 600,
+		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -186,7 +167,7 @@ async function init() {
 		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 400, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -215,6 +196,28 @@ function animate() {
 		platform.velocity.x = 0;
 	});
 
+	if (flag) {
+		flag.update(ctx);
+		flag.velocity.x = 0;
+
+		if (
+			objectsTouch({
+				object1: player,
+				object2: flag,
+			})
+		) {
+			game.disableUserInput = true;
+			player.velocity.x = 0;
+			player.velocity.y = 0;
+			player.currentSprite = player.sprites.stand.right;
+
+			gsap.to(player.position, {
+				y: canvas.height - platformImg.height - player.height,
+				duration: 1,
+			});
+		}
+	}
+
 	monsters.forEach((monster, index) => {
 		monster.update(ctx, gravity, canvas);
 
@@ -236,7 +239,7 @@ function animate() {
 			}
 
 			player.velocity.y -= 20;
-			audio.monsterSquash.play();
+			// audio.monsterSquash.play();
 
 			setTimeout(() => {
 				monsters.splice(index, 1);
@@ -246,8 +249,8 @@ function animate() {
 			player.position.y + player.height >= monster.position.y &&
 			player.position.x <= monster.position.x + monster.width
 		) {
-			init();
-			audio.hurt.play();
+			// 게임 오버 함수 띄우기
+			// audio.hurt.play();
 		}
 	});
 
@@ -256,6 +259,8 @@ function animate() {
 	});
 
 	player.update(gravity, canvas, ctx);
+
+	if (game.disableUserInput) return;
 
 	let hitSide = false;
 
@@ -292,6 +297,7 @@ function animate() {
 
 			if (!hitSide) {
 				scrollOffSet += player.speed;
+				flag.velocity.x = -player.speed;
 
 				platforms.forEach(platform => {
 					platform.velocity.x = -player.speed;
@@ -328,6 +334,7 @@ function animate() {
 
 			if (!hitSide) {
 				scrollOffSet -= player.speed;
+				flag.velocity.x = player.speed;
 
 				monsters.forEach(monster => {
 					monster.position.x += player.speed;
@@ -433,20 +440,46 @@ function animate() {
 	}
 
 	if (platformImg && scrollOffSet === 4000) {
-		audio.gameWin.play();
-		// 게임 오버 함수 띄우기
+		// audio.gameWin.play();
+		// 게임 위너 함수 띄우기
 	}
 
 	if (player.position.y > canvas.height) {
-		audio.falling.play();
-		init();
+		// audio.falling.play();
+		// 게임 오버 함수 띄우기
 	}
 }
 
 init();
 animate();
+// const modal = document.querySelector(".modal");
+// const startButton = document.querySelector(".start-button");
+// const howToPlayButton = document.querySelector(".game-explain");
+// const playButton = document.querySelector(".play-button");
+// const startPage = document.querySelector(".start-page");
+// const modalContainer = document.querySelector(".modal-container");
+
+// function openHowToPlayModal() {
+// 	modal.classList.add("open");
+// }
+
+// function showCanvas() {
+// 	modal.classList.remove("open");
+// 	startPage.classList.add("close");
+// 	modalContainer.classList.add("close");
+
+// 	init();
+// 	animate();
+// }
+
+// howToPlayButton.addEventListener("click", openHowToPlayModal);
+// playButton.addEventListener("click", showCanvas);
+
+// startButton.addEventListener("click", showCanvas);
 
 addEventListener("keydown", event => {
+	if (game.disableUserInput) return;
+
 	switch (event.code) {
 		case "KeyA":
 			keys.left.pressed = true;
@@ -459,8 +492,9 @@ addEventListener("keydown", event => {
 			break;
 
 		case "KeyW":
-			if (player.velocity.y === 0) {
-				audio.jump.play();
+			if (player.position.y < 0) {
+				player.position.y = 0;
+			} else {
 				player.velocity.y -= 18;
 			}
 
@@ -479,6 +513,8 @@ addEventListener("keydown", event => {
 });
 
 addEventListener("keyup", event => {
+	if (game.disableUserInput) return;
+
 	switch (event.code) {
 		case "KeyA":
 			keys.left.pressed = false;

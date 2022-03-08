@@ -4,8 +4,6 @@ import spriteStandRightImage from "../img/player/idleRight.png";
 import spriteStandLeftImage from "../img/player/idleLeft.png";
 import spriteJumpingRightImage from "../img/player/jumpingRight.png";
 import spriteJumpingLeftImage from "../img/player/jumpingLeft.png";
-import spriteSingingRightImage from "../img/player/singingRight.png";
-import spriteSingingLeftImage from "../img/player/singingLeft.png";
 
 export default class Player {
 	constructor(createImage) {
@@ -42,12 +40,6 @@ export default class Player {
 			jump: {
 				right: createImage(spriteJumpingRightImage),
 				left: createImage(spriteJumpingLeftImage),
-				cropWidth: 32,
-				width: 64,
-			},
-			sing: {
-				right: createImage(spriteSingingRightImage),
-				left: createImage(spriteSingingLeftImage),
 				cropWidth: 32,
 				width: 64,
 			},
