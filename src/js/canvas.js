@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
-import Player from "./gameObjects/Player";
-import Platform from "./gameObjects/Platform";
-import GenericObject from "./gameObjects/GenericObject";
-import Monster from "./gameObjects/Monster";
+import Player from "../gameObjects/Player";
+import Platform from "../gameObjects/Platform";
+import GenericObject from "../gameObjects/GenericObject";
+import Monster from "../gameObjects/Monster";
 
-import platformImage from "./img/platform/platform.png";
-import smallPlatformImage from "./img/platform/smallPlatform.png";
-import backgroundImage from "./img/background/stage_01.png";
-import obstacleImage from "./img/obstacle/obstacle.png";
-import flagImage from "./img/flag/flag.png";
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+import backgroundImage from "../img/background/stage_01.png";
+import obstacleImage from "../img/obstacle/obstacle.png";
+import flagImage from "../img/flag/flag.png";
 
-import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
-import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
+import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
 // import { audio } from "./js/audio";
 import {
@@ -25,7 +25,7 @@ import {
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
 	objectsTouch,
-} from "./js/utils";
+} from "./utils";
 
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
@@ -34,7 +34,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 1000;
+canvas.width = 1024;
 canvas.height = innerHeight;
 
 class Particle {
