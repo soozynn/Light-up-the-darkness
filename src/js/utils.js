@@ -76,3 +76,7 @@ export function findDistancePercent(player, flag) {
 	return `${Math.floor(distancePercent)}%`;
 	// velocity 값은 어떻게 컨트롤?
 }
+
+export function loseGame() {
+	// game over 모달 만들기
+}
