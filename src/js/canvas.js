@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
+<<<<<<< HEAD
 import Player from "../gameObjects/Player";
 import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
@@ -14,11 +15,15 @@ import iceSmallPlatformImage from "../img/platform/ice/iceSmallPlatform.png";
 import icePlatfromImage from "../img/platform/ice/icePlatform.png";
 
 =======
+=======
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 import Player from "../gameObjects/Player";
 import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
+import Particle from "../gameObjects/Particle";
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 import platformImage from "../img/platform/platform.png";
 import smallPlatformImage from "../img/platform/smallPlatform.png";
@@ -45,6 +50,18 @@ import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
 // import { audio } from "./js/audio";
 import { images } from "./image";
 >>>>>>> 440e789 (Feat: motion 별 음향 추가)
+=======
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+import backgroundImage from "../img/background/stage_01.png";
+import obstacleImage from "../img/obstacle/obstacle.png";
+import flagImage from "../img/flag/flag.png";
+import back from "../img/background/stage_02.png";
+import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
+
+// import { audio } from "./audio";
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -94,6 +111,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 canvas.width = 1000;
@@ -157,6 +175,11 @@ class Particle {
 }
 >>>>>>> af58507 (Feat: 주석 제거)
 
+=======
+canvas.width = 1000;
+canvas.height = innerHeight;
+
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 let platformImg = createImage(platformImage);
 let smallPlatformImg;
 let obstacleImg;
@@ -275,7 +298,11 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
+<<<<<<< HEAD
 		x: 100,
+=======
+		x: 6900 + 600,
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
@@ -722,21 +749,28 @@ function selectLevel() {
 
 function showLevel1() {
 	levelSelectPage.classList.remove("open");
+<<<<<<< HEAD
 	canvas.classList.add("open");
+=======
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 
 	initLevel1();
 	animate();
 }
 
 function showLevel2() {
+<<<<<<< HEAD
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
  
+=======
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 	initLevel2();
 	animate();
 }
 
 function showLevel3() {
+<<<<<<< HEAD
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
@@ -744,6 +778,12 @@ function showLevel3() {
 	animate();
 }
 
+=======
+	initLevel3();
+	animate();
+}
+
+>>>>>>> e50a7d6 (Feat: selec page 구현)
 howToPlayButton.addEventListener("click", openHowToPlayModal);
 playButton.addEventListener("click", selectLevel);
 startButton.addEventListener("click", selectLevel);
