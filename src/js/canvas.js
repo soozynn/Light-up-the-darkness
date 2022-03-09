@@ -9,10 +9,13 @@ import Particle from "../gameObjects/Particle";
 
 import platformImage from "../img/platform/platform.png";
 import smallPlatformImage from "../img/platform/smallPlatform.png";
+import iceSmallPlatformImage from "../img/platform/ice/iceSmallPlatform.png";
+import icePlatfromImage from "../img/platform/ice/icePlatform.png";
+
 import backgroundImage from "../img/background/stage_01.png";
 import obstacleImage from "../img/obstacle/obstacle.png";
 import flagImage from "../img/flag/flag.png";
-import back from "../img/background/stage_02.png";
+import back from "../img/background/stage_03.png";
 import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
@@ -35,7 +38,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 1000;
+canvas.width = 1024;
 canvas.height = innerHeight;
 
 let platformImg = createImage(platformImage);
@@ -68,8 +71,8 @@ async function initLevel1() {
 		disableUserInput: false,
 	};
 
-	platformImg = await createImageAsync(platformImage);
-	smallPlatformImg = await createImageAsync(smallPlatformImage);
+	platformImg = await createImageAsync(icePlatfromImage);
+	smallPlatformImg = await createImageAsync(iceSmallPlatformImage);
 	obstacleImg = await createImageAsync(obstacleImage);
 	flagImg = await createImageAsync(flagImage);
 
@@ -120,10 +123,10 @@ async function initLevel1() {
 			image: smallPlatformImg,
 			block: true,
 		}),
-		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
 		new Platform({
 			x: platformImg.width - 3,
-			y: 742,
+			y: 772,
 			image: platformImg,
 			block: true,
 		}),
@@ -603,17 +606,22 @@ function selectLevel() {
 
 function showLevel1() {
 	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
 
 	initLevel1();
 	animate();
 }
 
 function showLevel2() {
+	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
 	initLevel2();
 	animate();
 }
 
 function showLevel3() {
+	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
 	initLevel3();
 	animate();
 }
