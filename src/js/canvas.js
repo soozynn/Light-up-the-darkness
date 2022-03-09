@@ -15,7 +15,7 @@ import icePlatfromImage from "../img/platform/ice/icePlatform.png";
 import backgroundImage from "../img/background/stage_01.png";
 import obstacleImage from "../img/obstacle/obstacle.png";
 import flagImage from "../img/flag/flag.png";
-import back from "../img/background/stage_03.png";
+
 import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
@@ -38,7 +38,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
-canvas.width = 1024;
+canvas.width = 1000;
 canvas.height = innerHeight;
 
 let platformImg = createImage(platformImage);
@@ -615,6 +615,7 @@ function showLevel1() {
 function showLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+ 
 	initLevel2();
 	animate();
 }
@@ -622,6 +623,7 @@ function showLevel2() {
 function showLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+
 	initLevel3();
 	animate();
 }
