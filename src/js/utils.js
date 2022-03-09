@@ -70,6 +70,9 @@ export function objectsTouch({ object1, object2 }) {
 	);
 }
 
-export function findDistancePercent({ player, flag }) {
-	return;
+export function findDistancePercent(player, flag) {
+	const onePercent = Math.floor(flag) / 100;
+	const distancePercent = player / onePercent;
+	return `${Math.floor(distancePercent)}%`;
+	// velocity 값은 어떻게 컨트롤?
 }
