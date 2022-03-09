@@ -22,7 +22,7 @@ export default class Particle {
 		ctx.closePath();
 	}
 
-	update(ctx, gravity, canvas) {
+	update(ctx, canvas, gravity) {
 		this.timeTheLess--;
 		this.draw(ctx);
 		this.position.x += this.velocity.x;

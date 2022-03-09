@@ -8,8 +8,8 @@ module.exports = {
 		main: "./src/js/canvas.js",
 	},
 	output: {
+		path: path.resolve("./dist"),
 		filename: "[name].js",
-		path: path.resolve("../dist"),
 	},
 	module: {
 		rules: [
@@ -38,6 +38,13 @@ module.exports = {
 						},
 					},
 				],
+			},
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|pages)/,
+				use: {
+					loader: "babel-loader",
+				},
 			},
 		],
 	},

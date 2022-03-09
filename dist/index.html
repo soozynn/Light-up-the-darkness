@@ -12,29 +12,51 @@
 			rel="stylesheet"
 		/>
 		<title>Light up the darkness</title>
-		<script defer src="main.js"></script>
-	</head>
+	<script defer src="main.js"></script></head>
 	<body>
 		<div class="start-page">
 			<div class="game-title">Louder!</div>
 			<div class="button-container">
 				<button type="button" class="start-button">Start Game</button>
-				<button type="button" class="game-explain">How to play</button>
+				<button type="button" class="how-to-play-button">How to play</button>
 			</div>
 		</div>
 		<div class="modal-container">
 			<div class="modal">
 				<p class="modal-title">How To Play</p>
 				<div class="modal-content">
-					<div>부드러운 목소리는 캐릭터를 앞으로 걷게 할 수 있습니다.</div>
-					<div>큰 목소리는 장애물을 뛰어넘을 수 있습니다</div>
-					<div>목소리가 커질수록 더 높이 뛸 수 있습니다</div>
-					<div>목소리 볼륨을 조절하여 장애물을 피해 깃발이 있는 곳 까지 완주해주세요!</div>
+					<div class="game-explain">
+						<img src="../img/audio/soft.png" alt="soft voice image" />Use
+						<span class="red-text">SOFT VOICE</span>to move
+					</div>
+					<div class="game-explain">
+						<img src="../img/audio/soft-loud.png" alt="soft voice image" />Use
+						<span class="red-text">LOUD VOICE</span>to jump
+					</div>
+					<div class="game-explain">
+						<img src="../img/audio/loud.png" alt="soft voice image" />
+						Speck
+						<span class="red-text">LOUDER</span>, jump <span class="red-text">Higher</span>
+					</div>
+					<div class="sub-explain">
+						목소리 볼륨을 조절하여 장애물을 피해 깃발이 있는 곳 까지 완주해주세요!
+					</div>
+					<div class="sub-explain">
+						Tip) 몬스터를 밟아 죽일 수는 있지만 머리 외에 몸통이 닿으면 Game Over!
+					</div>
 				</div>
 				<button type="button" class="play-button">Play</button>
 			</div>
 		</div>
+		<div class="level-page">
+			<p class="selec-title">Select Level</p>
+			<div class="level-container">
+				<div class="level-1">Level 1</div>
+				<div class="level-2">Level 2</div>
+				<div class="level-3">Level 3</div>
+			</div>
+		</div>
 		<canvas></canvas>
-		<script src="../../dist/main.js></script>
+		<script defer src="../../dist/main.js"></script>
 	</body>
 </html>

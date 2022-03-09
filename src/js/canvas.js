@@ -1,22 +1,22 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
-
 import Player from "../gameObjects/Player";
 import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
+import Particle from "../gameObjects/Particle";
 
-import platformImage from "./img/platform/platform.png";
-import smallPlatformImage from "./img/platform/smallPlatform.png";
-import backgroundImage from "./img/background/stage_01.png";
-import obstacleImage from "./img/obstacle/obstacle.png";
-import flagImage from "./img/flag/flag.png";
-import spriteGreenMonster from "./img/monster/walk/walkGreen.png";
-import spriteBrownMonster from "./img/monster/walk/walkBrown.png";
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+import backgroundImage from "../img/background/stage_01.png";
+import obstacleImage from "../img/obstacle/obstacle.png";
+import flagImage from "../img/flag/flag.png";
+import back from "../img/background/stage_02.png";
+import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
-// import { audio } from "./js/audio";
-import { images } from "./image";
+// import { audio } from "./audio";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -33,49 +33,10 @@ import {
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const gravity = 1.5;
+const gravity = 0.5;
 
-canvas.width = 1024;
+canvas.width = 1000;
 canvas.height = innerHeight;
-
-canvas.width = 10;
-canvas.height = 10;
-
-class Particle {
-	constructor({ position, velocity, radius }) {
-		this.position = {
-			x: position.x,
-			y: position.y,
-		};
-
-		this.velocity = {
-			x: velocity.x,
-			y: velocity.y,
-		};
-
-		this.radius = radius;
-		this.timeTheLess = 300;
-	}
-
-	draw() {
-		ctx.beginPath();
-		ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
-		ctx.fillStyle = "red";
-		ctx.fill();
-		ctx.closePath();
-	}
-
-	update() {
-		this.timeTheLess--;
-		this.draw();
-		this.position.x += this.velocity.x;
-		this.position.y += this.velocity.y;
-
-		if (this.position.y + this.radius + this.velocity.y <= canvas.height) {
-			this.velocity.y += gravity * 0.4;
-		}
-	}
-}
 
 let platformImg = createImage(platformImage);
 let smallPlatformImg;
@@ -88,25 +49,21 @@ let monsters = [];
 let particles = [];
 
 let lastKey;
-let keys;
+const keys = {
+	right: {
+		pressed: false,
+	},
+	left: {
+		pressed: false,
+	},
+};
 
-let scrollOffSet;
+let scrollOffSet = 0;
 let flag;
 let flagImg;
 let game;
 
 async function initLevel1() {
-	player = new Player();
-	keys = {
-		right: {
-			pressed: false,
-		},
-		left: {
-			pressed: false,
-		},
-	};
-	scrollOffSet = 0;
-
 	game = {
 		disableUserInput: false,
 	};
@@ -189,17 +146,6 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	player = new Player();
-	keys = {
-		right: {
-			pressed: false,
-		},
-		left: {
-			pressed: false,
-		},
-	};
-	scrollOffSet = 0;
-
 	game = {
 		disableUserInput: false,
 	};
@@ -211,47 +157,6 @@ async function initLevel2() {
 
 	flag = new GenericObject({
 		x: 6900 + 600,
-		y: canvas.height - platformImg.height - flagImg.height,
-		image: flagImg,
-	});
-	player = new Player(createImage);
-	monsters = [];
-	particles = [];
-	platforms = [new Platform({ x: -1, y: 742, image: platformImg, block: true })];
-	genericObjects = [
-		new GenericObject({
-			x: -1,
-			y: -1,
-			image: createImage(backgroundLevel2),
-		}),
-	];
-
-	scrollOffSet = 0;
-}
-
-async function initLevel3() {
-	player = new Player();
-	keys = {
-		right: {
-			pressed: false,
-		},
-		left: {
-			pressed: false,
-		},
-	};
-	scrollOffSet = 0;
-
-	game = {
-		disableUserInput: false,
-	};
-
-	platformImg = await createImageAsync(platformImage);
-	smallPlatformImg = await createImageAsync(smallPlatformImage);
-	obstacleImg = await createImageAsync(obstacleImage);
-	flagImg = await createImageAsync(flagImage);
-
-	flag = new GenericObject({
-		x: 100,
 		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
@@ -315,7 +220,89 @@ async function initLevel3() {
 		new GenericObject({
 			x: -1,
 			y: -1,
-			image: createImage(backgroundImage),
+			image: createImage(back),
+		}),
+	];
+
+	scrollOffSet = 0;
+}
+
+async function initLevel3() {
+	game = {
+		disableUserInput: false,
+	};
+
+	platformImg = await createImageAsync(platformImage);
+	smallPlatformImg = await createImageAsync(smallPlatformImage);
+	obstacleImg = await createImageAsync(obstacleImage);
+	flagImg = await createImageAsync(flagImage);
+
+	flag = new GenericObject({
+		x: 6900 + 600,
+		y: canvas.height - platformImg.height - flagImg.height,
+		image: flagImg,
+	});
+	player = new Player(createImage);
+	monsters = [
+		new Monster({
+			position: {
+				x: 800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 1600,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteBrownMonster),
+			distance: {
+				limit: 100,
+				traveled: 0,
+			},
+		}),
+	];
+
+	particles = [];
+	platforms = [
+		new Platform({
+			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
+			y: 270,
+			image: smallPlatformImg,
+			block: true,
+		}),
+		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({
+			x: platformImg.width - 3,
+			y: 742,
+			image: platformImg,
+			block: true,
+		}),
+		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
+		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+	];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(back),
 		}),
 	];
 
@@ -397,7 +384,7 @@ function animate() {
 	});
 
 	particles.forEach(particle => {
-		particle.update();
+		particle.update(ctx, canvas, gravity);
 	});
 
 	player.update(gravity, canvas, ctx);
@@ -592,36 +579,54 @@ function animate() {
 	}
 }
 
-// init();
-initLevel2();
-animate();
+const modal = document.querySelector(".modal");
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".how-to-play-button");
+const playButton = document.querySelector(".play-button");
+const startPage = document.querySelector(".start-page");
+const modalContainer = document.querySelector(".modal-container");
+const levelSelectPage = document.querySelector(".level-page");
+const level1Button = document.querySelector(".level-1");
+const level2Button = document.querySelector(".level-2");
+const level3Button = document.querySelector(".level-3");
 
-// const modal = document.querySelector(".modal");
-// const startButton = document.querySelector(".start-button");
-// const howToPlayButton = document.querySelector(".game-explain");
-// const playButton = document.querySelector(".play-button");
-// const startPage = document.querySelector(".start-page");
-// const modalContainer = document.querySelector(".modal-container");
+function openHowToPlayModal() {
+	modalContainer.classList.add("open");
+}
 
-// function openHowToPlayModal() {
-// 	modal.classList.add("open");
-// }
+function selectLevel() {
+	modal.classList.remove("open");
+	startPage.classList.add("close");
+	modalContainer.classList.add("close");
+	levelSelectPage.classList.add("open");
+}
 
-// function showCanvas() {
-// 	modal.classList.remove("open");
-// 	startPage.classList.add("close");
-// 	modalContainer.classList.add("close");
+function showLevel1() {
+	levelSelectPage.classList.remove("open");
 
-// 	init();
-// 	animate();
-// }
+	initLevel1();
+	animate();
+}
 
-// howToPlayButton.addEventListener("click", openHowToPlayModal);
-// playButton.addEventListener("click", showCanvas);
+function showLevel2() {
+	initLevel2();
+	animate();
+}
 
-// startButton.addEventListener("click", showCanvas);
+function showLevel3() {
+	initLevel3();
+	animate();
+}
 
-addEventListener("keydown", event => {
+howToPlayButton.addEventListener("click", openHowToPlayModal);
+playButton.addEventListener("click", selectLevel);
+startButton.addEventListener("click", selectLevel);
+
+level1Button.addEventListener("click", showLevel1);
+level2Button.addEventListener("click", showLevel2);
+level3Button.addEventListener("click", showLevel3);
+
+window.addEventListener("keydown", event => {
 	if (game.disableUserInput) return;
 
 	switch (event.code) {
@@ -656,7 +661,7 @@ addEventListener("keydown", event => {
 	}
 });
 
-addEventListener("keyup", event => {
+window.addEventListener("keyup", event => {
 	if (game.disableUserInput) return;
 
 	switch (event.code) {
