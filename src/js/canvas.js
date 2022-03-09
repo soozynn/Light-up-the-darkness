@@ -1,21 +1,9 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
-import Player from "../gameObjects/Player";
-import Platform from "../gameObjects/Platform";
-import GenericObject from "../gameObjects/GenericObject";
-import Monster from "../gameObjects/Monster";
-
-import platformImage from "../img/platform/platform.png";
-import smallPlatformImage from "../img/platform/smallPlatform.png";
-import backgroundImage from "../img/background/stage_01.png";
-import obstacleImage from "../img/obstacle/obstacle.png";
-import flagImage from "../img/flag/flag.png";
-
-import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
-import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
 // import { audio } from "./js/audio";
+import { images } from "./image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -26,13 +14,27 @@ import {
 	hitSideOfPlatform,
 	objectsTouch,
 } from "./utils";
+import Player from "../gameObjects/Player";
+import Platform from "../gameObjects/Platform";
+import GenericObject from "../gameObjects/GenericObject";
+import Monster from "../gameObjects/Monster";
+
+import platformImage from "../img/platform/platform.png";
+import smallPlatformImage from "../img/platform/smallPlatform.png";
+import backgroundImage from "../img/background/stage_01.png";
+import obstacleImage from "../img/obstacle/obstacle.png";
+import flagImage from "../img/flag/flag.png";
+import backgroundLevel2 from "../img/background/stage_02.png";
+
+import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
+import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
 // import KEY_CODE from "./constants/constants";
 // audio.stage1.play();
-
+console.log(images);
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const gravity = 0.5;
+const gravity = 1.5;
 
 canvas.width = 1024;
 canvas.height = innerHeight;
@@ -84,21 +86,159 @@ let monsters = [];
 let particles = [];
 
 let lastKey;
-const keys = {
-	right: {
-		pressed: false,
-	},
-	left: {
-		pressed: false,
-	},
-};
+let keys;
 
-let scrollOffSet = 0;
+let scrollOffSet;
 let flag;
 let flagImg;
 let game;
 
-async function init() {
+async function initLevel1() {
+	player = new Player();
+	keys = {
+		right: {
+			pressed: false,
+		},
+		left: {
+			pressed: false,
+		},
+	};
+	scrollOffSet = 0;
+
+	game = {
+		disableUserInput: false,
+	};
+
+	platformImg = await createImageAsync(platformImage);
+	smallPlatformImg = await createImageAsync(smallPlatformImage);
+	obstacleImg = await createImageAsync(obstacleImage);
+	flagImg = await createImageAsync(flagImage);
+
+	flag = new GenericObject({
+		x: 6900 + 600,
+		y: canvas.height - platformImg.height - flagImg.height,
+		image: flagImg,
+	});
+	player = new Player(createImage);
+	monsters = [
+		new Monster({
+			position: {
+				x: 800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 1600,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteBrownMonster),
+			distance: {
+				limit: 100,
+				traveled: 0,
+			},
+		}),
+	];
+
+	particles = [];
+	platforms = [
+		new Platform({
+			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
+			y: 270,
+			image: smallPlatformImg,
+			block: true,
+		}),
+		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({
+			x: platformImg.width - 3,
+			y: 742,
+			image: platformImg,
+			block: true,
+		}),
+		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
+		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+	];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(backgroundImage),
+		}),
+	];
+
+	scrollOffSet = 0;
+}
+
+async function initLevel2() {
+	player = new Player();
+	keys = {
+		right: {
+			pressed: false,
+		},
+		left: {
+			pressed: false,
+		},
+	};
+	scrollOffSet = 0;
+
+	game = {
+		disableUserInput: false,
+	};
+
+	platformImg = await createImageAsync(platformImage);
+	smallPlatformImg = await createImageAsync(smallPlatformImage);
+	obstacleImg = await createImageAsync(obstacleImage);
+	flagImg = await createImageAsync(flagImage);
+
+	flag = new GenericObject({
+		x: 6900 + 600,
+		y: canvas.height - platformImg.height - flagImg.height,
+		image: flagImg,
+	});
+	player = new Player(createImage);
+	monsters = [];
+	particles = [];
+	platforms = [new Platform({ x: -1, y: 742, image: platformImg, block: true })];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(backgroundLevel2),
+		}),
+	];
+
+	scrollOffSet = 0;
+}
+
+async function initLevel3() {
+	player = new Player();
+	keys = {
+		right: {
+			pressed: false,
+		},
+		left: {
+			pressed: false,
+		},
+	};
+	scrollOffSet = 0;
+
 	game = {
 		disableUserInput: false,
 	};
@@ -450,8 +590,10 @@ function animate() {
 	}
 }
 
-init();
+// init();
+initLevel2();
 animate();
+
 // const modal = document.querySelector(".modal");
 // const startButton = document.querySelector(".start-button");
 // const howToPlayButton = document.querySelector(".game-explain");
