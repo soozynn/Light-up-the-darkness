@@ -53,10 +53,13 @@ import { images } from "./image";
 =======
 import platformImage from "../img/platform/platform.png";
 import smallPlatformImage from "../img/platform/smallPlatform.png";
+import iceSmallPlatformImage from "../img/platform/ice/iceSmallPlatform.png";
+import icePlatfromImage from "../img/platform/ice/icePlatform.png";
+
 import backgroundImage from "../img/background/stage_01.png";
 import obstacleImage from "../img/obstacle/obstacle.png";
 import flagImage from "../img/flag/flag.png";
-import back from "../img/background/stage_02.png";
+import back from "../img/background/stage_03.png";
 import spriteGreenMonster from "../img/monster/walk/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walk/walkBrown.png";
 
@@ -111,6 +114,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const gravity = 0.5;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -177,6 +181,9 @@ class Particle {
 
 =======
 canvas.width = 1000;
+=======
+canvas.width = 1024;
+>>>>>>> 006eb14 (Feat: selec level page)
 canvas.height = innerHeight;
 
 >>>>>>> e50a7d6 (Feat: selec page 구현)
@@ -750,9 +757,13 @@ function selectLevel() {
 function showLevel1() {
 	levelSelectPage.classList.remove("open");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	canvas.classList.add("open");
 =======
 >>>>>>> e50a7d6 (Feat: selec page 구현)
+=======
+	canvas.classList.add("open");
+>>>>>>> 006eb14 (Feat: selec level page)
 
 	initLevel1();
 	animate();
@@ -760,20 +771,30 @@ function showLevel1() {
 
 function showLevel2() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
  
 =======
 >>>>>>> e50a7d6 (Feat: selec page 구현)
+=======
+	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
+>>>>>>> 006eb14 (Feat: selec level page)
 	initLevel2();
 	animate();
 }
 
 function showLevel3() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
+=======
+	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
+>>>>>>> 006eb14 (Feat: selec level page)
 	initLevel3();
 	animate();
 }
