@@ -75,6 +75,5 @@ export function makeDistancePercent(player, flag) {
 	distance += Math.abs(player);
 	const onePercent = Math.floor(flag) / 100;
 	const percent = Math.round(distance / onePercent);
-	// console.log("퍼센트" + percent);
 	return percent;
 }
