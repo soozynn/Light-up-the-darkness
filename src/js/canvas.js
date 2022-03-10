@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
+
 import Player from "../gameObjects/Player";
 import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
 import Particle from "../gameObjects/Particle";
+// import { VolumeMeter } from "./volume";
 
 import flagImage from "../img/flag/flag.png";
 import spriteGreenMonster from "../img/monster/walkGreen.png";
@@ -15,6 +17,7 @@ import spritePurpleMonster from "../img/monster/walkPurple.png";
 // import { audio } from "./audio";
 import { images } from "./image";
 import {
+	// requestAudio,
 	isOnTopOfPlatform,
 	collisionTop,
 	isOnTopOfPlatformCircle,
@@ -30,7 +33,7 @@ import {
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const gravity = 1.5;
+let gravity = 1.5;
 
 canvas.width = 1024;
 canvas.height = innerHeight;
@@ -39,15 +42,16 @@ let platformImg;
 let smallPlatformImg;
 let obstacleImg;
 let largeObstacleImg;
+let flagImg;
 
 let player = new Player(createImage);
 let platforms = [];
 let genericObjects = [];
 let monsters = [];
-let particles = [];
+const particles = [];
 
 let lastKey;
-const keys = {
+let keys = {
 	right: {
 		pressed: false,
 	},
@@ -57,15 +61,15 @@ const keys = {
 };
 
 let scrollOffSet = 0;
+let gameOver = true;
 let flag;
-let flagImg;
-let game;
-let curretLevel = 1;
+// let game;
+let currentLevel = 1;
 
 async function initLevel1() {
-	game = {
-		disableUserInput: false,
-	};
+	// game = {
+	// 	disableUserInput: false,
+	// };
 
 	platformImg = await createImageAsync(images.levels[1].platform);
 	smallPlatformImg = await createImageAsync(images.levels[1].smallPlatform);
@@ -74,7 +78,7 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 6900 + 600,
+		x: platformImg.width * 7 + 680,
 		y: canvas.height - platformImg.height - flagImg.height,
 		image: flagImg,
 	});
@@ -95,23 +99,7 @@ async function initLevel1() {
 				traveled: 0,
 			},
 		}),
-		new Monster({
-			position: {
-				x: 1600,
-				y: 100,
-			},
-			velocity: {
-				x: -0.3,
-				y: 0,
-			},
-			image: createImage(spriteBrownMonster),
-			distance: {
-				limit: 100,
-				traveled: 0,
-			},
-		}),
 	];
-	particles = [];
 	platforms = [
 		new Platform({
 			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
@@ -127,12 +115,12 @@ async function initLevel1() {
 			block: true,
 		}),
 		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 200, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 380, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 480, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 580, y: 142, image: smallPlatformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
-		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: 1000, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -147,12 +135,12 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	game = {
-		disableUserInput: false,
-	};
+	// game = {
+	// 	disableUserInput: false,
+	// };
 
-	platformImg = await createImageAsync(images.levels[2].platform);
-	smallPlatformImg = await createImageAsync(images.levels[2].smallPlatform);
+	platformImg = await createImageAsync(images.levels[2].largePlatform);
+	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
 	largeObstacleImg = await createImageAsync(images.levels[2].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
@@ -194,8 +182,22 @@ async function initLevel2() {
 				traveled: 0,
 			},
 		}),
+		new Monster({
+			position: {
+				x: 1800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spritePurpleMonster),
+			distance: {
+				limit: 100,
+				traveled: 0,
+			},
+		}),
 	];
-	particles = [];
 	platforms = [
 		new Platform({
 			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
@@ -230,9 +232,9 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
-	game = {
-		disableUserInput: false,
-	};
+	// game = {
+	// 	disableUserInput: false,
+	// };
 
 	platformImg = await createImageAsync(images.levels[3].platform);
 	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
@@ -293,7 +295,6 @@ async function initLevel3() {
 			},
 		}),
 	];
-	particles = [];
 	platforms = [
 		new Platform({
 			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
@@ -353,7 +354,7 @@ function animate() {
 				object2: flag,
 			})
 		) {
-			game.disableUserInput = true;
+			// game.disableUserInput = true;
 			player.velocity.x = 0;
 			player.velocity.y = 0;
 			player.currentSprite = player.sprites.stand.right;
@@ -362,6 +363,9 @@ function animate() {
 				y: canvas.height - platformImg.height - player.height,
 				duration: 1,
 			});
+
+			// audio.gameWin.play();
+			winGame();
 		}
 	}
 
@@ -396,7 +400,7 @@ function animate() {
 			player.position.y + player.height >= monster.position.y &&
 			player.position.x <= monster.position.x + monster.width
 		) {
-			// 게임 오버 함수 띄우기
+			loseGame();
 			// audio.hurt.play();
 		}
 	});
@@ -407,7 +411,7 @@ function animate() {
 
 	player.update(gravity, canvas, ctx);
 
-	if (game.disableUserInput) return;
+	// if (game.disableUserInput) return;
 
 	let hitSide = false;
 
@@ -586,17 +590,63 @@ function animate() {
 		}
 	}
 
-	if (platformImg && scrollOffSet === 4000) {
-		// audio.gameWin.play();
-		// 게임 위너 함수 띄우기
-	}
-
 	if (player.position.y > canvas.height) {
 		// audio.falling.play();
-		// 게임 오버 함수 띄우기
+		loseGame();
 	}
 }
 
+let jump = true;
+
+navigator.mediaDevices
+	.getUserMedia({
+		audio: true,
+		video: false,
+	})
+	.then(function (stream) {
+		const audioContext = new AudioContext();
+		const analyser = audioContext.createAnalyser();
+		const microphone = audioContext.createMediaStreamSource(stream);
+		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+
+		analyser.smoothingTimeConstant = 0.8;
+		analyser.fftSize = 1024;
+
+		microphone.connect(analyser);
+		analyser.connect(scriptProcessor);
+		scriptProcessor.connect(audioContext.destination);
+		scriptProcessor.onaudioprocess = function () {
+			const array = new Uint8Array(analyser.frequencyBinCount);
+			analyser.getByteFrequencyData(array);
+			const arraySum = array.reduce((a, value) => a + value, 0);
+			const average = arraySum / array.length;
+			console.log(Math.round(average));
+			if (7 < average < 20) {
+				keys.right.pressed = true;
+				lastKey = "right";
+			}
+
+			if (20 < average && jump) {
+				player.velocity.y -= 18;
+				jump = false;
+			}
+
+			if (average < 5) {
+				keys.right.pressed = false;
+				player.velocity.y = 0;
+			}
+
+			if (!player.velocity.y) {
+				jump = true;
+			}
+		};
+	})
+	.catch(function (err) {
+		/* handle the error */
+		console.error(err);
+	});
+
+// start page
 const modal = document.querySelector(".modal");
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
@@ -609,43 +659,140 @@ const level1Button = document.querySelector(".level-1");
 const level2Button = document.querySelector(".level-2");
 const level3Button = document.querySelector(".level-3");
 
+const body = document.querySelector("body");
+const gameResultModal = document.createElement("div");
+const gameResultTitle = document.createElement("p");
+const gameResultSubText = document.createElement("p");
+const backButton = document.createElement("button");
+const gameStartButton = document.createElement("button");
+
 function openHowToPlayModal() {
 	modalContainer.classList.add("open");
 }
 
-function selectLevel() {
+function showLevelPage() {
 	modal.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.add("close");
 	levelSelectPage.classList.add("open");
+	gameResultModal.classList.add("close");
 }
 
-function showLevel1() {
+function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
+	animate();
 	initLevel1();
-	animate();
 }
 
-function showLevel2() {
+function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+
+	animate();
 	initLevel2();
-	animate();
 }
 
-function showLevel3() {
+function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	initLevel3();
+
 	animate();
+	initLevel3();
+}
+
+function selectLevel(level) {
+	// if (!audio.musicLevel1.playing()) {
+	// 	audio.musicLevel1.play();
+	// }
+
+	levelSelectPage.classList.remove("open");
+	canvas.classList.add("open");
+	animate();
+
+	switch (level) {
+		case 1:
+			initLevel1();
+			break;
+
+		case 2:
+			initLevel2();
+			break;
+
+		case 3:
+			initLevel3();
+			break;
+
+		// no default
+	}
 }
 
 howToPlayButton.addEventListener("click", openHowToPlayModal);
-playButton.addEventListener("click", selectLevel);
-startButton.addEventListener("click", selectLevel);
+playButton.addEventListener("click", showLevelPage);
+startButton.addEventListener("click", showLevelPage);
 
-level1Button.addEventListener("click", showLevel1);
-level2Button.addEventListener("click", showLevel2);
-level3Button.addEventListener("click", showLevel3);
+level1Button.addEventListener("click", startLevel1);
+level2Button.addEventListener("click", startLevel2);
+level3Button.addEventListener("click", startLevel3);
+
+function loseGame() {
+	if (gameOver) {
+		body.appendChild(gameResultModal);
+		gameResultModal.appendChild(gameResultTitle);
+		gameResultModal.appendChild(gameResultSubText);
+		gameResultModal.appendChild(backButton);
+		gameResultModal.appendChild(gameStartButton);
+
+		gameResultTitle.textContent = "Game Over";
+		gameStartButton.textContent = "Restart";
+		backButton.textContent = "Back";
+		gameResultSubText.textContent = "Don't give up and try again.";
+
+		gameResultModal.classList.add("modal");
+		gameResultTitle.classList.add("game-over");
+		gameStartButton.classList.add("play-button");
+		backButton.classList.add("play-button");
+
+		gameOver = false;
+
+		backButton.addEventListener("click", showLevelPage);
+		gameStartButton.addEventListener("click", () => {
+			setTimeout(() => {
+				gravity = 1.5;
+				selectLevel(currentLevel);
+			}, 3000);
+		});
+	}
+}
+
+function winGame() {
+	if (gameOver) {
+		body.appendChild(gameResultModal);
+		gameResultModal.appendChild(gameResultTitle);
+		gameResultModal.appendChild(gameResultSubText);
+		gameResultModal.appendChild(backButton);
+		gameResultModal.appendChild(gameStartButton);
+
+		gameResultTitle.textContent = "Clear!";
+		gameStartButton.textContent = "Next";
+		backButton.textContent = "Back";
+		gameResultSubText.textContent = "Do you want to move on to the next level?";
+
+		gameResultModal.classList.add("modal");
+		gameResultTitle.classList.add("game-win");
+		gameStartButton.classList.add("play-button");
+		backButton.classList.add("play-button");
+
+		gameOver = false;
+
+		backButton.addEventListener("click", showLevelPage);
+		gameStartButton.addEventListener("click", () => {
+			setTimeout(() => {
+				gravity = 1.5;
+				currentLevel++;
+				selectLevel(currentLevel);
+			}, 3000);
+		});
+	}
+}
