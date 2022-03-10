@@ -32,11 +32,11 @@ export default class GenericObject {
 		if (percent) {
 			ctx.font = "30px Arial";
 			ctx.fillStyle = "black";
-			ctx.fillText(`${percent}%`, 470, 50);
+			ctx.fillText(`${percent}%`, 510, 50);
 		} else {
 			ctx.font = "30px Arial";
 			ctx.fillStyle = "black";
-			ctx.fillText("0%", 470, 50);
+			ctx.fillText("0%", 510, 50);
 		}
 	}
 }

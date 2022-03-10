@@ -34,7 +34,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 let gravity = 1.5;
 
-canvas.width = 1024;
+canvas.width = 1090;
 canvas.height = innerHeight;
 
 let platformImg;
@@ -392,7 +392,7 @@ function animate() {
 
 			setTimeout(() => {
 				if (gameOver) {
-					winGame();
+					loseGame();
 
 					gameOver = false;
 				}
@@ -689,24 +689,36 @@ function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	animate();
-	initLevel1();
+	showProgressBar();
+
+	setTimeout(() => {
+		animate();
+		initLevel1();
+	}, 3000);
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	animate();
-	initLevel2();
+	showProgressBar();
+
+	setTimeout(() => {
+		animate();
+		initLevel2();
+	}, 3000);
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	animate();
-	initLevel3();
+	showProgressBar();
+
+	setTimeout(() => {
+		animate();
+		initLevel3();
+	}, 3000);
 }
 
 // 게임 오버 또는 승리 시
@@ -735,6 +747,15 @@ function selectLevel(level) {
 		// no default
 	}
 }
+
+// function showProgressBar() {
+// 	const progressBarContainer = document.createElement("div");
+// 	const progressBar = document.createElement("div");
+
+// 	progressBarContainer.appendChild(progressBar);
+// 	progressBarContainer.classList.add("progress-bar-container");
+// 	progressBar.classList.add("progress-bar");
+// }
 
 howToPlayButton.addEventListener("click", openHowToPlayModal);
 playButton.addEventListener("click", showLevelPage);

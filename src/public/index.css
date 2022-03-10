@@ -246,3 +246,31 @@ img {
 .close {
 	display: none;
 }
+
+.progress-bar-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 25px;
+	background-color: #ccc;
+	position: relative;
+	border-radius: 7px;
+	z-index: 1;
+}
+
+.progress-bar-container .progress-bar {
+	position: absolute;
+	height: 10%;
+	background-color: #ccc;
+	z-index: 1;
+	animation: progress-animation 3s forwards;
+}
+
+@keyframes progress-animation {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
