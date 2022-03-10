@@ -392,7 +392,7 @@ function animate() {
 
 			setTimeout(() => {
 				if (gameOver) {
-					loseGame();
+					winGame();
 
 					gameOver = false;
 				}
@@ -677,9 +677,11 @@ function openHowToPlayModal() {
 }
 
 function showLevelPage() {
+	canvas.classList.remove("open");
 	startPage.classList.add("close");
-	// modalContainer.classList.add("close");
+	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
+	gameResultModal.classList.remove("result-modal");
 	// gameResultModal.classList.add("close");
 }
 
@@ -748,10 +750,8 @@ function loseGame() {
 		gameResultModal.appendChild(gameResultTitle);
 		gameResultModal.appendChild(gameResultSubText);
 		gameResultModal.appendChild(gameResultButtonsContainer);
-		gameResultButtonsContainer.append(backButton);
-		gameResultButtonsContainer.append(gameStartButton);
-		gameResultModal.appendChild(backButton);
-		gameResultModal.appendChild(gameStartButton);
+		gameResultButtonsContainer.appendChild(backButton);
+		gameResultButtonsContainer.appendChild(gameStartButton);
 
 		gameResultTitle.textContent = "Game Over";
 		gameStartButton.textContent = "Restart";
@@ -785,8 +785,6 @@ function winGame() {
 		gameResultModal.appendChild(gameResultButtonsContainer);
 		gameResultButtonsContainer.appendChild(backButton);
 		gameResultButtonsContainer.appendChild(gameStartButton);
-		gameResultModal.appendChild(backButton);
-		gameResultModal.appendChild(gameStartButton);
 
 		gameResultTitle.textContent = "Clear!";
 		gameStartButton.textContent = "Next";
@@ -795,6 +793,8 @@ function winGame() {
 
 		gameResultModal.classList.add("result-modal");
 		gameResultTitle.classList.add("game-win");
+		gameResultSubText.classList.add("result-sub-text");
+		gameResultButtonsContainer.classList.add("buttons");
 		gameStartButton.classList.add("play-button");
 		backButton.classList.add("play-button");
 
