@@ -93,6 +93,23 @@ img {
 	background-color: #808080;
 }
 
+.result-modal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	left: 25%;
+	top: 10%;
+	border-radius: 4px;
+	z-index: 1;
+	height: 85%;
+	width: 50%;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background-color: transparent;
+}
+
 .modal-title {
 	margin: 10px 10px 5px 10px;
 	font-size: 60px;
@@ -115,6 +132,7 @@ img {
 }
 
 .play-button {
+	display: flex;
 	margin: 5px 5px 10px 5px;
 	padding: 10px 20px;
 	border-radius: 6px;
@@ -184,11 +202,11 @@ img {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 	text-align: center;
 	color: red;
 	font-weight: bold;
-	font-size: 5rem;
+	font-size: 7rem;
 	font-family: "Cookie", cursive;
 }
 
@@ -203,6 +221,19 @@ img {
 	font-weight: bold;
 	font-size: 5rem;
 	font-family: "Cookie", cursive;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.result-sub-text {
+	margin-top: 0;
+	font-weight: bold;
+	font-size: 1rem;
 }
 
 .open {

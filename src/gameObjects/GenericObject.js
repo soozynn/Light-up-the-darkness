@@ -21,12 +21,22 @@ export default class GenericObject {
 		if (this.currentLevel) {
 			ctx.font = "30px Arial";
 			ctx.fillStyle = "black";
-			ctx.fillText(`Lv.${this.currentLevel}`, 10, 50);
+			ctx.fillText(`Lv.${this.currentLevel}`, 10, 40);
 		}
 	}
 
-	update(ctx) {
+	update(ctx, percent) {
 		this.draw(ctx);
 		this.position.x += this.velocity.x;
+
+		if (percent) {
+			ctx.font = "30px Arial";
+			ctx.fillStyle = "black";
+			ctx.fillText(`${percent}%`, 470, 50);
+		} else {
+			ctx.font = "30px Arial";
+			ctx.fillStyle = "black";
+			ctx.fillText("0%", 470, 50);
+		}
 	}
 }

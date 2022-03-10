@@ -61,7 +61,7 @@ export function hitSideOfPlatform({ object, platform }) {
 	);
 }
 
-export function objectsTouch({ object1, object2 }) {
+export function touchObjects({ object1, object2 }) {
 	return (
 		object1.position.x + object1.width >= object2.position.x &&
 		object1.position.x <= object2.position.x + object2.width &&
@@ -70,9 +70,11 @@ export function objectsTouch({ object1, object2 }) {
 	);
 }
 
-export function findDistancePercent(player, flag) {
+export function makeDistancePercent(player, flag) {
+	let distance = 0;
+	distance += Math.abs(player);
 	const onePercent = Math.floor(flag) / 100;
-	const distancePercent = player / onePercent;
-	return `${Math.floor(distancePercent)}%`;
-	// velocity 값은 어떻게 컨트롤?
+	const percent = Math.round(distance / onePercent);
+	// console.log("퍼센트" + percent);
+	return percent;
 }

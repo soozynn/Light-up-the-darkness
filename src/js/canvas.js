@@ -7,17 +7,15 @@ import Platform from "../gameObjects/Platform";
 import GenericObject from "../gameObjects/GenericObject";
 import Monster from "../gameObjects/Monster";
 import Particle from "../gameObjects/Particle";
-// import { VolumeMeter } from "./volume";
 
 import flagImage from "../img/flag/flag.png";
 import spriteGreenMonster from "../img/monster/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walkBrown.png";
 import spritePurpleMonster from "../img/monster/walkPurple.png";
 
-// import { audio } from "./audio";
+import { audio } from "./audio";
 import { images } from "./image";
 import {
-	// requestAudio,
 	isOnTopOfPlatform,
 	collisionTop,
 	isOnTopOfPlatformCircle,
@@ -25,7 +23,8 @@ import {
 	createImageAsync,
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
-	objectsTouch,
+	touchObjects,
+	makeDistancePercent,
 } from "./utils";
 
 // import KEY_CODE from "./constants/constants";
@@ -51,7 +50,7 @@ let monsters = [];
 const particles = [];
 
 let lastKey;
-let keys = {
+const keys = {
 	right: {
 		pressed: false,
 	},
@@ -63,14 +62,9 @@ let keys = {
 let scrollOffSet = 0;
 let gameOver = true;
 let flag;
-// let game;
 let currentLevel = 1;
 
 async function initLevel1() {
-	// game = {
-	// 	disableUserInput: false,
-	// };
-
 	platformImg = await createImageAsync(images.levels[1].platform);
 	smallPlatformImg = await createImageAsync(images.levels[1].smallPlatform);
 	obstacleImg = await createImageAsync(images.levels[1].obstacle);
@@ -127,7 +121,7 @@ async function initLevel1() {
 			x: -1,
 			y: -1,
 			image: createImage(images.levels[1].background),
-			curretLevel: 1,
+			currentLevel: 1,
 		}),
 	];
 
@@ -135,10 +129,6 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	// game = {
-	// 	disableUserInput: false,
-	// };
-
 	platformImg = await createImageAsync(images.levels[2].largePlatform);
 	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
@@ -232,10 +222,6 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
-	// game = {
-	// 	disableUserInput: false,
-	// };
-
 	platformImg = await createImageAsync(images.levels[3].platform);
 	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
 	obstacleImg = await createImageAsync(images.levels[3].obstacle);
@@ -349,7 +335,7 @@ function animate() {
 		flag.velocity.x = 0;
 
 		if (
-			objectsTouch({
+			touchObjects({
 				object1: player,
 				object2: flag,
 			})
@@ -390,7 +376,7 @@ function animate() {
 			}
 
 			player.velocity.y -= 20;
-			// audio.monsterSquash.play();
+			audio.monsterSquash.play();
 
 			setTimeout(() => {
 				monsters.splice(index, 1);
@@ -400,7 +386,17 @@ function animate() {
 			player.position.y + player.height >= monster.position.y &&
 			player.position.x <= monster.position.x + monster.width
 		) {
-			loseGame();
+			player.currentSprite = player.sprites.hurt.right;
+			player.speed = 0;
+			player.velocity.y = 0;
+
+			setTimeout(() => {
+				if (gameOver) {
+					loseGame();
+
+					gameOver = false;
+				}
+			}, 300);
 			// audio.hurt.play();
 		}
 	});
@@ -411,17 +407,17 @@ function animate() {
 
 	player.update(gravity, canvas, ctx);
 
-	// if (game.disableUserInput) return;
-
 	let hitSide = false;
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
+		// makeDistancePercent(player.velocity.x, 6000);
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
 	) {
 		player.velocity.x = -player.speed;
+		// makeDistancePercent(player.velocity.x, 6000);
 	} else {
 		player.velocity.x = 0;
 
@@ -592,7 +588,15 @@ function animate() {
 
 	if (player.position.y > canvas.height) {
 		// audio.falling.play();
-		loseGame();
+		player.speed = 0;
+		player.velocity.y = 0;
+
+		setTimeout(() => {
+			if (gameOver) {
+				loseGame();
+				gameOver = false;
+			}
+		}, 300);
 	}
 }
 
@@ -615,13 +619,15 @@ navigator.mediaDevices
 		microphone.connect(analyser);
 		analyser.connect(scriptProcessor);
 		scriptProcessor.connect(audioContext.destination);
+
 		scriptProcessor.onaudioprocess = function () {
 			const array = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(array);
 			const arraySum = array.reduce((a, value) => a + value, 0);
 			const average = arraySum / array.length;
+
 			console.log(Math.round(average));
-			if (7 < average < 20) {
+			if (1 < average < 20) {
 				keys.right.pressed = true;
 				lastKey = "right";
 			}
@@ -631,7 +637,7 @@ navigator.mediaDevices
 				jump = false;
 			}
 
-			if (average < 5) {
+			if (average < 2) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 			}
@@ -647,7 +653,6 @@ navigator.mediaDevices
 	});
 
 // start page
-const modal = document.querySelector(".modal");
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
 const playButton = document.querySelector(".play-button");
@@ -665,17 +670,17 @@ const gameResultTitle = document.createElement("p");
 const gameResultSubText = document.createElement("p");
 const backButton = document.createElement("button");
 const gameStartButton = document.createElement("button");
+const gameResultButtonsContainer = document.createElement("div");
 
 function openHowToPlayModal() {
 	modalContainer.classList.add("open");
 }
 
 function showLevelPage() {
-	modal.classList.remove("open");
 	startPage.classList.add("close");
-	modalContainer.classList.add("close");
+	// modalContainer.classList.add("close");
 	levelSelectPage.classList.add("open");
-	gameResultModal.classList.add("close");
+	// gameResultModal.classList.add("close");
 }
 
 function startLevel1() {
@@ -702,6 +707,7 @@ function startLevel3() {
 	initLevel3();
 }
 
+// 게임 오버 또는 승리 시
 function selectLevel(level) {
 	// if (!audio.musicLevel1.playing()) {
 	// 	audio.musicLevel1.play();
@@ -741,6 +747,9 @@ function loseGame() {
 		body.appendChild(gameResultModal);
 		gameResultModal.appendChild(gameResultTitle);
 		gameResultModal.appendChild(gameResultSubText);
+		gameResultModal.appendChild(gameResultButtonsContainer);
+		gameResultButtonsContainer.append(backButton);
+		gameResultButtonsContainer.append(gameStartButton);
 		gameResultModal.appendChild(backButton);
 		gameResultModal.appendChild(gameStartButton);
 
@@ -749,8 +758,10 @@ function loseGame() {
 		backButton.textContent = "Back";
 		gameResultSubText.textContent = "Don't give up and try again.";
 
-		gameResultModal.classList.add("modal");
+		gameResultModal.classList.add("result-modal");
 		gameResultTitle.classList.add("game-over");
+		gameResultSubText.classList.add("result-sub-text");
+		gameResultButtonsContainer.classList.add("buttons");
 		gameStartButton.classList.add("play-button");
 		backButton.classList.add("play-button");
 
@@ -771,6 +782,9 @@ function winGame() {
 		body.appendChild(gameResultModal);
 		gameResultModal.appendChild(gameResultTitle);
 		gameResultModal.appendChild(gameResultSubText);
+		gameResultModal.appendChild(gameResultButtonsContainer);
+		gameResultButtonsContainer.appendChild(backButton);
+		gameResultButtonsContainer.appendChild(gameStartButton);
 		gameResultModal.appendChild(backButton);
 		gameResultModal.appendChild(gameStartButton);
 
@@ -779,7 +793,7 @@ function winGame() {
 		backButton.textContent = "Back";
 		gameResultSubText.textContent = "Do you want to move on to the next level?";
 
-		gameResultModal.classList.add("modal");
+		gameResultModal.classList.add("result-modal");
 		gameResultTitle.classList.add("game-win");
 		gameStartButton.classList.add("play-button");
 		backButton.classList.add("play-button");
