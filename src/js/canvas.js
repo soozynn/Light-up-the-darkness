@@ -60,6 +60,7 @@ let scrollOffSet = 0;
 let flag;
 let flagImg;
 let game;
+let curretLevel = 1;
 
 async function initLevel1() {
 	game = {
@@ -110,7 +111,6 @@ async function initLevel1() {
 			},
 		}),
 	];
-
 	particles = [];
 	platforms = [
 		new Platform({
@@ -132,12 +132,14 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
 			x: -1,
 			y: -1,
 			image: createImage(images.levels[1].background),
+			curretLevel: 1,
 		}),
 	];
 
@@ -193,7 +195,6 @@ async function initLevel2() {
 			},
 		}),
 	];
-
 	particles = [];
 	platforms = [
 		new Platform({
@@ -221,6 +222,7 @@ async function initLevel2() {
 			x: -1,
 			y: -1,
 			image: createImage(images.levels[2].background),
+			currentLevel: 2,
 		}),
 	];
 
@@ -291,7 +293,6 @@ async function initLevel3() {
 			},
 		}),
 	];
-
 	particles = [];
 	platforms = [
 		new Platform({
@@ -319,6 +320,7 @@ async function initLevel3() {
 			x: -1,
 			y: -1,
 			image: createImage(images.levels[3].background),
+			currentLevel: 3,
 		}),
 	];
 
@@ -601,6 +603,7 @@ const howToPlayButton = document.querySelector(".how-to-play-button");
 const playButton = document.querySelector(".play-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
+
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
 const level2Button = document.querySelector(".level-2");
@@ -646,57 +649,3 @@ startButton.addEventListener("click", selectLevel);
 level1Button.addEventListener("click", showLevel1);
 level2Button.addEventListener("click", showLevel2);
 level3Button.addEventListener("click", showLevel3);
-
-window.addEventListener("keydown", event => {
-	if (game.disableUserInput) return;
-
-	switch (event.code) {
-		case "KeyA":
-			keys.left.pressed = true;
-			lastKey = "left";
-			break;
-
-		case "KeyD":
-			keys.right.pressed = true;
-			lastKey = "right";
-			break;
-
-		case "KeyW":
-			if (player.position.y < 0) {
-				player.position.y = 0;
-			} else {
-				player.velocity.y -= 18;
-			}
-
-			if (lastKey === "right") {
-				player.currentSprite = player.sprites.jump.right;
-			}
-
-			if (lastKey === "left") {
-				player.currentSprite = player.sprites.jump.left;
-			}
-
-			break;
-
-		// no default
-	}
-});
-
-window.addEventListener("keyup", event => {
-	if (game.disableUserInput) return;
-
-	switch (event.code) {
-		case "KeyA":
-			keys.left.pressed = false;
-			break;
-
-		case "KeyD":
-			keys.right.pressed = false;
-			break;
-
-		case "KeyW":
-			break;
-
-		// no default
-	}
-});
