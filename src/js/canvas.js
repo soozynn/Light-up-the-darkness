@@ -73,7 +73,7 @@ async function initLevel1() {
 
 	flag = new GenericObject({
 		x: platformImg.width * 7 + 680,
-		y: canvas.height - platformImg.height - flagImg.height,
+		y: 142,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -113,7 +113,6 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 5 + 380, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 6 + 480, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 580, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: 1000, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
@@ -340,7 +339,6 @@ function animate() {
 				object2: flag,
 			})
 		) {
-			// game.disableUserInput = true;
 			player.velocity.x = 0;
 			player.velocity.y = 0;
 			player.currentSprite = player.sprites.stand.right;
@@ -350,7 +348,7 @@ function animate() {
 				duration: 1,
 			});
 
-			// audio.gameWin.play();
+			audio.gameWin.play();
 			winGame();
 		}
 	}
@@ -626,20 +624,20 @@ navigator.mediaDevices
 			const arraySum = array.reduce((a, value) => a + value, 0);
 			const average = arraySum / array.length;
 
-			console.log(Math.round(average));
-			if (1 < average < 20) {
+			if (10 < average < 30) {
 				keys.right.pressed = true;
 				lastKey = "right";
 			}
 
-			if (20 < average && jump) {
-				player.velocity.y -= 18;
+			if (jump && 30 < average) {
+				player.velocity.y -= average;
 				jump = false;
 			}
-
+			// 점프 고도가 계속 유지되었다가 떨어지게
 			if (average < 2) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
+				player.velocity.x = 0;
 			}
 
 			if (!player.velocity.y) {
@@ -689,7 +687,7 @@ function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	showProgressBar();
+	// showProgressBar();
 
 	setTimeout(() => {
 		animate();
@@ -701,7 +699,7 @@ function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	showProgressBar();
+	// showProgressBar();
 
 	setTimeout(() => {
 		animate();
@@ -713,7 +711,7 @@ function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	showProgressBar();
+	// showProgressBar();
 
 	setTimeout(() => {
 		animate();
@@ -789,11 +787,13 @@ function loseGame() {
 		gameOver = false;
 
 		backButton.addEventListener("click", showLevelPage);
+		// restart 누를 시 canvas 속도가 빨라지는 현상
 		gameStartButton.addEventListener("click", () => {
+			gameResultModal.classList.add("close");
 			setTimeout(() => {
 				gravity = 1.5;
 				selectLevel(currentLevel);
-			}, 3000);
+			}, 1000);
 		});
 	}
 }
@@ -823,11 +823,12 @@ function winGame() {
 
 		backButton.addEventListener("click", showLevelPage);
 		gameStartButton.addEventListener("click", () => {
+			gameResultModal.classList.remove("result-modal");
 			setTimeout(() => {
 				gravity = 1.5;
 				currentLevel++;
 				selectLevel(currentLevel);
-			}, 3000);
+			}, 1000);
 		});
 	}
 }
