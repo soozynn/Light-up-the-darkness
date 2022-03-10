@@ -8,8 +8,13 @@ module.exports = {
 		main: "./src/js/canvas.js",
 	},
 	output: {
+<<<<<<< Updated upstream
 		filename: "[name].js",
 		path: path.resolve("../dist"),
+=======
+		path: path.resolve("./dist"),
+		filename: "[name].js",
+>>>>>>> Stashed changes
 	},
 	module: {
 		rules: [
@@ -38,6 +43,13 @@ module.exports = {
 						},
 					},
 				],
+			},
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|pages)/,
+				use: {
+					loader: "babel-loader",
+				},
 			},
 		],
 	},
