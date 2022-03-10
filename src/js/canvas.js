@@ -28,7 +28,6 @@ import {
 } from "./utils";
 
 // import KEY_CODE from "./constants/constants";
-// audio.stage1.play();
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -656,6 +655,8 @@ const howToPlayButton = document.querySelector(".how-to-play-button");
 const playButton = document.querySelector(".play-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
+const soundOnButton = document.querySelector(".music-on");
+const soundOffButton = document.querySelector(".music-off");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -687,44 +688,34 @@ function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel1();
-	}, 3000);
+	// setTimeout(() => {
+	animate();
+	initLevel1();
+	// }, 3000);
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel2();
-	}, 3000);
+	// setTimeout(() => {
+	animate();
+	initLevel2();
+	// }, 3000);
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel3();
-	}, 3000);
+	// setTimeout(() => {
+	animate();
+	initLevel3();
+	// }, 3000);
 }
 
 // 게임 오버 또는 승리 시
 function selectLevel(level) {
-	// if (!audio.musicLevel1.playing()) {
-	// 	audio.musicLevel1.play();
-	// }
-
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 	animate();
@@ -746,18 +737,23 @@ function selectLevel(level) {
 	}
 }
 
-// function showProgressBar() {
-// 	const progressBarContainer = document.createElement("div");
-// 	const progressBar = document.createElement("div");
-
-// 	progressBarContainer.appendChild(progressBar);
-// 	progressBarContainer.classList.add("progress-bar-container");
-// 	progressBar.classList.add("progress-bar");
-// }
-
 howToPlayButton.addEventListener("click", openHowToPlayModal);
 playButton.addEventListener("click", showLevelPage);
 startButton.addEventListener("click", showLevelPage);
+soundOnButton.addEventListener("click", () => {
+	soundOnButton.classList.remove("open");
+	soundOffButton.classList.remove("close");
+	if (audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.stop();
+	}
+});
+soundOffButton.addEventListener("click", () => {
+	soundOnButton.classList.add("open");
+	soundOffButton.classList.add("close");
+	if (!audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+});
 
 level1Button.addEventListener("click", startLevel1);
 level2Button.addEventListener("click", startLevel2);

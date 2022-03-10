@@ -23,12 +23,29 @@ body {
 }
 
 .game-title {
-	margin-bottom: 50px;
 	text-align: center;
 	color: #f7971e;
 	font-weight: bold;
 	font-size: 10rem;
 	font-family: "Cookie", cursive;
+}
+
+.toggle-music {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 5px;
+	margin-bottom: 20px;
+}
+
+.music-off:hover,
+.music-on:hover {
+	transform: scale(1.1, 1.1);
+	cursor: pointer;
+}
+
+.music-on {
+	display: none;
 }
 
 .start-button,
