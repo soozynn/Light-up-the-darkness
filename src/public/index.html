@@ -16,11 +16,14 @@
 	<body>
 		<div class="start-page">
 			<div class="game-title">Louder!</div>
+			<input class="nickname-input" type="text" name="username" placeholder="your name" />
+
 			<div class="button-container">
-				<button type="button" class="start-button">Start Game</button>
+				<button type="button" class="start-button" disabled>Start Game</button>
 				<button type="button" class="how-to-play-button">How to play</button>
 			</div>
 		</div>
+
 		<div class="modal-container">
 			<div class="modal">
 				<p class="modal-title">How To Play</p>
@@ -30,17 +33,20 @@
 						<span class="red-text">SOFT VOICE</span>to move
 						<img class="arrow" src="../img/arrow/forward.png" art="character motion explain" />
 					</div>
+
 					<div class="game-explain">
 						<img class="audio-image" src="../img/audio/soft-loud.png" alt="soft voice image" />Use
 						<span class="red-text">LOUD VOICE</span>to jump
 						<img class="arrow" src="../img/arrow/jump.png" art="character motion explain" />
 					</div>
+
 					<div class="game-explain">
 						<img class="audio-image" src="../img/audio/loud.png" alt="soft voice image" />
 						Speck
 						<span class="red-text">LOUDER</span>, jump <span class="red-text">Higher</span>
 						<img class="arrow-jump" src="../img/arrow/higher.png" art="character motion explain" />
 					</div>
+
 					<div class="sub-explain">
 						목소리 볼륨을 조절하여 장애물을 피해 깃발이 있는 곳 까지 완주해주세요!
 					</div>
@@ -48,9 +54,10 @@
 						Tip) 몬스터를 밟아 죽일 수는 있지만 머리 외에 몸통이 닿으면 Game Over!
 					</div>
 				</div>
-				<button type="button" class="play-button">Play</button>
+				<button type="button" class="close-button">Close</button>
 			</div>
 		</div>
+
 		<div class="level-page">
 			<p class="selec-title">Select Level</p>
 			<div class="level-container">
@@ -59,17 +66,21 @@
 				<div class="level-3">Level 3</div>
 			</div>
 		</div>
+
 		<div class="toggle-music">
 			<img class="music-on" src="../img/audio/on.png" alt="music-on" />
 			<img class="music-off" src="../img/audio/off.png" alt="music-off" />
 		</div>
+
 		<div class="timer">
 			<label id="minutes">00</label><label id="colon">:</label><label id="seconds">00</label>
 		</div>
+
 		<div class="percent-container">
 			<label id="percent">00</label>
 			<label class="symbol">%</label>
 		</div>
+
 		<canvas></canvas>
 		<script defer src="../../dist/main.js"></script>
 	</body>

@@ -42,6 +42,7 @@ let smallPlatformImg;
 let obstacleImg;
 let largeObstacleImg;
 let flagImg;
+let mountainsImg;
 
 let player = new Player(createImage);
 let platforms = [];
@@ -72,8 +73,8 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 7 + 680,
-		y: 142,
+		x: platformImg.width * 10 + 100,
+		y: 180,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -111,9 +112,15 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 200, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 380, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 480, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 580, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 1000, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 450, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 8 + 480, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 742, image: platformImg, block: true }),
+		// new Platform({ x: platformImg.width * 9 + 480, y: 442, image: platformImg, block: true }),
+		new Platform({ x: 800, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: 800, y: -100, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -121,6 +128,11 @@ async function initLevel1() {
 			y: -1,
 			image: createImage(images.levels[1].background),
 			currentLevel: 1,
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
 		}),
 	];
 
@@ -133,7 +145,7 @@ async function initLevel2() {
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
 	largeObstacleImg = await createImageAsync(images.levels[2].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
-
+	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
 		x: 6900 + 600,
 		y: canvas.height - platformImg.height - flagImg.height,
@@ -141,51 +153,51 @@ async function initLevel2() {
 	});
 	player = new Player(createImage);
 	monsters = [
-		new Monster({
-			position: {
-				x: 800,
-				y: 100,
-			},
-			velocity: {
-				x: -0.3,
-				y: 0,
-			},
-			image: createImage(spriteGreenMonster),
-			distance: {
-				limit: 200,
-				traveled: 0,
-			},
-		}),
-		new Monster({
-			position: {
-				x: 1600,
-				y: 100,
-			},
-			velocity: {
-				x: -0.3,
-				y: 0,
-			},
-			image: createImage(spriteBrownMonster),
-			distance: {
-				limit: 100,
-				traveled: 0,
-			},
-		}),
-		new Monster({
-			position: {
-				x: 1800,
-				y: 100,
-			},
-			velocity: {
-				x: -0.3,
-				y: 0,
-			},
-			image: createImage(spritePurpleMonster),
-			distance: {
-				limit: 100,
-				traveled: 0,
-			},
-		}),
+		// new Monster({
+		// 	position: {
+		// 		x: 800,
+		// 		y: 100,
+		// 	},
+		// 	velocity: {
+		// 		x: -0.3,
+		// 		y: 0,
+		// 	},
+		// 	image: createImage(spriteGreenMonster),
+		// 	distance: {
+		// 		limit: 200,
+		// 		traveled: 0,
+		// 	},
+		// }),
+		// new Monster({
+		// 	position: {
+		// 		x: 1600,
+		// 		y: 100,
+		// 	},
+		// 	velocity: {
+		// 		x: -0.3,
+		// 		y: 0,
+		// 	},
+		// 	image: createImage(spriteBrownMonster),
+		// 	distance: {
+		// 		limit: 100,
+		// 		traveled: 0,
+		// 	},
+		// }),
+		// new Monster({
+		// 	position: {
+		// 		x: 1800,
+		// 		y: 100,
+		// 	},
+		// 	velocity: {
+		// 		x: -0.3,
+		// 		y: 0,
+		// 	},
+		// 	image: createImage(spritePurpleMonster),
+		// 	distance: {
+		// 		limit: 100,
+		// 		traveled: 0,
+		// 	},
+		// }),
 	];
 	platforms = [
 		new Platform({
@@ -215,6 +227,21 @@ async function initLevel2() {
 			image: createImage(images.levels[2].background),
 			currentLevel: 2,
 		}),
+		new GenericObject({
+			x: -1,
+			y: canvas.height - mountainsImg.height,
+			image: createImage(images.levels[2].mountain),
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
+		}),
+		// new GenericObject({
+		// 	x: 50,
+		// 	y: 100,
+		// 	image: createImage(images.levels[2].sun),
+		// }),
 	];
 
 	scrollOffSet = 0;
@@ -629,78 +656,79 @@ function animate() {
 	}
 }
 
-let jump = true;
+// let jump = true;
 
-navigator.mediaDevices
-	.getUserMedia({
-		audio: true,
-		video: false,
-	})
-	.then(function (stream) {
-		const audioContext = new AudioContext();
-		const analyser = audioContext.createAnalyser();
-		const microphone = audioContext.createMediaStreamSource(stream);
-		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+// navigator.mediaDevices
+// 	.getUserMedia({
+// 		audio: true,
+// 		video: false,
+// 	})
+// 	.then(function (stream) {
+// 		const audioContext = new AudioContext();
+// 		const analyser = audioContext.createAnalyser();
+// 		const microphone = audioContext.createMediaStreamSource(stream);
+// 		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
 
-		analyser.smoothingTimeConstant = 0.8;
-		analyser.fftSize = 1024;
+// 		analyser.smoothingTimeConstant = 0.8;
+// 		analyser.fftSize = 1024;
 
-		microphone.connect(analyser);
-		analyser.connect(scriptProcessor);
-		scriptProcessor.connect(audioContext.destination);
+// 		microphone.connect(analyser);
+// 		analyser.connect(scriptProcessor);
+// 		scriptProcessor.connect(audioContext.destination);
 
-		scriptProcessor.onaudioprocess = function () {
-			const array = new Uint8Array(analyser.frequencyBinCount);
-			analyser.getByteFrequencyData(array);
-			const arraySum = array.reduce((a, value) => a + value, 0);
-			const average = arraySum / array.length;
+// 		scriptProcessor.onaudioprocess = function () {
+// 			const array = new Uint8Array(analyser.frequencyBinCount);
+// 			analyser.getByteFrequencyData(array);
+// 			const arraySum = array.reduce((a, value) => a + value, 0);
+// 			const average = arraySum / array.length;
 
-			if (10 < average < 30) {
-				keys.right.pressed = true;
-				lastKey = "right";
-			}
+// 			if (10 < average < 30) {
+// 				keys.right.pressed = true;
+// 				lastKey = "right";
+// 			}
 
-			if (jump && 30 < average) {
-				player.velocity.y -= average;
-				jump = false;
-			}
-			// 점프 고도가 계속 유지되었다가 떨어지게
-			if (average < 2) {
-				keys.right.pressed = false;
-				player.velocity.y = 0;
-				player.velocity.x = 0;
-			}
+// 			if (jump && 30 < average) {
+// 				player.velocity.y -= average;
+// 				jump = false;
+// 			}
+// 			// 점프 고도가 계속 유지되었다가 떨어지게
+// 			if (average < 2) {
+// 				keys.right.pressed = false;
+// 				player.velocity.y = 0;
+// 				player.velocity.x = 0;
+// 			}
 
-			if (!player.velocity.y) {
-				jump = true;
-			}
+// 			if (!player.velocity.y) {
+// 				jump = true;
+// 			}
 
-			if (player.position.y > canvas.height) {
-				// audio.falling.play();
-				player.speed = 0;
-				player.velocity.y = 0;
-				// clearInterval(timer);
+// 			if (player.position.y > canvas.height) {
+// 				// audio.falling.play();
+// 				player.speed = 0;
+// 				player.velocity.y = 0;
+// 				// clearInterval(timer);
 
-				setTimeout(() => {
-					if (gameOver) {
-						loseGame();
-						gameOver = false;
-					}
-				}, 300);
-			}
-		};
-	})
-	.catch(function (err) {
-		/* handle the error */
-		console.error(err);
-	});
+// 				setTimeout(() => {
+// 					if (gameOver) {
+// 						loseGame();
+// 						gameOver = false;
+// 					}
+// 				}, 300);
+// 			}
+// 		};
+// 	})
+// 	.catch(function (err) {
+// 		/* handle the error */
+// 		console.error(err);
+// 	});
 
 // start page
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
-const playButton = document.querySelector(".play-button");
+const closeButton = document.querySelector(".close-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
+const input = document.querySelector(".nickname-input");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -714,10 +742,6 @@ const gameResultSubText = document.createElement("p");
 const backButton = document.createElement("button");
 const gameStartButton = document.createElement("button");
 const gameResultButtonsContainer = document.createElement("div");
-
-function openHowToPlayModal() {
-	modalContainer.classList.add("open");
-}
 
 function showLevelPage() {
 	canvas.classList.remove("open");
@@ -777,8 +801,23 @@ function selectLevel(level) {
 	}
 }
 
-howToPlayButton.addEventListener("click", openHowToPlayModal);
-playButton.addEventListener("click", showLevelPage);
+input.addEventListener("keyup", e => {
+	const { value } = e.currentTarget;
+
+	if (!value) {
+		startButton.disabled = true;
+		return;
+	}
+
+	startButton.disabled = false;
+});
+
+howToPlayButton.addEventListener("click", () => {
+	modalContainer.classList.add("open");
+});
+closeButton.addEventListener("click", () => {
+	modalContainer.classList.remove("open");
+});
 startButton.addEventListener("click", showLevelPage);
 
 level1Button.addEventListener("click", startLevel1);
@@ -854,3 +893,56 @@ function winGame() {
 		});
 	}
 }
+addEventListener("keydown", event => {
+	// if (game.disableUserInput) return;
+
+	switch (event.code) {
+		case "KeyA":
+			keys.left.pressed = true;
+			lastKey = "left";
+			break;
+
+		case "KeyD":
+			keys.right.pressed = true;
+			lastKey = "right";
+			break;
+
+		case "KeyW":
+			// if (player.position.y < 0) {
+			// 	player.position.y = 0;
+			// } else {
+			player.velocity.y -= 33;
+			// }
+
+			if (lastKey === "right") {
+				player.currentSprite = player.sprites.jump.right;
+			}
+
+			if (lastKey === "left") {
+				player.currentSprite = player.sprites.jump.left;
+			}
+
+			break;
+
+		// no default
+	}
+});
+
+addEventListener("keyup", event => {
+	// if (game.disableUserInput) return;
+
+	switch (event.code) {
+		case "KeyA":
+			keys.left.pressed = false;
+			break;
+
+		case "KeyD":
+			keys.right.pressed = false;
+			break;
+
+		case "KeyW":
+			break;
+
+		// no default
+	}
+});

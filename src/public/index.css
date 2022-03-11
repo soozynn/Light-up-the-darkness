@@ -54,10 +54,36 @@ body {
 	height: 70px;
 }
 
+.start-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.nickname-input {
+	float: right;
+	width: 50%;
+	height: 70px;
+	border: 2px solid white;
+	margin-top: 15px;
+	border-radius: 5px;
+	background-color: transparent;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+}
+
+.nickname-input:focus,
+.nickname-input:hover {
+	border-color: #03a9f4;
+	outline: 0;
+}
+
 .start-button,
 .how-to-play-button {
 	margin: 5px;
-	padding: 20px 40px;
+	padding: 18px 30px;
 	border-radius: 6px;
 	border: none;
 	font-size: 40px;
@@ -182,7 +208,7 @@ body {
 	margin-left: 10px;
 }
 
-.play-button {
+.close-button {
 	display: flex;
 	margin: 5px 5px 10px 5px;
 	padding: 10px 20px;
@@ -193,8 +219,8 @@ body {
 	font-family: "Cookie", cursive;
 }
 
-.play-button:hover,
-.play-button:focus {
+.close-button:hover,
+.close-button:focus {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
