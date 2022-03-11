@@ -32,6 +32,9 @@ body {
 
 .toggle-music {
 	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
 	justify-content: center;
 	align-items: center;
 	margin: 5px;
@@ -44,8 +47,11 @@ body {
 	cursor: pointer;
 }
 
+.music-off,
 .music-on {
 	display: none;
+	width: 70px;
+	height: 70px;
 }
 
 .start-button,
@@ -264,30 +270,38 @@ img {
 	display: none;
 }
 
-.progress-bar-container {
+.timer {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 25px;
-	background-color: #ccc;
-	position: relative;
-	border-radius: 7px;
-	z-index: 1;
-}
-
-.progress-bar-container .progress-bar {
 	position: absolute;
-	height: 10%;
-	background-color: #ccc;
+	left: 5px;
+	top: 60px;
+	color: rgb(151, 23, 23);
+	font-weight: bold;
+	font-size: 3rem;
+	font-family: "Cookie", cursive;
 	z-index: 1;
-	animation: progress-animation 3s forwards;
 }
 
-@keyframes progress-animation {
-	0% {
-		width: 0%;
-	}
-	100% {
-		width: 100%;
-	}
+#minutes,
+#seconds,
+#colon {
+	display: none;
 }
+
+.percent-container {
+	position: absolute;
+	top: 20px;
+	font-weight: bold;
+	font-size: 4rem;
+	font-family: "Cookie", cursive;
+}
+/* .timer-open {
+	display: flex;
+	position: absolute;
+	left: 0;
+	top: 20px;
+	color: rgb(151, 23, 23);
+	font-weight: bold;
+	font-size: 2rem;
+	font-family: "Cookie", cursive;
+} */

@@ -24,7 +24,8 @@ import {
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
 	touchObjects,
-	makeDistancePercent,
+	setTime,
+	setPercent,
 } from "./utils";
 
 // import KEY_CODE from "./constants/constants";
@@ -313,6 +314,34 @@ async function initLevel3() {
 }
 
 function animate() {
+	const soundOnButton = document.querySelector(".music-on");
+	const soundOffButton = document.querySelector(".music-off");
+	let audioOn = true;
+
+	soundOnButton.classList.add("open");
+
+	if (audioOn && !audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+
+	soundOnButton.addEventListener("click", () => {
+		soundOnButton.classList.add("close");
+		soundOffButton.classList.add("open");
+		audioOn = false;
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+	});
+	soundOffButton.addEventListener("click", () => {
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+
+		if (!audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.play();
+		}
+	});
+
 	requestAnimationFrame(animate);
 
 	ctx.fillStyle = "white";
@@ -347,6 +376,7 @@ function animate() {
 				duration: 1,
 			});
 
+			// clearInterval(timer);
 			audio.gameWin.play();
 			winGame();
 		}
@@ -386,6 +416,7 @@ function animate() {
 			player.currentSprite = player.sprites.hurt.right;
 			player.speed = 0;
 			player.velocity.y = 0;
+			// clearInterval(timer);
 
 			setTimeout(() => {
 				if (gameOver) {
@@ -408,13 +439,13 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		// makeDistancePercent(player.velocity.x, 6000);
+		setPercent(player.position.x, flag.position.x, 1000);
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
 	) {
 		player.velocity.x = -player.speed;
-		// makeDistancePercent(player.velocity.x, 6000);
+		setPercent(player.position.x, flag.position.x, 1000);
 	} else {
 		player.velocity.x = 0;
 
@@ -587,6 +618,7 @@ function animate() {
 		// audio.falling.play();
 		player.speed = 0;
 		player.velocity.y = 0;
+		// clearInterval(timer);
 
 		setTimeout(() => {
 			if (gameOver) {
@@ -642,6 +674,20 @@ navigator.mediaDevices
 			if (!player.velocity.y) {
 				jump = true;
 			}
+
+			if (player.position.y > canvas.height) {
+				// audio.falling.play();
+				player.speed = 0;
+				player.velocity.y = 0;
+				// clearInterval(timer);
+
+				setTimeout(() => {
+					if (gameOver) {
+						loseGame();
+						gameOver = false;
+					}
+				}, 300);
+			}
 		};
 	})
 	.catch(function (err) {
@@ -655,8 +701,9 @@ const howToPlayButton = document.querySelector(".how-to-play-button");
 const playButton = document.querySelector(".play-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
-const soundOnButton = document.querySelector(".music-on");
-const soundOffButton = document.querySelector(".music-off");
+const minutes = document.getElementById("minutes");
+const seconds = document.getElementById("seconds");
+const colon = document.getElementById("colon");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -681,37 +728,39 @@ function showLevelPage() {
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
 	gameResultModal.classList.remove("result-modal");
-	// gameResultModal.classList.add("close");
 }
 
 function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-
-	// setTimeout(() => {
-	animate();
+	// minutes.classList.add("timer");
+	// seconds.classList.add("timer");
+	// colon.classList.add("timer");
 	initLevel1();
-	// }, 3000);
+	animate();
+	const timer = setInterval(setTime, 1000);
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-
-	// setTimeout(() => {
-	animate();
+	// minutes.classList.add("timer");
+	// seconds.classList.add("timer");
+	// colon.classList.add("timer");
 	initLevel2();
-	// }, 3000);
+	animate();
+	// const timer = setInterval(setTime, 1000);
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-
-	// setTimeout(() => {
-	animate();
+	// minutes.classList.add("timer");
+	// seconds.classList.add("timer");
+	// colon.classList.add("timer");
 	initLevel3();
-	// }, 3000);
+	animate();
+	// const timer = setInterval(setTime, 1000);
 }
 
 // 게임 오버 또는 승리 시
@@ -722,15 +771,15 @@ function selectLevel(level) {
 
 	switch (level) {
 		case 1:
-			initLevel1();
+			startLevel1();
 			break;
 
 		case 2:
-			initLevel2();
+			startLevel2();
 			break;
 
 		case 3:
-			initLevel3();
+			startLevel3();
 			break;
 
 		// no default
@@ -740,20 +789,6 @@ function selectLevel(level) {
 howToPlayButton.addEventListener("click", openHowToPlayModal);
 playButton.addEventListener("click", showLevelPage);
 startButton.addEventListener("click", showLevelPage);
-soundOnButton.addEventListener("click", () => {
-	soundOnButton.classList.remove("open");
-	soundOffButton.classList.remove("close");
-	if (audio.backgroundMusic.playing()) {
-		audio.backgroundMusic.stop();
-	}
-});
-soundOffButton.addEventListener("click", () => {
-	soundOnButton.classList.add("open");
-	soundOffButton.classList.add("close");
-	if (!audio.backgroundMusic.playing()) {
-		audio.backgroundMusic.play();
-	}
-});
 
 level1Button.addEventListener("click", startLevel1);
 level2Button.addEventListener("click", startLevel2);
