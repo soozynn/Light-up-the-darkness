@@ -701,9 +701,6 @@ const howToPlayButton = document.querySelector(".how-to-play-button");
 const playButton = document.querySelector(".play-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
-const minutes = document.getElementById("minutes");
-const seconds = document.getElementById("seconds");
-const colon = document.getElementById("colon");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -733,9 +730,7 @@ function showLevelPage() {
 function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	// minutes.classList.add("timer");
-	// seconds.classList.add("timer");
-	// colon.classList.add("timer");
+
 	initLevel1();
 	animate();
 	const timer = setInterval(setTime, 1000);
@@ -744,23 +739,19 @@ function startLevel1() {
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	// minutes.classList.add("timer");
-	// seconds.classList.add("timer");
-	// colon.classList.add("timer");
+
 	initLevel2();
 	animate();
-	// const timer = setInterval(setTime, 1000);
+	const timer = setInterval(setTime, 1000);
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	// minutes.classList.add("timer");
-	// seconds.classList.add("timer");
-	// colon.classList.add("timer");
+
 	initLevel3();
 	animate();
-	// const timer = setInterval(setTime, 1000);
+	const timer = setInterval(setTime, 1000);
 }
 
 // 게임 오버 또는 승리 시

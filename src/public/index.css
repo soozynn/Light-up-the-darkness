@@ -72,11 +72,6 @@ body {
 	color: white;
 }
 
-img {
-	width: 100px;
-	height: 100px;
-}
-
 .red-text {
 	color: red;
 	font-size: 30px;
@@ -92,9 +87,11 @@ img {
 	display: flex;
 	justify-content: start;
 	align-items: center;
+	margin-bottom: 10px;
 }
 
 .sub-explain {
+	margin-top: 20px;
 	font-size: 24px;
 	text-align: center;
 }
@@ -113,7 +110,7 @@ img {
 	width: 50%;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	background-color: #808080;
+	background-color: #cdd1d4;
 }
 
 .result-modal {
@@ -140,9 +137,13 @@ img {
 }
 
 .modal-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	margin: 10px 0;
 	padding: 20px;
 	background-color: #f4f4f4;
+	border: 1px solid black;
 	border-radius: 4px;
 	width: 70%;
 	height: 70%;
@@ -150,8 +151,35 @@ img {
 	font-family: "Nanum Brush Script", cursive;
 }
 
-.modal-content * {
-	margin: 10px;
+.game-explain {
+	display: flex;
+	justify-content: space-around;
+}
+
+.game-explain * {
+	margin: 5px;
+}
+
+.audio {
+	width: 60px;
+	height: 60px;
+}
+
+.audio-image {
+	width: 70px;
+	height: 70px;
+}
+
+.arrow-jump {
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.arrow {
+	width: 80px;
+	height: 80px;
+	margin-left: 10px;
 }
 
 .play-button {
@@ -251,6 +279,10 @@ img {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+}
+
+.button-container {
+	margin-top: 30px;
 }
 
 .result-sub-text {

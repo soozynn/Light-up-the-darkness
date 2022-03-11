@@ -77,15 +77,6 @@ export function touchObjects({ object1, object2 }) {
 	);
 }
 
-function addCountZero(value) {
-	const valString = value + "";
-
-	if (valString.length < 2) {
-		return `0${valString}`;
-	}
-	return valString;
-}
-
 export function setPercent(player, flag, distance) {
 	console.log(player, flag, distance);
 	const onePercent = Math.round(distance) / 100;
@@ -102,6 +93,15 @@ export function setPercent(player, flag, distance) {
 	}
 
 	percent.textContent = result;
+}
+
+function addCountZero(value) {
+	const valString = value + "";
+
+	if (valString.length < 2) {
+		return `0${valString}`;
+	}
+	return valString;
 }
 
 export function setTime() {
