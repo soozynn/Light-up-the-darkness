@@ -1,10 +1,10 @@
-import spriteRunRightImage from "../img/player/runToTheRight.png";
-import spriteRunLeftImage from "../img/player/runToTheLeft.png";
-import spriteStandRightImage from "../img/player/idleRight.png";
-import spriteStandLeftImage from "../img/player/idleLeft.png";
-import spriteJumpingRightImage from "../img/player/jumpingRight.png";
-import spriteJumpingLeftImage from "../img/player/jumpingLeft.png";
-import spriteHurtImage from "../img/player/hurt.png";
+import spriteRunRightImage from "../assets/img/player/runToTheRight.png";
+import spriteRunLeftImage from "../assets/img/player/runToTheLeft.png";
+import spriteStandRightImage from "../assets/img/player/idleRight.png";
+import spriteStandLeftImage from "../assets/img/player/idleLeft.png";
+import spriteJumpingRightImage from "../assets/img/player/jumpingRight.png";
+import spriteJumpingLeftImage from "../assets/img/player/jumpingLeft.png";
+import spriteHurtImage from "../assets/img/player/hurt.png";
 
 export default class Player {
 	constructor(createImage) {

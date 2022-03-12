@@ -2,20 +2,20 @@
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
 
-import Player from "../gameObjects/Player";
-import Platform from "../gameObjects/Platform";
-import GenericObject from "../gameObjects/GenericObject";
-import Monster from "../gameObjects/Monster";
-import Particle from "../gameObjects/Particle";
+import Player from "./gameObjects/Player";
+import Platform from "./gameObjects/Platform";
+import GenericObject from "./gameObjects/GenericObject";
+import Monster from "./gameObjects/Monster";
+import Particle from "./gameObjects/Particle";
 
-import flagImage from "../img/flag/flag.png";
-import spriteGreenMonster from "../img/monster/walkGreen.png";
-import spriteBrownMonster from "../img/monster/walkBrown.png";
-import spritePurpleMonster from "../img/monster/walkPurple.png";
+import flagImage from "./assets/img/flag/flag.png";
+import spriteGreenMonster from "./assets/img/monster/walkGreen.png";
+import spriteBrownMonster from "./assets/img/monster/walkBrown.png";
+import spritePurpleMonster from "./assets/img/monster/walkPurple.png";
 
 // import database from "./database";
-import { audio } from "./audio";
-import { images } from "./image";
+import { audio } from "./js/audio";
+import { images } from "./js/image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -26,7 +26,7 @@ import {
 	hitSideOfPlatform,
 	touchObjects,
 	setPercent,
-} from "./utils";
+} from "./js/utils";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");

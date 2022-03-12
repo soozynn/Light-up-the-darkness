@@ -1,8 +1,4 @@
-const minutesLabel = document.getElementById("minutes");
-const secondsLabel = document.getElementById("seconds");
 const percent = document.getElementById("percent");
-
-let totalSeconds = 0;
 let totalPercent = 0;
 
 export function createImage(imageSrc) {

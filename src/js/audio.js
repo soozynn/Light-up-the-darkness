@@ -1,11 +1,11 @@
 import { Howl } from "howler";
-import audioMonsterSquash from "../audio/audioMonsterSquash.mp3";
-import audioGameOver from "../audio/audioGameOver.mp3";
-import audioGameWin from "../audio/audioGameWin.mp3";
-import audioStage1Music from "../audio/audioBackground01.mp3";
-import audioFalling from "../audio/audioFalling.wav";
-import audioHurt from "../audio/audioHurt.wav";
-import audioJump from "../audio/audioJump.mp3";
+import audioMonsterSquash from "../assets/audio/audioMonsterSquash.mp3";
+import audioGameOver from "../assets/audio/audioGameOver.mp3";
+import audioGameWin from "../assets/audio/audioGameWin.mp3";
+import audioStage1Music from "../assets/audio/audioBackground01.mp3";
+import audioFalling from "../assets/audio/audioFalling.wav";
+import audioHurt from "../assets/audio/audioHurt.wav";
+import audioJump from "../assets/audio/audioJump.mp3";
 
 export const audio = {
 	gameOver: new Howl({
