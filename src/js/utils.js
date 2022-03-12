@@ -94,18 +94,3 @@ export function setPercent(player, flag, distance) {
 
 	percent.textContent = result;
 }
-
-function addCountZero(value) {
-	const valString = value + "";
-
-	if (valString.length < 2) {
-		return `0${valString}`;
-	}
-	return valString;
-}
-
-export function setTime() {
-	++totalSeconds;
-	secondsLabel.textContent = addCountZero(totalSeconds % 60);
-	minutesLabel.textContent = addCountZero(parseInt(totalSeconds / 60, 10));
-}

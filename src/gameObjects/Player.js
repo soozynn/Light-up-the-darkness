@@ -8,7 +8,7 @@ import spriteHurtImage from "../img/player/hurt.png";
 
 export default class Player {
 	constructor(createImage) {
-		this.speed = 4;
+		this.speed = 2;
 		this.position = {
 			x: 100,
 			y: 100,

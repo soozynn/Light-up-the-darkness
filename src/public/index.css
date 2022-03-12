@@ -91,11 +91,26 @@ body {
 }
 
 .start-button:hover,
-.how-to-play-button:hover {
+.how-to-play-button:hover .play-button:hover {
 	cursor: pointer;
 	background: transparent;
 	border: 2px solid #eee;
 	color: white;
+}
+
+.play-button {
+	margin: 5px;
+	padding: 18px 24px;
+	border-radius: 6px;
+	border: none;
+	font-size: 30px;
+	font-family: "Cookie", cursive;
+}
+
+.play-button:hover {
+	cursor: pointer;
+	border: 2px solid black;
+	color: black;
 }
 
 .red-text {
@@ -328,24 +343,6 @@ body {
 	display: none;
 }
 
-.timer {
-	display: flex;
-	position: absolute;
-	left: 5px;
-	top: 60px;
-	color: rgb(151, 23, 23);
-	font-weight: bold;
-	font-size: 3rem;
-	font-family: "Cookie", cursive;
-	z-index: 1;
-}
-
-#minutes,
-#seconds,
-#colon {
-	display: none;
-}
-
 .percent-container {
 	position: absolute;
 	top: 20px;
@@ -353,13 +350,3 @@ body {
 	font-size: 4rem;
 	font-family: "Cookie", cursive;
 }
-/* .timer-open {
-	display: flex;
-	position: absolute;
-	left: 0;
-	top: 20px;
-	color: rgb(151, 23, 23);
-	font-weight: bold;
-	font-size: 2rem;
-	font-family: "Cookie", cursive;
-} */

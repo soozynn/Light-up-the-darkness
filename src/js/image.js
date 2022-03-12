@@ -9,7 +9,7 @@ import obstacleLevel2 from "../img/obstacle/level2/fireObstacle.png";
 import largeObstacleLevel2 from "../img/obstacle/level2/fireLargeObstacle.png";
 import platformLevel2 from "../img/platform/level2/firePlatform.png";
 import largePlatformLevel2 from "../img/platform/level2/fireLargePlatform.png";
-import mountainLevel2 from "../img/background/level2/mountain.png";
+import mountainLevel2 from "../img/background/level2/mountains.png";
 import sunLevel2 from "../img/background/level2/sun.png";
 
 import backgroundLevel3 from "../img/background/level3/background_03.png";

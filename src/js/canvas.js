@@ -13,6 +13,7 @@ import spriteGreenMonster from "../img/monster/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walkBrown.png";
 import spritePurpleMonster from "../img/monster/walkPurple.png";
 
+// import database from "./database";
 import { audio } from "./audio";
 import { images } from "./image";
 import {
@@ -24,11 +25,8 @@ import {
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
 	touchObjects,
-	setTime,
 	setPercent,
 } from "./utils";
-
-// import KEY_CODE from "./constants/constants";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -118,9 +116,7 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 9 + 480, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 480, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 480, y: 742, image: platformImg, block: true }),
-		// new Platform({ x: platformImg.width * 9 + 480, y: 442, image: platformImg, block: true }),
 		new Platform({ x: 800, y: -100, image: largeObstacleImg, block: true }),
-		new Platform({ x: 800, y: -100, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -147,116 +143,8 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: 6900 + 600,
-		y: canvas.height - platformImg.height - flagImg.height,
-		image: flagImg,
-	});
-	player = new Player(createImage);
-	monsters = [
-		// new Monster({
-		// 	position: {
-		// 		x: 800,
-		// 		y: 100,
-		// 	},
-		// 	velocity: {
-		// 		x: -0.3,
-		// 		y: 0,
-		// 	},
-		// 	image: createImage(spriteGreenMonster),
-		// 	distance: {
-		// 		limit: 200,
-		// 		traveled: 0,
-		// 	},
-		// }),
-		// new Monster({
-		// 	position: {
-		// 		x: 1600,
-		// 		y: 100,
-		// 	},
-		// 	velocity: {
-		// 		x: -0.3,
-		// 		y: 0,
-		// 	},
-		// 	image: createImage(spriteBrownMonster),
-		// 	distance: {
-		// 		limit: 100,
-		// 		traveled: 0,
-		// 	},
-		// }),
-		// new Monster({
-		// 	position: {
-		// 		x: 1800,
-		// 		y: 100,
-		// 	},
-		// 	velocity: {
-		// 		x: -0.3,
-		// 		y: 0,
-		// 	},
-		// 	image: createImage(spritePurpleMonster),
-		// 	distance: {
-		// 		limit: 100,
-		// 		traveled: 0,
-		// 	},
-		// }),
-	];
-	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
-		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
-		new Platform({
-			x: platformImg.width - 3,
-			y: 742,
-			image: platformImg,
-			block: true,
-		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
-	];
-	genericObjects = [
-		new GenericObject({
-			x: -1,
-			y: -1,
-			image: createImage(images.levels[2].background),
-			currentLevel: 2,
-		}),
-		new GenericObject({
-			x: -1,
-			y: canvas.height - mountainsImg.height,
-			image: createImage(images.levels[2].mountain),
-		}),
-		new GenericObject({
-			x: 50,
-			y: 100,
-			image: createImage(images.levels[2].sun),
-		}),
-		// new GenericObject({
-		// 	x: 50,
-		// 	y: 100,
-		// 	image: createImage(images.levels[2].sun),
-		// }),
-	];
-
-	scrollOffSet = 0;
-}
-
-async function initLevel3() {
-	platformImg = await createImageAsync(images.levels[3].platform);
-	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
-	obstacleImg = await createImageAsync(images.levels[3].obstacle);
-	largeObstacleImg = await createImageAsync(images.levels[3].largeObstacle);
-	flagImg = await createImageAsync(flagImage);
-
-	flag = new GenericObject({
-		x: 6900 + 600,
-		y: canvas.height - platformImg.height - flagImg.height,
+		x: platformImg.width * 7 + 580,
+		y: 100,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -287,13 +175,13 @@ async function initLevel3() {
 			},
 			image: createImage(spriteBrownMonster),
 			distance: {
-				limit: 100,
+				limit: 250,
 				traveled: 0,
 			},
 		}),
 		new Monster({
 			position: {
-				x: 1800,
+				x: 2800,
 				y: 100,
 			},
 			velocity: {
@@ -302,7 +190,22 @@ async function initLevel3() {
 			},
 			image: createImage(spritePurpleMonster),
 			distance: {
-				limit: 100,
+				limit: 300,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 4500,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
 				traveled: 0,
 			},
 		}),
@@ -314,19 +217,178 @@ async function initLevel3() {
 			image: smallPlatformImg,
 			block: true,
 		}),
-		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
 		new Platform({
-			x: platformImg.width - 3,
-			y: 742,
+			x: platformImg.width + 300,
+			y: 762,
 			image: platformImg,
 			block: true,
 		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 762, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 580, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
+	];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(images.levels[2].background),
+			currentLevel: 2,
+		}),
+		new GenericObject({
+			x: -1,
+			y: canvas.height - mountainsImg.height,
+			image: createImage(images.levels[2].mountain),
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
+		}),
+	];
+
+	scrollOffSet = 0;
+}
+
+async function initLevel3() {
+	platformImg = await createImageAsync(images.levels[3].platform);
+	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
+	obstacleImg = await createImageAsync(images.levels[3].obstacle);
+	largeObstacleImg = await createImageAsync(images.levels[3].largeObstacle);
+	flagImg = await createImageAsync(flagImage);
+
+	flag = new GenericObject({
+		x: platformImg.width * 11 + 700,
+		y: canvas.height - platformImg.height - flagImg.height - 220,
+		image: flagImg,
+	});
+	player = new Player(createImage);
+	monsters = [
+		new Monster({
+			position: {
+				x: 800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 1700,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteBrownMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 2200,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spritePurpleMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 2800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.5,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 3200,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteBrownMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+	];
+	platforms = [
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
+		new Platform({
+			x: platformImg.width - 3,
+			y: 770,
+			image: platformImg,
+			block: true,
+		}),
+		new Platform({ x: platformImg.width * 2 + 100, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 342, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 220, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 320, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 420, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 820, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: -400, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -403,7 +465,6 @@ function animate() {
 				duration: 1,
 			});
 
-			// clearInterval(timer);
 			audio.gameWin.play();
 			winGame();
 		}
@@ -443,7 +504,6 @@ function animate() {
 			player.currentSprite = player.sprites.hurt.right;
 			player.speed = 0;
 			player.velocity.y = 0;
-			// clearInterval(timer);
 
 			setTimeout(() => {
 				if (gameOver) {
@@ -466,13 +526,13 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		setPercent(player.position.x, flag.position.x, 1000);
+		setPercent(player.position.x, flag.position.x, 700000);
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
 	) {
 		player.velocity.x = -player.speed;
-		setPercent(player.position.x, flag.position.x, 1000);
+		setPercent(player.position.x, flag.position.x, 700000);
 	} else {
 		player.velocity.x = 0;
 
@@ -512,6 +572,10 @@ function animate() {
 				particles.forEach(particle => {
 					particle.position.x -= player.speed;
 				});
+
+				genericObjects.forEach(genericObject => {
+					genericObject.velocity.x = -player.speed;
+				});
 			}
 		} else if (keys.left.pressed && scrollOffSet > 0) {
 			for (let i = 0; i < platforms.length; i++) {
@@ -544,6 +608,10 @@ function animate() {
 
 				particles.forEach(particle => {
 					particle.position.x += player.speed;
+				});
+
+				genericObjects.forEach(genericObject => {
+					genericObject.velocity.x += player.speed;
 				});
 			}
 		}
@@ -645,7 +713,6 @@ function animate() {
 		// audio.falling.play();
 		player.speed = 0;
 		player.velocity.y = 0;
-		// clearInterval(timer);
 
 		setTimeout(() => {
 			if (gameOver) {
@@ -656,71 +723,70 @@ function animate() {
 	}
 }
 
-// let jump = true;
+let jump = true;
 
-// navigator.mediaDevices
-// 	.getUserMedia({
-// 		audio: true,
-// 		video: false,
-// 	})
-// 	.then(function (stream) {
-// 		const audioContext = new AudioContext();
-// 		const analyser = audioContext.createAnalyser();
-// 		const microphone = audioContext.createMediaStreamSource(stream);
-// 		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+navigator.mediaDevices
+	.getUserMedia({
+		audio: true,
+		video: false,
+	})
+	.then(stream => {
+		const audioContext = new AudioContext();
+		const analyser = audioContext.createAnalyser();
+		const microphone = audioContext.createMediaStreamSource(stream);
+		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
 
-// 		analyser.smoothingTimeConstant = 0.8;
-// 		analyser.fftSize = 1024;
+		analyser.smoothingTimeConstant = 0.8;
+		analyser.fftSize = 1024;
 
-// 		microphone.connect(analyser);
-// 		analyser.connect(scriptProcessor);
-// 		scriptProcessor.connect(audioContext.destination);
+		microphone.connect(analyser);
+		analyser.connect(scriptProcessor);
+		scriptProcessor.connect(audioContext.destination);
 
-// 		scriptProcessor.onaudioprocess = function () {
-// 			const array = new Uint8Array(analyser.frequencyBinCount);
-// 			analyser.getByteFrequencyData(array);
-// 			const arraySum = array.reduce((a, value) => a + value, 0);
-// 			const average = arraySum / array.length;
+		scriptProcessor.onaudioprocess = function () {
+			const dataArray = new Uint8Array(analyser.frequencyBinCount);
+			analyser.getByteFrequencyData(dataArray);
+			const arraySum = dataArray.reduce((acc, value) => acc + value) / dataArray.length;
+			const average = arraySum;
+			console.log(average);
 
-// 			if (10 < average < 30) {
-// 				keys.right.pressed = true;
-// 				lastKey = "right";
-// 			}
+			if (jump && 30 < average) {
+				player.velocity.y -= average;
+				jump = false;
+			}
 
-// 			if (jump && 30 < average) {
-// 				player.velocity.y -= average;
-// 				jump = false;
-// 			}
-// 			// 점프 고도가 계속 유지되었다가 떨어지게
-// 			if (average < 2) {
-// 				keys.right.pressed = false;
-// 				player.velocity.y = 0;
-// 				player.velocity.x = 0;
-// 			}
+			if (10 < average) {
+				keys.right.pressed = true;
+				lastKey = "right";
+			}
 
-// 			if (!player.velocity.y) {
-// 				jump = true;
-// 			}
+			if (average < 5) {
+				player.velocity.y = 0;
+				player.velocity.x = 0;
+			}
 
-// 			if (player.position.y > canvas.height) {
-// 				// audio.falling.play();
-// 				player.speed = 0;
-// 				player.velocity.y = 0;
-// 				// clearInterval(timer);
+			if (!player.velocity.y) {
+				jump = true;
+			}
 
-// 				setTimeout(() => {
-// 					if (gameOver) {
-// 						loseGame();
-// 						gameOver = false;
-// 					}
-// 				}, 300);
-// 			}
-// 		};
-// 	})
-// 	.catch(function (err) {
-// 		/* handle the error */
-// 		console.error(err);
-// 	});
+			if (player.position.y > canvas.height) {
+				// audio.falling.play();
+				player.velocity.y = 0;
+				player.velocity.x = 0;
+
+				setTimeout(() => {
+					if (gameOver) {
+						loseGame();
+						gameOver = false;
+					}
+				});
+			}
+		};
+	})
+	.catch(function (err) {
+		/* handle the error */
+		console.error(err);
+	});
 
 // start page
 const startButton = document.querySelector(".start-button");
@@ -757,7 +823,6 @@ function startLevel1() {
 
 	initLevel1();
 	animate();
-	const timer = setInterval(setTime, 1000);
 }
 
 function startLevel2() {
@@ -766,7 +831,6 @@ function startLevel2() {
 
 	initLevel2();
 	animate();
-	const timer = setInterval(setTime, 1000);
 }
 
 function startLevel3() {
@@ -775,7 +839,6 @@ function startLevel3() {
 
 	initLevel3();
 	animate();
-	const timer = setInterval(setTime, 1000);
 }
 
 // 게임 오버 또는 승리 시
@@ -853,8 +916,8 @@ function loseGame() {
 			gameResultModal.classList.add("close");
 			setTimeout(() => {
 				gravity = 1.5;
-				selectLevel(currentLevel);
-			}, 1000);
+				selectLevel(currentLevel); // level 1으로 가는 문제
+			});
 		});
 	}
 }
@@ -889,60 +952,7 @@ function winGame() {
 				gravity = 1.5;
 				currentLevel++;
 				selectLevel(currentLevel);
-			}, 1000);
+			});
 		});
 	}
 }
-addEventListener("keydown", event => {
-	// if (game.disableUserInput) return;
-
-	switch (event.code) {
-		case "KeyA":
-			keys.left.pressed = true;
-			lastKey = "left";
-			break;
-
-		case "KeyD":
-			keys.right.pressed = true;
-			lastKey = "right";
-			break;
-
-		case "KeyW":
-			// if (player.position.y < 0) {
-			// 	player.position.y = 0;
-			// } else {
-			player.velocity.y -= 33;
-			// }
-
-			if (lastKey === "right") {
-				player.currentSprite = player.sprites.jump.right;
-			}
-
-			if (lastKey === "left") {
-				player.currentSprite = player.sprites.jump.left;
-			}
-
-			break;
-
-		// no default
-	}
-});
-
-addEventListener("keyup", event => {
-	// if (game.disableUserInput) return;
-
-	switch (event.code) {
-		case "KeyA":
-			keys.left.pressed = false;
-			break;
-
-		case "KeyD":
-			keys.right.pressed = false;
-			break;
-
-		case "KeyW":
-			break;
-
-		// no default
-	}
-});
