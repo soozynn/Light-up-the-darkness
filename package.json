@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.17.2",
+		"firebase": "^9.6.8",
 		"gsap": "^3.9.1",
 		"howler": "^2.2.3"
 	}

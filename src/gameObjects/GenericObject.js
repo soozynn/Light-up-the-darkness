@@ -25,18 +25,8 @@ export default class GenericObject {
 		}
 	}
 
-	update(ctx, percent) {
+	update(ctx) {
 		this.draw(ctx);
 		this.position.x += this.velocity.x;
-
-		if (percent) {
-			ctx.font = "30px Arial";
-			ctx.fillStyle = "black";
-			ctx.fillText(`${percent}%`, 510, 50);
-		} else {
-			ctx.font = "30px Arial";
-			ctx.fillStyle = "black";
-			ctx.fillText("0%", 510, 50);
-		}
 	}
 }

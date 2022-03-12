@@ -16,7 +16,7 @@ export const audio = {
 		src: [audioGameWin],
 		volume: 0.2,
 	}),
-	stage1: new Howl({
+	backgroundMusic: new Howl({
 		src: [audioStage1Music],
 		volume: 0.5,
 	}),

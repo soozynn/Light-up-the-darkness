@@ -23,7 +23,6 @@ body {
 }
 
 .game-title {
-	margin-bottom: 50px;
 	text-align: center;
 	color: #f7971e;
 	font-weight: bold;
@@ -31,10 +30,60 @@ body {
 	font-family: "Cookie", cursive;
 }
 
+.toggle-music {
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	justify-content: center;
+	align-items: center;
+	margin: 5px;
+	margin-bottom: 20px;
+}
+
+.music-off:hover,
+.music-on:hover {
+	transform: scale(1.1, 1.1);
+	cursor: pointer;
+}
+
+.music-off,
+.music-on {
+	display: none;
+	width: 70px;
+	height: 70px;
+}
+
+.start-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.nickname-input {
+	float: right;
+	width: 50%;
+	height: 70px;
+	border: 2px solid white;
+	margin-top: 15px;
+	border-radius: 5px;
+	background-color: transparent;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+}
+
+.nickname-input:focus,
+.nickname-input:hover {
+	border-color: #03a9f4;
+	outline: 0;
+}
+
 .start-button,
 .how-to-play-button {
 	margin: 5px;
-	padding: 20px 40px;
+	padding: 18px 30px;
 	border-radius: 6px;
 	border: none;
 	font-size: 40px;
@@ -42,16 +91,26 @@ body {
 }
 
 .start-button:hover,
-.how-to-play-button:hover {
+.how-to-play-button:hover .play-button:hover {
 	cursor: pointer;
 	background: transparent;
 	border: 2px solid #eee;
 	color: white;
 }
 
-img {
-	width: 100px;
-	height: 100px;
+.play-button {
+	margin: 5px;
+	padding: 18px 24px;
+	border-radius: 6px;
+	border: none;
+	font-size: 30px;
+	font-family: "Cookie", cursive;
+}
+
+.play-button:hover {
+	cursor: pointer;
+	border: 2px solid black;
+	color: black;
 }
 
 .red-text {
@@ -69,9 +128,11 @@ img {
 	display: flex;
 	justify-content: start;
 	align-items: center;
+	margin-bottom: 10px;
 }
 
 .sub-explain {
+	margin-top: 20px;
 	font-size: 24px;
 	text-align: center;
 }
@@ -90,7 +151,7 @@ img {
 	width: 50%;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	background-color: #808080;
+	background-color: #cdd1d4;
 }
 
 .result-modal {
@@ -117,9 +178,13 @@ img {
 }
 
 .modal-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	margin: 10px 0;
 	padding: 20px;
 	background-color: #f4f4f4;
+	border: 1px solid black;
 	border-radius: 4px;
 	width: 70%;
 	height: 70%;
@@ -127,11 +192,38 @@ img {
 	font-family: "Nanum Brush Script", cursive;
 }
 
-.modal-content * {
-	margin: 10px;
+.game-explain {
+	display: flex;
+	justify-content: space-around;
 }
 
-.play-button {
+.game-explain * {
+	margin: 5px;
+}
+
+.audio {
+	width: 60px;
+	height: 60px;
+}
+
+.audio-image {
+	width: 70px;
+	height: 70px;
+}
+
+.arrow-jump {
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+}
+
+.arrow {
+	width: 80px;
+	height: 80px;
+	margin-left: 10px;
+}
+
+.close-button {
 	display: flex;
 	margin: 5px 5px 10px 5px;
 	padding: 10px 20px;
@@ -142,8 +234,8 @@ img {
 	font-family: "Cookie", cursive;
 }
 
-.play-button:hover,
-.play-button:focus {
+.close-button:hover,
+.close-button:focus {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
@@ -230,6 +322,10 @@ img {
 	align-items: center;
 }
 
+.button-container {
+	margin-top: 30px;
+}
+
 .result-sub-text {
 	margin-top: 0;
 	font-weight: bold;
@@ -247,30 +343,10 @@ img {
 	display: none;
 }
 
-.progress-bar-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 25px;
-	background-color: #ccc;
-	position: relative;
-	border-radius: 7px;
-	z-index: 1;
-}
-
-.progress-bar-container .progress-bar {
+.percent-container {
 	position: absolute;
-	height: 10%;
-	background-color: #ccc;
-	z-index: 1;
-	animation: progress-animation 3s forwards;
-}
-
-@keyframes progress-animation {
-	0% {
-		width: 0%;
-	}
-	100% {
-		width: 100%;
-	}
+	top: 20px;
+	font-weight: bold;
+	font-size: 4rem;
+	font-family: "Cookie", cursive;
 }

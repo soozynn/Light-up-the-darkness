@@ -13,6 +13,7 @@ import spriteGreenMonster from "../img/monster/walkGreen.png";
 import spriteBrownMonster from "../img/monster/walkBrown.png";
 import spritePurpleMonster from "../img/monster/walkPurple.png";
 
+// import database from "./database";
 import { audio } from "./audio";
 import { images } from "./image";
 import {
@@ -24,11 +25,8 @@ import {
 	hitBottomOfPlatform,
 	hitSideOfPlatform,
 	touchObjects,
-	makeDistancePercent,
+	setPercent,
 } from "./utils";
-
-// import KEY_CODE from "./constants/constants";
-// audio.stage1.play();
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -42,6 +40,7 @@ let smallPlatformImg;
 let obstacleImg;
 let largeObstacleImg;
 let flagImg;
+let mountainsImg;
 
 let player = new Player(createImage);
 let platforms = [];
@@ -72,8 +71,8 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 7 + 680,
-		y: 142,
+		x: platformImg.width * 10 + 100,
+		y: 180,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -111,9 +110,13 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 200, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 380, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 480, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 580, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 1000, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 450, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 8 + 480, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 480, y: 742, image: platformImg, block: true }),
+		new Platform({ x: 800, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -121,6 +124,11 @@ async function initLevel1() {
 			y: -1,
 			image: createImage(images.levels[1].background),
 			currentLevel: 1,
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
 		}),
 	];
 
@@ -133,10 +141,10 @@ async function initLevel2() {
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
 	largeObstacleImg = await createImageAsync(images.levels[2].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
-
+	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: 6900 + 600,
-		y: canvas.height - platformImg.height - flagImg.height,
+		x: platformImg.width * 7 + 580,
+		y: 100,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -167,13 +175,13 @@ async function initLevel2() {
 			},
 			image: createImage(spriteBrownMonster),
 			distance: {
-				limit: 100,
+				limit: 250,
 				traveled: 0,
 			},
 		}),
 		new Monster({
 			position: {
-				x: 1800,
+				x: 2800,
 				y: 100,
 			},
 			velocity: {
@@ -182,7 +190,22 @@ async function initLevel2() {
 			},
 			image: createImage(spritePurpleMonster),
 			distance: {
-				limit: 100,
+				limit: 300,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 4500,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
 				traveled: 0,
 			},
 		}),
@@ -194,19 +217,28 @@ async function initLevel2() {
 			image: smallPlatformImg,
 			block: true,
 		}),
-		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
 		new Platform({
-			x: platformImg.width - 3,
-			y: 742,
+			x: platformImg.width + 300,
+			y: 762,
 			image: platformImg,
 			block: true,
 		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 762, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
-		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 580, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -214,6 +246,16 @@ async function initLevel2() {
 			y: -1,
 			image: createImage(images.levels[2].background),
 			currentLevel: 2,
+		}),
+		new GenericObject({
+			x: -1,
+			y: canvas.height - mountainsImg.height,
+			image: createImage(images.levels[2].mountain),
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
 		}),
 	];
 
@@ -228,8 +270,8 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 6900 + 600,
-		y: canvas.height - platformImg.height - flagImg.height,
+		x: platformImg.width * 11 + 700,
+		y: canvas.height - platformImg.height - flagImg.height - 220,
 		image: flagImg,
 	});
 	player = new Player(createImage);
@@ -251,7 +293,7 @@ async function initLevel3() {
 		}),
 		new Monster({
 			position: {
-				x: 1600,
+				x: 1700,
 				y: 100,
 			},
 			velocity: {
@@ -260,13 +302,13 @@ async function initLevel3() {
 			},
 			image: createImage(spriteBrownMonster),
 			distance: {
-				limit: 100,
+				limit: 200,
 				traveled: 0,
 			},
 		}),
 		new Monster({
 			position: {
-				x: 1800,
+				x: 2200,
 				y: 100,
 			},
 			velocity: {
@@ -275,31 +317,78 @@ async function initLevel3() {
 			},
 			image: createImage(spritePurpleMonster),
 			distance: {
-				limit: 100,
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 2800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.5,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+		new Monster({
+			position: {
+				x: 3200,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteBrownMonster),
+			distance: {
+				limit: 200,
 				traveled: 0,
 			},
 		}),
 	];
 	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
-		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
 		new Platform({
 			x: platformImg.width - 3,
-			y: 742,
+			y: 770,
 			image: platformImg,
 			block: true,
 		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 770, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 770, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 142, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 342, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 220, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 320, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 420, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 820, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 11 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: -400, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -314,6 +403,34 @@ async function initLevel3() {
 }
 
 function animate() {
+	const soundOnButton = document.querySelector(".music-on");
+	const soundOffButton = document.querySelector(".music-off");
+	let audioOn = true;
+
+	soundOnButton.classList.add("open");
+
+	if (audioOn && !audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+
+	soundOnButton.addEventListener("click", () => {
+		soundOnButton.classList.add("close");
+		soundOffButton.classList.add("open");
+		audioOn = false;
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+	});
+	soundOffButton.addEventListener("click", () => {
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+
+		if (!audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.play();
+		}
+	});
+
 	requestAnimationFrame(animate);
 
 	ctx.fillStyle = "white";
@@ -409,13 +526,13 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		// makeDistancePercent(player.velocity.x, 6000);
+		setPercent(player.position.x, flag.position.x, 700000);
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
 	) {
 		player.velocity.x = -player.speed;
-		// makeDistancePercent(player.velocity.x, 6000);
+		setPercent(player.position.x, flag.position.x, 700000);
 	} else {
 		player.velocity.x = 0;
 
@@ -455,6 +572,10 @@ function animate() {
 				particles.forEach(particle => {
 					particle.position.x -= player.speed;
 				});
+
+				genericObjects.forEach(genericObject => {
+					genericObject.velocity.x = -player.speed;
+				});
 			}
 		} else if (keys.left.pressed && scrollOffSet > 0) {
 			for (let i = 0; i < platforms.length; i++) {
@@ -487,6 +608,10 @@ function animate() {
 
 				particles.forEach(particle => {
 					particle.position.x += player.speed;
+				});
+
+				genericObjects.forEach(genericObject => {
+					genericObject.velocity.x += player.speed;
 				});
 			}
 		}
@@ -605,7 +730,7 @@ navigator.mediaDevices
 		audio: true,
 		video: false,
 	})
-	.then(function (stream) {
+	.then(stream => {
 		const audioContext = new AudioContext();
 		const analyser = audioContext.createAnalyser();
 		const microphone = audioContext.createMediaStreamSource(stream);
@@ -619,29 +744,42 @@ navigator.mediaDevices
 		scriptProcessor.connect(audioContext.destination);
 
 		scriptProcessor.onaudioprocess = function () {
-			const array = new Uint8Array(analyser.frequencyBinCount);
-			analyser.getByteFrequencyData(array);
-			const arraySum = array.reduce((a, value) => a + value, 0);
-			const average = arraySum / array.length;
-
-			if (10 < average < 30) {
-				keys.right.pressed = true;
-				lastKey = "right";
-			}
+			const dataArray = new Uint8Array(analyser.frequencyBinCount);
+			analyser.getByteFrequencyData(dataArray);
+			const arraySum = dataArray.reduce((acc, value) => acc + value) / dataArray.length;
+			const average = arraySum;
+			console.log(average);
 
 			if (jump && 30 < average) {
 				player.velocity.y -= average;
 				jump = false;
 			}
-			// 점프 고도가 계속 유지되었다가 떨어지게
-			if (average < 2) {
-				keys.right.pressed = false;
+
+			if (10 < average) {
+				keys.right.pressed = true;
+				lastKey = "right";
+			}
+
+			if (average < 5) {
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 			}
 
 			if (!player.velocity.y) {
 				jump = true;
+			}
+
+			if (player.position.y > canvas.height) {
+				// audio.falling.play();
+				player.velocity.y = 0;
+				player.velocity.x = 0;
+
+				setTimeout(() => {
+					if (gameOver) {
+						loseGame();
+						gameOver = false;
+					}
+				});
 			}
 		};
 	})
@@ -653,9 +791,10 @@ navigator.mediaDevices
 // start page
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
-const playButton = document.querySelector(".play-button");
+const closeButton = document.querySelector(".close-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
+const input = document.querySelector(".nickname-input");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -670,93 +809,78 @@ const backButton = document.createElement("button");
 const gameStartButton = document.createElement("button");
 const gameResultButtonsContainer = document.createElement("div");
 
-function openHowToPlayModal() {
-	modalContainer.classList.add("open");
-}
-
 function showLevelPage() {
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
 	gameResultModal.classList.remove("result-modal");
-	// gameResultModal.classList.add("close");
 }
 
 function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel1();
-	}, 3000);
+	initLevel1();
+	animate();
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel2();
-	}, 3000);
+	initLevel2();
+	animate();
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 
-	// showProgressBar();
-
-	setTimeout(() => {
-		animate();
-		initLevel3();
-	}, 3000);
+	initLevel3();
+	animate();
 }
 
 // 게임 오버 또는 승리 시
 function selectLevel(level) {
-	// if (!audio.musicLevel1.playing()) {
-	// 	audio.musicLevel1.play();
-	// }
-
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 	animate();
 
 	switch (level) {
 		case 1:
-			initLevel1();
+			startLevel1();
 			break;
 
 		case 2:
-			initLevel2();
+			startLevel2();
 			break;
 
 		case 3:
-			initLevel3();
+			startLevel3();
 			break;
 
 		// no default
 	}
 }
 
-// function showProgressBar() {
-// 	const progressBarContainer = document.createElement("div");
-// 	const progressBar = document.createElement("div");
+input.addEventListener("keyup", e => {
+	const { value } = e.currentTarget;
 
-// 	progressBarContainer.appendChild(progressBar);
-// 	progressBarContainer.classList.add("progress-bar-container");
-// 	progressBar.classList.add("progress-bar");
-// }
+	if (!value) {
+		startButton.disabled = true;
+		return;
+	}
 
-howToPlayButton.addEventListener("click", openHowToPlayModal);
-playButton.addEventListener("click", showLevelPage);
+	startButton.disabled = false;
+});
+
+howToPlayButton.addEventListener("click", () => {
+	modalContainer.classList.add("open");
+});
+closeButton.addEventListener("click", () => {
+	modalContainer.classList.remove("open");
+});
 startButton.addEventListener("click", showLevelPage);
 
 level1Button.addEventListener("click", startLevel1);
@@ -792,8 +916,8 @@ function loseGame() {
 			gameResultModal.classList.add("close");
 			setTimeout(() => {
 				gravity = 1.5;
-				selectLevel(currentLevel);
-			}, 1000);
+				selectLevel(currentLevel); // level 1으로 가는 문제
+			});
 		});
 	}
 }
@@ -828,7 +952,7 @@ function winGame() {
 				gravity = 1.5;
 				currentLevel++;
 				selectLevel(currentLevel);
-			}, 1000);
+			});
 		});
 	}
 }
