@@ -116,7 +116,6 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 9 + 480, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 480, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 480, y: 742, image: platformImg, block: true }),
-		new Platform({ x: 800, y: -100, image: largeObstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -505,14 +504,23 @@ function animate() {
 			player.speed = 0;
 			player.velocity.y = 0;
 
+			if (gameOver) {
+				audio.hurt.play();
+			}
+
 			setTimeout(() => {
 				if (gameOver) {
-					loseGame();
+					if (audio.backgroundMusic.playing()) {
+						console.log("재생 중");
+						audio.backgroundMusic.stop();
+					}
+
+					audio.gameOver.play();
+					winGame();
 
 					gameOver = false;
 				}
-			}, 300);
-			// audio.hurt.play();
+			});
 		}
 	});
 
@@ -532,11 +540,12 @@ function animate() {
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
 	) {
 		player.velocity.x = -player.speed;
-		setPercent(player.position.x, flag.position.x, 700000);
 	} else {
 		player.velocity.x = 0;
 
 		if (keys.right.pressed) {
+			setPercent(player.position.x, flag.position.x, 700000);
+
 			for (let i = 0; i < platforms.length; i++) {
 				const platform = platforms[i];
 				platform.velocity.x = -player.speed;
@@ -710,16 +719,22 @@ function animate() {
 	}
 
 	if (player.position.y > canvas.height) {
-		// audio.falling.play();
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
+		loseGame();
+		console.log(player.position.y, canvas.height);
 
 		setTimeout(() => {
 			if (gameOver) {
-				loseGame();
+				audio.falling.play();
+				audio.gameOver.play();
 				gameOver = false;
 			}
-		}, 300);
+		});
 	}
 }
 
@@ -761,6 +776,7 @@ navigator.mediaDevices
 			}
 
 			if (average < 5) {
+				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 			}
@@ -769,22 +785,13 @@ navigator.mediaDevices
 				jump = true;
 			}
 
-			if (player.position.y > canvas.height) {
-				// audio.falling.play();
-				player.velocity.y = 0;
-				player.velocity.x = 0;
-
-				setTimeout(() => {
-					if (gameOver) {
-						loseGame();
-						gameOver = false;
-					}
-				});
-			}
+			// if (player.position.y < canvas.height) {
+			// 	player.velocity.y += average;
+			// 	player.velocity.x += average;
+			// }
 		};
 	})
-	.catch(function (err) {
-		/* handle the error */
+	.catch(err => {
 		console.error(err);
 	});
 
@@ -841,23 +848,24 @@ function startLevel3() {
 	animate();
 }
 
-// 게임 오버 또는 승리 시
+// 레벨 고르기
 function selectLevel(level) {
 	levelSelectPage.classList.remove("open");
-	canvas.classList.add("open");
-	animate();
+	gameResultModal.classList.remove("result-modal");
 
 	switch (level) {
 		case 1:
-			startLevel1();
+			initLevel1();
+			currentLevel++;
 			break;
 
 		case 2:
-			startLevel2();
+			initLevel2();
+			currentLevel++;
 			break;
 
 		case 3:
-			startLevel3();
+			initLevel3();
 			break;
 
 		// no default
@@ -889,6 +897,8 @@ level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
 	if (gameOver) {
+		gameOver = false;
+
 		body.appendChild(gameResultModal);
 		gameResultModal.appendChild(gameResultTitle);
 		gameResultModal.appendChild(gameResultSubText);
@@ -908,15 +918,13 @@ function loseGame() {
 		gameStartButton.classList.add("play-button");
 		backButton.classList.add("play-button");
 
-		gameOver = false;
-
 		backButton.addEventListener("click", showLevelPage);
-		// restart 누를 시 canvas 속도가 빨라지는 현상
 		gameStartButton.addEventListener("click", () => {
 			gameResultModal.classList.add("close");
+
 			setTimeout(() => {
 				gravity = 1.5;
-				selectLevel(currentLevel); // level 1으로 가는 문제
+				selectLevel(currentLevel);
 			});
 		});
 	}
@@ -924,6 +932,8 @@ function loseGame() {
 
 function winGame() {
 	if (gameOver) {
+		gameOver = false;
+
 		body.appendChild(gameResultModal);
 		gameResultModal.appendChild(gameResultTitle);
 		gameResultModal.appendChild(gameResultSubText);
@@ -943,11 +953,10 @@ function winGame() {
 		gameStartButton.classList.add("play-button");
 		backButton.classList.add("play-button");
 
-		gameOver = false;
-
 		backButton.addEventListener("click", showLevelPage);
 		gameStartButton.addEventListener("click", () => {
 			gameResultModal.classList.remove("result-modal");
+
 			setTimeout(() => {
 				gravity = 1.5;
 				currentLevel++;
