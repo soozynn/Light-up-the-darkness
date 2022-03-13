@@ -1,8 +1,4 @@
-const minutesLabel = document.getElementById("minutes");
-const secondsLabel = document.getElementById("seconds");
 const percent = document.getElementById("percent");
-
-let totalSeconds = 0;
 let totalPercent = 0;
 
 export function createImage(imageSrc) {
@@ -77,19 +73,35 @@ export function touchObjects({ object1, object2 }) {
 	);
 }
 
-export function setPercent(player, flag, distance) {
-	console.log(player, flag, distance);
+let beEecutedTwice = false;
+let flagPosition;
+export function setPercent(player, flag, distance, restart) {
+	if (restart) {
+		percent.textContent = `00`;
+	}
+
+	if (!beEecutedTwice) {
+		flagPosition = flag;
+		beEecutedTwice = true;
+		return;
+	}
+
 	const onePercent = Math.round(distance) / 100;
 	let result = Math.round(totalPercent / onePercent);
 
-	if (player < 400) {
+	if (player <= 400) {
 		totalPercent += Math.abs(100 - player);
 	} else {
-		totalPercent += Math.abs(distance - flag);
+		totalPercent += Math.abs(flagPosition - flag);
 	}
 
 	if (result > 100) {
 		result = 100;
+	}
+
+	if (result < 10) {
+		percent.textContent = `0${result}`;
+		return;
 	}
 
 	percent.textContent = result;

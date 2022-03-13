@@ -1,3 +1,8 @@
+@font-face {
+	src: url("./assets//font/zig_____.ttf");
+	font-family: "arcade";
+}
+
 html,
 body {
 	width: 100%;
@@ -83,15 +88,15 @@ body {
 .start-button,
 .how-to-play-button {
 	margin: 5px;
-	padding: 18px 30px;
+	padding: 22px 30px;
 	border-radius: 6px;
 	border: none;
-	font-size: 40px;
-	font-family: "Cookie", cursive;
+	font-size: 20px;
+	font-family: "arcade";
 }
 
 .start-button:hover,
-.how-to-play-button:hover .play-button:hover {
+.how-to-play-button:hover {
 	cursor: pointer;
 	background: transparent;
 	border: 2px solid #eee;
@@ -103,8 +108,8 @@ body {
 	padding: 18px 24px;
 	border-radius: 6px;
 	border: none;
-	font-size: 30px;
-	font-family: "Cookie", cursive;
+	font-size: 24px;
+	font-family: "arcade";
 }
 
 .play-button:hover {
@@ -137,6 +142,13 @@ body {
 	text-align: center;
 }
 
+.mic-explain {
+	margin-top: 20px;
+	font-size: 24px;
+	color: rgb(255, 0, 0);
+	text-align: center;
+}
+
 .modal {
 	display: flex;
 	flex-direction: column;
@@ -155,11 +167,11 @@ body {
 }
 
 .result-modal {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
+	position: absolute;
 	left: 25%;
 	top: 10%;
 	border-radius: 4px;
@@ -173,8 +185,8 @@ body {
 
 .modal-title {
 	margin: 10px 10px 5px 10px;
-	font-size: 60px;
-	font-family: "Cookie", cursive;
+	font-size: 40px;
+	font-family: "arcade";
 }
 
 .modal-content {
@@ -225,13 +237,13 @@ body {
 
 .close-button {
 	display: flex;
-	margin: 5px 5px 10px 5px;
+	margin: 10px;
 	padding: 10px 20px;
 	border-radius: 6px;
 	border: none;
 	color: #ccc;
-	font-size: 40px;
-	font-family: "Cookie", cursive;
+	font-size: 20px;
+	font-family: "arcade";
 }
 
 .close-button:hover,
@@ -247,7 +259,17 @@ body {
 	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background-color: white;
+	background-image: url("./assets/img/background/selecPage/selecPage.png");
+	animation: movebg 5s linear infinite;
+}
+
+@keyframes movebg {
+	0% {
+		background-position: 0% center;
+	}
+	100% {
+		background-position: 10% center;
+	}
 }
 
 .level-container {
@@ -257,26 +279,32 @@ body {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 25%;
 }
 
 .selec-title {
 	margin: 50px 10px 5px 10px;
 	font-size: 60px;
-	font-family: "Cookie", cursive;
+	font-family: "arcade";
 }
 
 .level-1,
 .level-2,
 .level-3 {
 	margin: 10px;
-	padding: 20px 40px;
-	border: 1px solid black;
-	border-radius: 4px;
-	background-color: #666666;
+	padding: 30px 40px;
+	background-color: lightgray;
+	text-shadow: -1px -1px black, 1px 1px white;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+
 	text-align: center;
 	color: white;
 	font-size: 30px;
-	font-family: "Cookie", cursive;
+	font-family: "arcade";
+	font-weight: bold;
 }
 
 .level-1:hover,
@@ -285,6 +313,7 @@ body {
 .level-2:focus,
 .level-3:hover,
 .level-3:focus {
+	box-shadow: 1px 1px 20px rgb(255, 223, 81);
 	background-color: black;
 	cursor: pointer;
 }
@@ -294,12 +323,13 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 20px 0;
+	margin-top: 0;
+	margin-bottom: 10px;
 	text-align: center;
 	color: red;
 	font-weight: bold;
-	font-size: 7rem;
-	font-family: "Cookie", cursive;
+	font-size: 5rem;
+	font-family: "arcade";
 }
 
 .game-win {
@@ -307,12 +337,13 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 20px 0;
+	margin-top: 0;
+	margin-bottom: 10px;
 	text-align: center;
 	color: rgb(255, 208, 0);
 	font-weight: bold;
 	font-size: 7rem;
-	font-family: "Cookie", cursive;
+	font-family: "arcade";
 }
 
 .buttons {
@@ -327,7 +358,7 @@ body {
 }
 
 .result-sub-text {
-	margin-top: 0;
+	margin: 20px;
 	font-weight: bold;
 	font-size: 1rem;
 }
@@ -344,9 +375,14 @@ body {
 }
 
 .percent-container {
+	display: none;
 	position: absolute;
 	top: 20px;
 	font-weight: bold;
 	font-size: 4rem;
 	font-family: "Cookie", cursive;
+}
+
+.show {
+	display: flex;
 }

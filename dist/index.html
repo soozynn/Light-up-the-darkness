@@ -16,10 +16,8 @@
 	<body>
 		<div class="start-page">
 			<div class="game-title">Louder!</div>
-			<input class="nickname-input" type="text" name="username" placeholder="your name" />
-
 			<div class="button-container">
-				<button type="button" class="start-button" disabled>Start Game</button>
+				<button type="button" class="start-button">Start Game</button>
 				<button type="button" class="how-to-play-button">How to play</button>
 			</div>
 		</div>
@@ -29,22 +27,33 @@
 				<p class="modal-title">How To Play</p>
 				<div class="modal-content">
 					<div class="game-explain">
-						<img class="audio" src="../img/audio/soft.png" alt="soft voice image" />Use
+						<img class="audio" src="./assets/img/audio/soft.png" alt="soft voice image" />Use
 						<span class="red-text">SOFT VOICE</span>to move
-						<img class="arrow" src="../img/arrow/forward.png" art="character motion explain" />
+						<img
+							class="arrow"
+							src="./assets/img/arrow/forward.png"
+							art="character motion explain"
+						/>
 					</div>
 
 					<div class="game-explain">
-						<img class="audio-image" src="../img/audio/soft-loud.png" alt="soft voice image" />Use
-						<span class="red-text">LOUD VOICE</span>to jump
-						<img class="arrow" src="../img/arrow/jump.png" art="character motion explain" />
+						<img
+							class="audio-image"
+							src="./assets/img/audio/soft-loud.png"
+							alt="soft voice image"
+						/>Use <span class="red-text">LOUD VOICE</span>to jump
+						<img class="arrow" src="./assets/img/arrow/jump.png" art="character motion explain" />
 					</div>
 
 					<div class="game-explain">
-						<img class="audio-image" src="../img/audio/loud.png" alt="soft voice image" />
+						<img class="audio-image" src="./assets/img/audio/loud.png" alt="soft voice image" />
 						Speck
 						<span class="red-text">LOUDER</span>, jump <span class="red-text">Higher</span>
-						<img class="arrow-jump" src="../img/arrow/higher.png" art="character motion explain" />
+						<img
+							class="arrow-jump"
+							src="./assets/img/arrow/higher.png"
+							art="character motion explain"
+						/>
 					</div>
 
 					<div class="sub-explain">
@@ -53,6 +62,7 @@
 					<div class="sub-explain">
 						Tip) 몬스터를 밟아 죽일 수는 있지만 머리 외에 몸통이 닿으면 Game Over!
 					</div>
+					<div class="mic-explain">좌측 상단에 마이크 권한을 허용해주세요!</div>
 				</div>
 				<button type="button" class="close-button">Close</button>
 			</div>
@@ -61,15 +71,17 @@
 		<div class="level-page">
 			<p class="selec-title">Select Level</p>
 			<div class="level-container">
-				<div class="level-1">Level 1</div>
+				<div class="level-1"><span>Level 1</span></div>
 				<div class="level-2">Level 2</div>
 				<div class="level-3">Level 3</div>
 			</div>
 		</div>
 
+		<div class="result-modal"></div>
+
 		<div class="toggle-music">
-			<img class="music-on" src="../img/audio/on.png" alt="music-on" />
-			<img class="music-off" src="../img/audio/off.png" alt="music-off" />
+			<img class="music-on" src="./assets/img/audio/on.png" alt="music-on" />
+			<img class="music-off" src="./assets/img/audio/off.png" alt="music-off" />
 		</div>
 
 		<div class="percent-container">
@@ -78,6 +90,6 @@
 		</div>
 
 		<canvas></canvas>
-		<script defer src="../../dist/main.js"></script>
+		<script defer src="../dist/main.js"></script>
 	</body>
 </html>

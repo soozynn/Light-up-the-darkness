@@ -1,7 +1,8 @@
 {
 	"scripts": {
 		"build": "webpack --config webpack.config.js",
-		"start": "webpack-dev-server --mode development --hot"
+		"start": "webpack-dev-server --mode development --hot",
+		"test": "jest"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.5",
@@ -17,6 +18,7 @@
 		"eslint-plugin-prettier": "^4.0.0",
 		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^5.5.0",
+		"jest": "^27.5.1",
 		"style-loader": "^3.3.1",
 		"webpack": "^5.70.0",
 		"webpack-cli": "^4.9.2",
@@ -24,7 +26,6 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.17.2",
-		"firebase": "^9.6.8",
 		"gsap": "^3.9.1",
 		"howler": "^2.2.3"
 	}
