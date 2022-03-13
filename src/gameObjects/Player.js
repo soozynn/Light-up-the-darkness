@@ -5,13 +5,14 @@ import spriteStandLeftImage from "../assets/img/player/idleLeft.png";
 import spriteJumpingRightImage from "../assets/img/player/jumpingRight.png";
 import spriteJumpingLeftImage from "../assets/img/player/jumpingLeft.png";
 import spriteHurtImage from "../assets/img/player/hurt.png";
+import { createImage } from "../js/utils";
 
 export default class Player {
-	constructor(createImage) {
-		this.speed = 3;
+	constructor() {
+		this.speed = 2;
 		this.position = {
 			x: 100,
-			y: 100,
+			y: 600,
 		};
 		this.velocity = {
 			x: 0,
@@ -74,26 +75,15 @@ export default class Player {
 			this.frames++;
 		}
 
-		if (
-			this.frames > 3.5 &&
-			(this.currentSprite === this.sprites.stand.right ||
-				this.currentSprite === this.sprites.stand.left)
-		) {
+		if (this.frames > 3.5 && this.currentSprite === this.sprites.stand.right) {
 			this.frames = 0;
 		}
 
-		if (
-			this.frames > 5.5 &&
-			(this.currentSprite === this.sprites.run.right ||
-				this.currentSprite === this.sprites.run.left)
-		) {
+		if (this.frames > 5.5 && this.currentSprite === this.sprites.run.right) {
 			this.frames = 0;
 		}
 
-		if (
-			this.currentSprite === this.sprites.jump.right ||
-			this.currentSprite === this.sprites.jump.left
-		) {
+		if (this.frames > 7.5 && this.currentSprite === this.sprites.jump.rightt) {
 			this.frames = 0;
 		}
 

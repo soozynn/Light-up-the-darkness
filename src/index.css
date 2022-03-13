@@ -96,8 +96,7 @@ body {
 }
 
 .start-button:hover,
-.how-to-play-button:hover,
-.play-button:hover {
+.how-to-play-button:hover {
 	cursor: pointer;
 	background: transparent;
 	border: 2px solid #eee;
@@ -109,7 +108,7 @@ body {
 	padding: 18px 24px;
 	border-radius: 6px;
 	border: none;
-	font-size: 30px;
+	font-size: 24px;
 	font-family: "arcade";
 }
 
@@ -140,6 +139,13 @@ body {
 .sub-explain {
 	margin-top: 20px;
 	font-size: 24px;
+	text-align: center;
+}
+
+.mic-explain {
+	margin-top: 20px;
+	font-size: 24px;
+	color: rgb(255, 0, 0);
 	text-align: center;
 }
 
@@ -262,7 +268,7 @@ body {
 		background-position: 0% center;
 	}
 	100% {
-		background-position: 10% center;
+		background-position: 15% center;
 	}
 }
 
@@ -322,8 +328,8 @@ body {
 	text-align: center;
 	color: red;
 	font-weight: bold;
-	font-size: 7rem;
-	font-family: "Cookie", cursive;
+	font-size: 5rem;
+	font-family: "arcade";
 }
 
 .game-win {
@@ -337,7 +343,7 @@ body {
 	color: rgb(255, 208, 0);
 	font-weight: bold;
 	font-size: 7rem;
-	font-family: "Cookie", cursive;
+	font-family: "arcade";
 }
 
 .buttons {
@@ -352,7 +358,7 @@ body {
 }
 
 .result-sub-text {
-	margin-top: 0;
+	margin: 20px;
 	font-weight: bold;
 	font-size: 1rem;
 }

@@ -30,6 +30,10 @@ import {
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+
+const bgmButton = document.querySelector(".toggle-music");
+const soundOnButton = document.querySelector(".music-on");
+const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
 let gravity = 1.5;
 
@@ -65,8 +69,32 @@ let flag;
 let currentLevel = 1;
 
 async function initLevel1() {
+	let audioOn = true;
+
+	soundOnButton.classList.add("open");
 	percent.classList.add("show");
-	setPercent(0, 0, 0);
+
+	if (audioOn && !audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+
+	soundOnButton.addEventListener("click", () => {
+		soundOnButton.classList.add("close");
+		soundOffButton.classList.add("open");
+		audioOn = false;
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+	});
+	soundOffButton.addEventListener("click", () => {
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+
+		if (!audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.play();
+		}
+	});
 
 	platformImg = await createImageAsync(images.levels[1].platform);
 	smallPlatformImg = await createImageAsync(images.levels[1].smallPlatform);
@@ -79,7 +107,7 @@ async function initLevel1() {
 		y: 180,
 		image: flagImg,
 	});
-	player = new Player(createImage);
+	player = new Player();
 	monsters = [
 		new Monster({
 			position: {
@@ -112,14 +140,16 @@ async function initLevel1() {
 			block: true,
 		}),
 		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 200, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 380, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 450, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 442, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 8 + 480, y: 742, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 480, y: 542, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 480, y: 642, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 480, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 200, y: 500, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 200, y: 600, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 200, y: 700, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 6 + 300, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 400, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 8 + 400, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 400, y: 742, image: platformImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -139,9 +169,32 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	percent.classList.add("show");
-	setPercent(0, 0, 0);
+	let audioOn = true;
 
+	soundOnButton.classList.add("open");
+	percent.classList.add("show");
+
+	if (audioOn && !audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+
+	soundOnButton.addEventListener("click", () => {
+		soundOnButton.classList.add("close");
+		soundOffButton.classList.add("open");
+		audioOn = false;
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+	});
+	soundOffButton.addEventListener("click", () => {
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+
+		if (!audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.play();
+		}
+	});
 	platformImg = await createImageAsync(images.levels[2].largePlatform);
 	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
@@ -153,7 +206,7 @@ async function initLevel2() {
 		y: 100,
 		image: flagImg,
 	});
-	player = new Player(createImage);
+	player = new Player();
 	monsters = [
 		new Monster({
 			position: {
@@ -269,8 +322,32 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
+	let audioOn = true;
+
+	soundOnButton.classList.add("open");
 	percent.classList.add("show");
-	setPercent(0, 0, 0);
+
+	if (audioOn && !audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.play();
+	}
+
+	soundOnButton.addEventListener("click", () => {
+		soundOnButton.classList.add("close");
+		soundOffButton.classList.add("open");
+		audioOn = false;
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
+	});
+	soundOffButton.addEventListener("click", () => {
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+
+		if (!audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.play();
+		}
+	});
 
 	platformImg = await createImageAsync(images.levels[3].platform);
 	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
@@ -283,7 +360,7 @@ async function initLevel3() {
 		y: canvas.height - platformImg.height - flagImg.height - 220,
 		image: flagImg,
 	});
-	player = new Player(createImage);
+	player = new Player();
 	monsters = [
 		new Monster({
 			position: {
@@ -412,34 +489,6 @@ async function initLevel3() {
 }
 
 function animate() {
-	const soundOnButton = document.querySelector(".music-on");
-	const soundOffButton = document.querySelector(".music-off");
-	let audioOn = true;
-
-	soundOnButton.classList.add("open");
-
-	if (audioOn && !audio.backgroundMusic.playing()) {
-		audio.backgroundMusic.play();
-	}
-
-	soundOnButton.addEventListener("click", () => {
-		soundOnButton.classList.add("close");
-		soundOffButton.classList.add("open");
-		audioOn = false;
-
-		if (audio.backgroundMusic.playing()) {
-			audio.backgroundMusic.stop();
-		}
-	});
-	soundOffButton.addEventListener("click", () => {
-		soundOnButton.classList.remove("close");
-		soundOffButton.classList.remove("open");
-
-		if (!audio.backgroundMusic.playing()) {
-			audio.backgroundMusic.play();
-		}
-	});
-
 	requestAnimationFrame(animate);
 
 	ctx.fillStyle = "white";
@@ -526,7 +575,7 @@ function animate() {
 					}
 
 					audio.gameOver.play();
-					winGame();
+					loseGame();
 
 					gameOver = false;
 				}
@@ -732,15 +781,15 @@ function animate() {
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
 		}
+		audio.falling.play();
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
 		loseGame();
-		console.log(player.position.y, canvas.height);
+		// console.log(player.position.y, canvas.height);
 
 		setTimeout(() => {
 			if (gameOver) {
-				audio.falling.play();
 				audio.gameOver.play();
 				gameOver = false;
 			}
@@ -761,31 +810,39 @@ navigator.mediaDevices
 		const microphone = audioContext.createMediaStreamSource(stream);
 		const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
 
-		analyser.smoothingTimeConstant = 0.8;
-		analyser.fftSize = 1024;
+		analyser.minDecibels = -90;
+		analyser.maxDecibels = -10;
+		analyser.smoothingTimeConstant = 0.85;
+		analyser.fftSize = 256;
 
 		microphone.connect(analyser);
 		analyser.connect(scriptProcessor);
 		scriptProcessor.connect(audioContext.destination);
 
-		scriptProcessor.onaudioprocess = function () {
+		scriptProcessor.onaudioprocess = () => {
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
-			const arraySum = dataArray.reduce((acc, value) => acc + value) / dataArray.length;
-			const average = arraySum;
+
+			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
+
 			console.log(average);
 
-			if (jump && 30 < average) {
-				player.velocity.y -= average;
+			if (average > 30) {
+				player.velocity.y -= average / 2.5;
 				jump = false;
 			}
 
-			if (10 < average) {
+			// if (jump && average > 40) {
+			// 	player.velocity.y -= ㅁㅍ;
+			// 	jump = false;
+			// }
+
+			if (average > 10) {
 				keys.right.pressed = true;
 				lastKey = "right";
 			}
 
-			if (average < 5) {
+			if (average < 10) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
@@ -812,7 +869,6 @@ const closeButton = document.querySelector(".close-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
 const resultModal = document.querySelector(".result-modal");
-const input = document.querySelector(".nickname-input");
 
 const levelSelectPage = document.querySelector(".level-page");
 const level1Button = document.querySelector(".level-1");
@@ -832,6 +888,7 @@ function showLevelPage() {
 	levelSelectPage.classList.add("open");
 	resultModal.classList.remove("show");
 	percent.classList.remove("show");
+	soundOnButton.classList.remove("open");
 }
 
 function startLevel1() {
@@ -881,20 +938,10 @@ function selectLevel(level) {
 			initLevel3();
 			break;
 
-		// no default
+		default:
+			initLevel3();
 	}
 }
-
-// input.addEventListener("keyup", e => {
-// 	const { value } = e.currentTarget;
-
-// 	if (!value) {
-// 		startButton.disabled = true;
-// 		return;
-// 	}
-
-// 	startButton.disabled = false;
-// });
 
 howToPlayButton.addEventListener("click", () => {
 	modalContainer.classList.add("open");
@@ -952,7 +999,7 @@ function winGame() {
 		gameResultButtonsContainer.appendChild(backButton);
 		gameResultButtonsContainer.appendChild(gameStartButton);
 
-		gameResultTitle.textContent = "Clear!";
+		gameResultTitle.textContent = "Clear";
 		gameStartButton.textContent = "Next";
 		backButton.textContent = "Back";
 		gameResultSubText.textContent = "Do you want to move on to the next level?";

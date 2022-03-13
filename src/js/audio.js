@@ -18,7 +18,7 @@ export const audio = {
 	}),
 	backgroundMusic: new Howl({
 		src: [audioStage1Music],
-		volume: 0.5,
+		volume: 0.1,
 	}),
 	monsterSquash: new Howl({
 		src: [audioMonsterSquash],

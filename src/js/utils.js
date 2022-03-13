@@ -75,7 +75,11 @@ export function touchObjects({ object1, object2 }) {
 
 let beEecutedTwice = false;
 let flagPosition;
-export function setPercent(player, flag, distance) {
+export function setPercent(player, flag, distance, restart) {
+	if (restart) {
+		percent.textContent = `00`;
+	}
+
 	if (!beEecutedTwice) {
 		flagPosition = flag;
 		beEecutedTwice = true;
