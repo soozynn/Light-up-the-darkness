@@ -30,6 +30,7 @@ import {
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+const percent = document.querySelector(".percent-container");
 let gravity = 1.5;
 
 canvas.width = 1090;
@@ -64,6 +65,9 @@ let flag;
 let currentLevel = 1;
 
 async function initLevel1() {
+	percent.classList.add("show");
+	setPercent(0, 0, 0);
+
 	platformImg = await createImageAsync(images.levels[1].platform);
 	smallPlatformImg = await createImageAsync(images.levels[1].smallPlatform);
 	obstacleImg = await createImageAsync(images.levels[1].obstacle);
@@ -135,6 +139,9 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
+	percent.classList.add("show");
+	setPercent(0, 0, 0);
+
 	platformImg = await createImageAsync(images.levels[2].largePlatform);
 	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
@@ -262,6 +269,9 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
+	percent.classList.add("show");
+	setPercent(0, 0, 0);
+
 	platformImg = await createImageAsync(images.levels[3].platform);
 	smallPlatformImg = await createImageAsync(images.levels[3].smallPlatform);
 	obstacleImg = await createImageAsync(images.levels[3].obstacle);
@@ -801,6 +811,7 @@ const howToPlayButton = document.querySelector(".how-to-play-button");
 const closeButton = document.querySelector(".close-button");
 const startPage = document.querySelector(".start-page");
 const modalContainer = document.querySelector(".modal-container");
+const resultModal = document.querySelector(".result-modal");
 const input = document.querySelector(".nickname-input");
 
 const levelSelectPage = document.querySelector(".level-page");
@@ -808,8 +819,6 @@ const level1Button = document.querySelector(".level-1");
 const level2Button = document.querySelector(".level-2");
 const level3Button = document.querySelector(".level-3");
 
-const body = document.querySelector("body");
-const gameResultModal = document.createElement("div");
 const gameResultTitle = document.createElement("p");
 const gameResultSubText = document.createElement("p");
 const backButton = document.createElement("button");
@@ -821,12 +830,14 @@ function showLevelPage() {
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
-	gameResultModal.classList.remove("result-modal");
+	resultModal.classList.remove("show");
+	percent.classList.remove("show");
 }
 
 function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+	resultModal.classList.add("show");
 
 	initLevel1();
 	animate();
@@ -835,6 +846,7 @@ function startLevel1() {
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+	resultModal.classList.add("show");
 
 	initLevel2();
 	animate();
@@ -843,6 +855,7 @@ function startLevel2() {
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
+	resultModal.classList.add("show");
 
 	initLevel3();
 	animate();
@@ -851,7 +864,7 @@ function startLevel3() {
 // 레벨 고르기
 function selectLevel(level) {
 	levelSelectPage.classList.remove("open");
-	gameResultModal.classList.remove("result-modal");
+	resultModal.classList.remove("show");
 
 	switch (level) {
 		case 1:
@@ -872,16 +885,16 @@ function selectLevel(level) {
 	}
 }
 
-input.addEventListener("keyup", e => {
-	const { value } = e.currentTarget;
+// input.addEventListener("keyup", e => {
+// 	const { value } = e.currentTarget;
 
-	if (!value) {
-		startButton.disabled = true;
-		return;
-	}
+// 	if (!value) {
+// 		startButton.disabled = true;
+// 		return;
+// 	}
 
-	startButton.disabled = false;
-});
+// 	startButton.disabled = false;
+// });
 
 howToPlayButton.addEventListener("click", () => {
 	modalContainer.classList.add("open");
@@ -899,10 +912,9 @@ function loseGame() {
 	if (gameOver) {
 		gameOver = false;
 
-		body.appendChild(gameResultModal);
-		gameResultModal.appendChild(gameResultTitle);
-		gameResultModal.appendChild(gameResultSubText);
-		gameResultModal.appendChild(gameResultButtonsContainer);
+		resultModal.appendChild(gameResultTitle);
+		resultModal.appendChild(gameResultSubText);
+		resultModal.appendChild(gameResultButtonsContainer);
 		gameResultButtonsContainer.appendChild(backButton);
 		gameResultButtonsContainer.appendChild(gameStartButton);
 
@@ -911,7 +923,7 @@ function loseGame() {
 		backButton.textContent = "Back";
 		gameResultSubText.textContent = "Don't give up and try again.";
 
-		gameResultModal.classList.add("result-modal");
+		resultModal.classList.add("result-modal");
 		gameResultTitle.classList.add("game-over");
 		gameResultSubText.classList.add("result-sub-text");
 		gameResultButtonsContainer.classList.add("buttons");
@@ -920,7 +932,7 @@ function loseGame() {
 
 		backButton.addEventListener("click", showLevelPage);
 		gameStartButton.addEventListener("click", () => {
-			gameResultModal.classList.add("close");
+			resultModal.classList.remove("show");
 
 			setTimeout(() => {
 				gravity = 1.5;
@@ -934,10 +946,9 @@ function winGame() {
 	if (gameOver) {
 		gameOver = false;
 
-		body.appendChild(gameResultModal);
-		gameResultModal.appendChild(gameResultTitle);
-		gameResultModal.appendChild(gameResultSubText);
-		gameResultModal.appendChild(gameResultButtonsContainer);
+		resultModal.appendChild(gameResultTitle);
+		resultModal.appendChild(gameResultSubText);
+		resultModal.appendChild(gameResultButtonsContainer);
 		gameResultButtonsContainer.appendChild(backButton);
 		gameResultButtonsContainer.appendChild(gameStartButton);
 
@@ -946,7 +957,7 @@ function winGame() {
 		backButton.textContent = "Back";
 		gameResultSubText.textContent = "Do you want to move on to the next level?";
 
-		gameResultModal.classList.add("result-modal");
+		resultModal.classList.add("result-modal");
 		gameResultTitle.classList.add("game-win");
 		gameResultSubText.classList.add("result-sub-text");
 		gameResultButtonsContainer.classList.add("buttons");
@@ -955,7 +966,7 @@ function winGame() {
 
 		backButton.addEventListener("click", showLevelPage);
 		gameStartButton.addEventListener("click", () => {
-			gameResultModal.classList.remove("result-modal");
+			resultModal.classList.remove("show");
 
 			setTimeout(() => {
 				gravity = 1.5;
