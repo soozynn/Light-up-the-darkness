@@ -31,7 +31,7 @@ import {
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-const bgmButton = document.querySelector(".toggle-music");
+// const bgmButton = document.querySelector(".toggle-music");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
@@ -139,10 +139,11 @@ async function initLevel1() {
 			image: platformImg,
 			block: true,
 		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 200, y: 742, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 200, y: 500, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 200, y: 600, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 200, y: 700, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: 700, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 200, y: 470, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 6 + 300, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 400, y: 442, image: smallPlatformImg, block: true }),
@@ -781,7 +782,6 @@ function animate() {
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
 		}
-		audio.falling.play();
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
@@ -790,6 +790,7 @@ function animate() {
 
 		setTimeout(() => {
 			if (gameOver) {
+				audio.falling.play();
 				audio.gameOver.play();
 				gameOver = false;
 			}

@@ -18,8 +18,8 @@ export default class Monster {
 			y: velocity.y,
 		};
 
-		this.width = 130;
-		this.height = 110;
+		this.width = 60;
+		this.height = 90;
 
 		this.image = image;
 		this.frames = 0;
@@ -32,10 +32,10 @@ export default class Monster {
 	draw(ctx) {
 		ctx.drawImage(
 			this.image,
-			490 * this.frames,
+			225 * this.frames,
 			0,
-			490,
-			350,
+			225,
+			290,
 			this.position.x,
 			this.position.y,
 			this.width,
@@ -47,7 +47,7 @@ export default class Monster {
 		if (this.frameSpeed % this.staggerFrames === 0) {
 			this.frames++;
 
-			if (this.frames > 2.9) {
+			if (this.frames > 3.5) {
 				this.frames = 0;
 			}
 		}
