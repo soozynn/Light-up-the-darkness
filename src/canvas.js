@@ -34,6 +34,7 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
+
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
 const closeButton = document.querySelector(".close-button");
