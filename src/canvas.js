@@ -8,13 +8,13 @@ import GenericObject from "./gameObjects/GenericObject";
 import Monster from "./gameObjects/Monster";
 import Particle from "./gameObjects/Particle";
 
-import flagImage from "./assets/img/flag/flag.png";
-import spriteGreenMonster from "./assets/img/monster/walkGreen.png";
-import spriteBrownMonster from "./assets/img/monster/walkBrown.png";
-import spritePurpleMonster from "./assets/img/monster/walkPurple.png";
+import flagImage from "./assets/images/flag/flag.png";
+import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
+import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
+import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
-import { audio } from "./js/audio";
-import { images } from "./js/image";
+import { audio } from "./utils/audio";
+import { images } from "./utils/image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -25,7 +25,7 @@ import {
 	hitSideOfPlatform,
 	touchObjects,
 	setPercent,
-} from "./js/utils";
+} from "./utils/utils";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -137,10 +137,13 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 3 + 400, y: 650, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 400, y: 750, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 200, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 442, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 582, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 722, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 8 + 400, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 442, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 742, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 742, image: platformImg, block: true }),
@@ -790,6 +793,7 @@ function animate() {
 	}
 }
 
+let jump = true;
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
@@ -815,18 +819,24 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-
-			if (average > 30) {
-				player.velocity.y -= average / 2.5;
+			console.log(average);
+			// 최상단 안넘게 조절
+			if (average > 35) {
+				player.velocity.y -= average / 2 + 15;
 				jump = false;
 			}
 
-			if (average > 10) {
+			if (35 > average > 20) {
+				player.velocity.y -= average / 2;
+				jump = false;
+			}
+
+			if (average > 5) {
 				keys.right.pressed = true;
 				lastKey = "right";
 			}
 
-			if (average < 10) {
+			if (average < 5) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
