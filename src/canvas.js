@@ -13,7 +13,6 @@ import spriteGreenMonster from "./assets/img/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/img/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/img/monster/walkPurple.png";
 
-// import database from "./database";
 import { audio } from "./js/audio";
 import { images } from "./js/image";
 import {
@@ -31,7 +30,6 @@ import {
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-// const bgmButton = document.querySelector(".toggle-music");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
@@ -126,12 +124,6 @@ async function initLevel1() {
 		}),
 	];
 	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
 		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
 		new Platform({
 			x: platformImg.width - 3,
@@ -140,13 +132,14 @@ async function initLevel1() {
 			block: true,
 		}),
 		new Platform({ x: platformImg.width * 2 + 200, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 200, y: 500, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 200, y: 600, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 200, y: 700, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: 700, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 400, y: 450, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 400, y: 550, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 400, y: 650, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 400, y: 750, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 200, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 300, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 400, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 400, y: 582, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 400, y: 722, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 8 + 400, y: 742, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
@@ -594,7 +587,7 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		setPercent(player.position.x, flag.position.x, 700000);
+		setPercent(player.position.x, flag.position.x, 750000);
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
@@ -604,7 +597,7 @@ function animate() {
 		player.velocity.x = 0;
 
 		if (keys.right.pressed) {
-			setPercent(player.position.x, flag.position.x, 700000);
+			setPercent(player.position.x, flag.position.x, 750000);
 
 			for (let i = 0; i < platforms.length; i++) {
 				const platform = platforms[i];
@@ -786,7 +779,6 @@ function animate() {
 		player.speed = 0;
 		player.velocity.y = 0;
 		loseGame();
-		// console.log(player.position.y, canvas.height);
 
 		setTimeout(() => {
 			if (gameOver) {
@@ -797,8 +789,6 @@ function animate() {
 		});
 	}
 }
-
-let jump = true;
 
 navigator.mediaDevices
 	.getUserMedia({
@@ -826,17 +816,10 @@ navigator.mediaDevices
 
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
 
-			console.log(average);
-
 			if (average > 30) {
 				player.velocity.y -= average / 2.5;
 				jump = false;
 			}
-
-			// if (jump && average > 40) {
-			// 	player.velocity.y -= ㅁㅍ;
-			// 	jump = false;
-			// }
 
 			if (average > 10) {
 				keys.right.pressed = true;
@@ -852,18 +835,12 @@ navigator.mediaDevices
 			if (!player.velocity.y) {
 				jump = true;
 			}
-
-			// if (player.position.y < canvas.height) {
-			// 	player.velocity.y += average;
-			// 	player.velocity.x += average;
-			// }
 		};
 	})
 	.catch(err => {
 		console.error(err);
 	});
 
-// start page
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
 const closeButton = document.querySelector(".close-button");
@@ -919,7 +896,6 @@ function startLevel3() {
 	animate();
 }
 
-// 레벨 고르기
 function selectLevel(level) {
 	levelSelectPage.classList.remove("open");
 	resultModal.classList.remove("show");
