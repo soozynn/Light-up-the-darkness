@@ -33,7 +33,6 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
-let gravity = 1.5;
 
 canvas.width = 1090;
 canvas.height = innerHeight;
@@ -61,25 +60,23 @@ const keys = {
 	},
 };
 
+let gravity = 1.5;
 let scrollOffSet = 0;
 let gameOver = true;
 let flag;
 let currentLevel = 1;
 
 async function initLevel1() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -166,19 +163,16 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -192,6 +186,7 @@ async function initLevel2() {
 			audio.backgroundMusic.play();
 		}
 	});
+
 	platformImg = await createImageAsync(images.levels[2].largePlatform);
 	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
@@ -319,19 +314,16 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -943,37 +935,40 @@ level2Button.addEventListener("click", startLevel2);
 level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
-	if (gameOver) {
-		gameOver = false;
+	// if (gameOver) {
+	// 	gameOver = false;
 
-		resultModal.appendChild(gameResultTitle);
-		resultModal.appendChild(gameResultSubText);
-		resultModal.appendChild(gameResultButtonsContainer);
-		gameResultButtonsContainer.appendChild(backButton);
-		gameResultButtonsContainer.appendChild(gameStartButton);
+	resultModal.appendChild(gameResultTitle);
+	resultModal.appendChild(gameResultSubText);
+	resultModal.appendChild(gameResultButtonsContainer);
+	gameResultButtonsContainer.appendChild(backButton);
+	gameResultButtonsContainer.appendChild(gameStartButton);
 
-		gameResultTitle.textContent = "Game Over";
-		gameStartButton.textContent = "Restart";
-		backButton.textContent = "Back";
-		gameResultSubText.textContent = "Don't give up and try again.";
+	gameResultTitle.textContent = "Game Over";
+	gameStartButton.textContent = "Restart";
+	backButton.textContent = "Back";
+	gameResultSubText.textContent = "Don't give up and try again.";
 
-		resultModal.classList.add("result-modal");
-		gameResultTitle.classList.add("game-over");
-		gameResultSubText.classList.add("result-sub-text");
-		gameResultButtonsContainer.classList.add("buttons");
-		gameStartButton.classList.add("play-button");
-		backButton.classList.add("play-button");
+	resultModal.classList.add("result-modal");
+	gameResultTitle.classList.add("game-over");
+	gameResultSubText.classList.add("result-sub-text");
+	gameResultButtonsContainer.classList.add("buttons");
+	gameStartButton.classList.add("play-button");
+	backButton.classList.add("play-button");
 
-		backButton.addEventListener("click", showLevelPage);
-		gameStartButton.addEventListener("click", () => {
-			resultModal.classList.remove("show");
+	backButton.addEventListener("click", showLevelPage);
+	gameStartButton.addEventListener("click", () => {
+		resultModal.classList.remove("show");
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+		setPercent(0, 0, 0, 1);
 
-			setTimeout(() => {
-				gravity = 1.5;
-				selectLevel(currentLevel);
-			});
+		setTimeout(() => {
+			gravity = 1.5;
+			selectLevel(currentLevel);
 		});
-	}
+	});
+	// }
 }
 
 function winGame() {
@@ -1001,6 +996,9 @@ function winGame() {
 		backButton.addEventListener("click", showLevelPage);
 		gameStartButton.addEventListener("click", () => {
 			resultModal.classList.remove("show");
+			soundOnButton.classList.remove("close");
+			soundOffButton.classList.remove("open");
+			setPercent(0, 0, 0, 1);
 
 			setTimeout(() => {
 				gravity = 1.5;
