@@ -561,6 +561,7 @@ function animate() {
 			if (gameOver) {
 				audio.gameWin.play();
 				winGame();
+				gameOver = false;
 			}
 		}
 	}
@@ -621,12 +622,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			if (!gameOver) {
-				setPercent(player.position.x, flag.position.x, 810000);
-				return;
-			}
-
-			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+			setPercent(player.position.x, flag.position.x, 825000);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -638,12 +634,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				if (!gameOver) {
-					setPercent(player.position.x, flag.position.x, 810000);
-					return;
-				}
-
-				setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+				setPercent(player.position.x, flag.position.x, 825000);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -835,7 +826,6 @@ function animate() {
 	}
 }
 
-let touchedGround = true;
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
@@ -861,28 +851,31 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
 
-			if (average > 5) {
+			if (average > 10) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (average < 5) {
+			if (player.position.y < 5) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
+				return;
 			}
 
-			if (touchedGround) {
-				if (average > 30) {
-					player.velocity.y = -10;
-				}
+			if (average < 10) {
+				keys.right.pressed = false;
+				player.velocity.y = 0;
+				player.velocity.x = 0;
+				return;
+			}
 
-				if (average < 30) {
-					player.velocity.y = -average / 2;
-				}
-				if (average < 2) {
-					touchedGround = true;
-				}
+			if (player.position.y > 5 && average > 30) {
+				player.velocity.y = -10;
+			}
+
+			if (player.position.y > 5 && average < 30) {
+				player.velocity.y = -average / 2;
 			}
 		};
 	})
@@ -910,6 +903,8 @@ function showLevelPage() {
 		audio.falling.stop();
 		audio.hurt.stop();
 	}
+
+	gameOver = true;
 	restart = true;
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
@@ -998,6 +993,10 @@ level2Button.addEventListener("click", startLevel2);
 level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
+	if (audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.stop();
+	}
+
 	resultModal.appendChild(gameResultTitle);
 	resultModal.appendChild(gameResultSubText);
 	resultModal.appendChild(gameResultButtonsContainer);
@@ -1015,6 +1014,7 @@ function loseGame() {
 	gameResultButtonsContainer.classList.add("buttons");
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
+	gameResultTitle.classList.remove("game-win");
 
 	backButton.addEventListener("click", () => {
 		showLevelPage();
@@ -1035,6 +1035,10 @@ function loseGame() {
 }
 
 function winGame() {
+	if (audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.stop();
+	}
+
 	resultModal.appendChild(gameResultTitle);
 	resultModal.appendChild(gameResultSubText);
 	resultModal.appendChild(gameResultButtonsContainer);
@@ -1052,6 +1056,7 @@ function winGame() {
 	gameResultButtonsContainer.classList.add("buttons");
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
+	gameResultTitle.classList.remove("game-over");
 
 	backButton.addEventListener("click", () => {
 		showLevelPage();
