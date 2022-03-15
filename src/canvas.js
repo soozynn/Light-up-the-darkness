@@ -375,8 +375,8 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 11 + 700,
-		y: canvas.height - platformImg.height - flagImg.height - 220,
+		x: platformImg.width * 9 + 700,
+		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
 	player = new Player();
@@ -479,17 +479,10 @@ async function initLevel3() {
 		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 220, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 320, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 420, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 720, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 520, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
@@ -890,11 +883,11 @@ function showLevelPage() {
 
 	gameOver = true;
 	restart = true;
+	resultModal.classList.remove("show");
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
-	resultModal.classList.remove("show");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
 }
