@@ -12,3 +12,17 @@ export const result = {
 	NEXT_LEVEL: "Next",
 	GAME_CLEAR_SUB_TEXT: "Do you want to move on to the next level?",
 };
+
+export const screen = {
+	CELLING: 750,
+	BOTTOM: 5,
+};
+
+export const flagPosition = {
+	x: 825000,
+};
+
+export const volume = {
+	SOFT: 10,
+	LOUD: 30,
+};

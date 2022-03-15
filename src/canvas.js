@@ -13,6 +13,7 @@ import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
+import { key, result, screen, flagPosition, volume } from "./constants/constants";
 import { audio } from "./utils/audio";
 import { images } from "./utils/image";
 import {
@@ -26,7 +27,6 @@ import {
 	touchObjects,
 	setPercent,
 } from "./utils/utils";
-import { key, result } from "./constants/constants";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -599,7 +599,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			setPercent(player.position.x, flag.position.x, 825000);
+			setPercent(player.position.x, flag.position.x, flagPosition.x);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -611,7 +611,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				setPercent(player.position.x, flag.position.x, 825000);
+				setPercent(player.position.x, flag.position.x, flagPosition.x);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -785,14 +785,20 @@ function animate() {
 		}
 	}
 
-	if (player.position.y > 750) {
+	if (player.position.y < screen.BOTTOM) {
+		keys.right.pressed = false;
+		player.currentSprite = player.sprites.stand.right;
+		player.velocity.y = 0;
+		player.velocity.x = 0;
+	}
+
+	if (player.position.y > screen.CELLING) {
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
 
 		if (gameOver) {
 			loseGame();
-			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
 			audio.falling.play();
 			gameOver = false;
 		}
@@ -827,31 +833,26 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(average);
-			if (average > 10) {
+
+			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (player.position.y < 5) {
+			if (average < volume.SOFT) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 				return;
 			}
 
-			if (average < 10) {
-				keys.right.pressed = false;
-				player.velocity.y = 0;
-				player.velocity.x = 0;
-				return;
-			}
-
-			if (player.position.y > 5 && average > 30) {
+			if (player.position.y > screen.BOTTOM && average > volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
 				player.velocity.y = -5;
 			}
 
-			if (player.position.y > 5 && average < 30) {
+			if (player.position.y > screen.BOTTOM && average < volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
 				player.velocity.y = -average / 2;
 			}
 		};
