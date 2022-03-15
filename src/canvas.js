@@ -13,6 +13,7 @@ import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
+import { key, result, screen, flagPosition, volume } from "./constants/constants";
 import { audio } from "./utils/audio";
 import { images } from "./utils/image";
 import {
@@ -26,7 +27,10 @@ import {
 	touchObjects,
 	setPercent,
 } from "./utils/utils";
+<<<<<<< HEAD
 import { key, result, screen, flagPosition } from "./constants/constants";
+=======
+>>>>>>> bd70cc9 (Fix: numerical constantization)
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -599,7 +603,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			setPercent(player.position.x, flag.position.x, 825000);
+			setPercent(player.position.x, flag.position.x, flagPosition.x);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -611,7 +615,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				setPercent(player.position.x, flag.position.x, 825000);
+				setPercent(player.position.x, flag.position.x, flagPosition.x);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -833,25 +837,25 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(average);
-			if (average > 10) {
+
+			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (average < 10) {
+			if (average < volume.SOFT) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 				return;
 			}
 
-			if (player.position.y > 5 && average > 30) {
+			if (player.position.y > screen.BOTTOM && average > volume.LOUD) {
 				player.currentSprite = player.sprites.run.right;
 				player.velocity.y = -5;
 			}
 
-			if (player.position.y > 5 && average < 30) {
+			if (player.position.y > screen.BOTTOM && average < volume.LOUD) {
 				player.currentSprite = player.sprites.run.right;
 				player.velocity.y = -average / 2;
 			}
