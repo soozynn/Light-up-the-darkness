@@ -46,18 +46,6 @@ const level1Button = document.querySelector(".level-1");
 const level2Button = document.querySelector(".level-2");
 const level3Button = document.querySelector(".level-3");
 
-const startButton = document.querySelector(".start-button");
-const howToPlayButton = document.querySelector(".how-to-play-button");
-const closeButton = document.querySelector(".close-button");
-const startPage = document.querySelector(".start-page");
-const modalContainer = document.querySelector(".modal-container");
-const resultModal = document.querySelector(".result-modal");
-
-const levelSelectPage = document.querySelector(".level-page");
-const level1Button = document.querySelector(".level-1");
-const level2Button = document.querySelector(".level-2");
-const level3Button = document.querySelector(".level-3");
-
 canvas.width = 1090;
 canvas.height = innerHeight;
 
