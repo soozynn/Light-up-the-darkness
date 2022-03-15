@@ -73,16 +73,13 @@ export function touchObjects({ object1, object2 }) {
 	);
 }
 
-let beEecutedTwice = false;
 let flagPosition;
-export function setPercent(player, flag, distance, restart) {
+export function setPercent(player, flag, distance, restart, gameOver) {
+	if (gameOver) return;
+
 	if (restart) {
 		percent.textContent = `00`;
-	}
-
-	if (!beEecutedTwice) {
-		flagPosition = flag;
-		beEecutedTwice = true;
+		totalPercent = 0;
 		return;
 	}
 

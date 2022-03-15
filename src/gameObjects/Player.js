@@ -1,18 +1,18 @@
-import spriteRunRightImage from "../assets/img/player/runToTheRight.png";
-import spriteRunLeftImage from "../assets/img/player/runToTheLeft.png";
-import spriteStandRightImage from "../assets/img/player/idleRight.png";
-import spriteStandLeftImage from "../assets/img/player/idleLeft.png";
-import spriteJumpingRightImage from "../assets/img/player/jumpingRight.png";
-import spriteJumpingLeftImage from "../assets/img/player/jumpingLeft.png";
-import spriteHurtImage from "../assets/img/player/hurt.png";
-import { createImage } from "../js/utils";
+import spriteRunRightImage from "../assets/images/player/runToTheRight.png";
+import spriteRunLeftImage from "../assets/images/player/runToTheLeft.png";
+import spriteStandRightImage from "../assets/images/player/idleRight.png";
+import spriteStandLeftImage from "../assets/images/player/idleLeft.png";
+import spriteJumpingRightImage from "../assets/images/player/jumpingRight.png";
+import spriteJumpingLeftImage from "../assets/images/player/jumpingLeft.png";
+import spriteHurtImage from "../assets/images/player/hurt.png";
+import { createImage } from "../utils/utils";
 
 export default class Player {
 	constructor() {
 		this.speed = 2;
 		this.position = {
 			x: 100,
-			y: 600,
+			y: 500,
 		};
 		this.velocity = {
 			x: 0,

@@ -5,7 +5,6 @@ import audioGameWin from "../assets/audio/audioGameWin.mp3";
 import audioStage1Music from "../assets/audio/audioBackground01.mp3";
 import audioFalling from "../assets/audio/audioFalling.wav";
 import audioHurt from "../assets/audio/audioHurt.wav";
-import audioJump from "../assets/audio/audioJump.mp3";
 
 export const audio = {
 	gameOver: new Howl({
@@ -30,10 +29,6 @@ export const audio = {
 	}),
 	hurt: new Howl({
 		src: [audioHurt],
-		volume: 0.5,
-	}),
-	jump: new Howl({
-		src: [audioJump],
-		volume: 0.2,
+		volume: 0.1,
 	}),
 };

@@ -8,13 +8,13 @@ import GenericObject from "./gameObjects/GenericObject";
 import Monster from "./gameObjects/Monster";
 import Particle from "./gameObjects/Particle";
 
-import flagImage from "./assets/img/flag/flag.png";
-import spriteGreenMonster from "./assets/img/monster/walkGreen.png";
-import spriteBrownMonster from "./assets/img/monster/walkBrown.png";
-import spritePurpleMonster from "./assets/img/monster/walkPurple.png";
+import flagImage from "./assets/images/flag/flag.png";
+import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
+import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
+import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
-import { audio } from "./js/audio";
-import { images } from "./js/image";
+import { audio } from "./utils/audio";
+import { images } from "./utils/image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -25,7 +25,8 @@ import {
 	hitSideOfPlatform,
 	touchObjects,
 	setPercent,
-} from "./js/utils";
+} from "./utils/utils";
+import { key, result } from "./constants/constants";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -33,7 +34,17 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
-let gravity = 1.5;
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".how-to-play-button");
+const closeButton = document.querySelector(".close-button");
+const startPage = document.querySelector(".start-page");
+const modalContainer = document.querySelector(".modal-container");
+const resultModal = document.querySelector(".result-modal");
+
+const levelSelectPage = document.querySelector(".level-page");
+const level1Button = document.querySelector(".level-1");
+const level2Button = document.querySelector(".level-2");
+const level3Button = document.querySelector(".level-3");
 
 canvas.width = 1090;
 canvas.height = innerHeight;
@@ -61,25 +72,31 @@ const keys = {
 	},
 };
 
+let gravity = 1.5;
 let scrollOffSet = 0;
+let restart = false;
 let gameOver = true;
 let flag;
 let currentLevel = 1;
 
 async function initLevel1() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
+
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -137,10 +154,13 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 3 + 400, y: 650, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 400, y: 750, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 5 + 200, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 442, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 582, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 400, y: 722, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 8 + 400, y: 742, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 200, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 442, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 200, y: 742, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 400, y: 742, image: platformImg, block: true }),
@@ -163,19 +183,23 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
+
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -189,6 +213,7 @@ async function initLevel2() {
 			audio.backgroundMusic.play();
 		}
 	});
+
 	platformImg = await createImageAsync(images.levels[2].largePlatform);
 	smallPlatformImg = await createImageAsync(images.levels[2].platform);
 	obstacleImg = await createImageAsync(images.levels[2].obstacle);
@@ -316,19 +341,23 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
-	let audioOn = true;
-
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
-	if (audioOn && !audio.backgroundMusic.playing()) {
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
+
+	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
 	}
 
 	soundOnButton.addEventListener("click", () => {
 		soundOnButton.classList.add("close");
 		soundOffButton.classList.add("open");
-		audioOn = false;
 
 		if (audio.backgroundMusic.playing()) {
 			audio.backgroundMusic.stop();
@@ -517,8 +546,10 @@ function animate() {
 				duration: 1,
 			});
 
-			audio.gameWin.play();
-			winGame();
+			if (gameOver) {
+				audio.gameWin.play();
+				winGame();
+			}
 		}
 	}
 
@@ -558,22 +589,11 @@ function animate() {
 			player.velocity.y = 0;
 
 			if (gameOver) {
+				loseGame();
 				audio.hurt.play();
+				audio.gameOver.play();
+				gameOver = false;
 			}
-
-			setTimeout(() => {
-				if (gameOver) {
-					if (audio.backgroundMusic.playing()) {
-						console.log("재생 중");
-						audio.backgroundMusic.stop();
-					}
-
-					audio.gameOver.play();
-					loseGame();
-
-					gameOver = false;
-				}
-			});
 		}
 	});
 
@@ -587,7 +607,15 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		setPercent(player.position.x, flag.position.x, 750000);
+
+		if (flag.position.x) {
+			if (!gameOver) {
+				setPercent(player.position.x, flag.position.x, 810000);
+				return;
+			}
+
+			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
@@ -597,7 +625,14 @@ function animate() {
 		player.velocity.x = 0;
 
 		if (keys.right.pressed) {
-			setPercent(player.position.x, flag.position.x, 750000);
+			if (flag.position.x) {
+				if (!gameOver) {
+					setPercent(player.position.x, flag.position.x, 810000);
+					return;
+				}
+
+				setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+			}
 
 			for (let i = 0; i < platforms.length; i++) {
 				const platform = platforms[i];
@@ -679,7 +714,6 @@ function animate() {
 		}
 	}
 
-	// 지형 인식
 	platforms.forEach(platform => {
 		if (isOnTopOfPlatform({ object: player, platform })) {
 			player.velocity.y = 0;
@@ -731,7 +765,7 @@ function animate() {
 	if (player.velocity.y === 0) {
 		if (
 			keys.right.pressed &&
-			lastKey === "right" &&
+			lastKey === key.RIGHT &&
 			player.currentSprite !== player.sprites.run.right
 		) {
 			player.frames = 1;
@@ -742,7 +776,7 @@ function animate() {
 
 		if (
 			keys.left.pressed &&
-			lastKey === "left" &&
+			lastKey === key.LEFT &&
 			player.currentSprite !== player.sprites.run.left
 		) {
 			player.currentSprite = player.sprites.run.left;
@@ -752,7 +786,7 @@ function animate() {
 
 		if (
 			!keys.left.pressed &&
-			lastKey === "left" &&
+			lastKey === key.LEFT &&
 			player.currentSprite !== player.sprites.stand.left
 		) {
 			player.currentSprite = player.sprites.stand.left;
@@ -762,7 +796,7 @@ function animate() {
 
 		if (
 			!keys.right.pressed &&
-			lastKey === "right" &&
+			lastKey === key.RIGHT &&
 			player.currentSprite !== player.sprites.stand.right
 		) {
 			player.currentSprite = player.sprites.stand.right;
@@ -771,25 +805,25 @@ function animate() {
 		}
 	}
 
-	if (player.position.y > canvas.height) {
-		if (audio.backgroundMusic.playing()) {
-			audio.backgroundMusic.stop();
-		}
+	if (player.position.y > 750) {
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
-		loseGame();
 
-		setTimeout(() => {
-			if (gameOver) {
-				audio.falling.play();
-				audio.gameOver.play();
-				gameOver = false;
-			}
-		});
+		if (gameOver) {
+			loseGame();
+			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+			audio.falling.play();
+			gameOver = false;
+		}
+
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
 	}
 }
 
+let touchedGround = true;
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
@@ -813,45 +847,36 @@ navigator.mediaDevices
 		scriptProcessor.onaudioprocess = () => {
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
-
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
 
-			if (average > 30) {
-				player.velocity.y -= average / 2.5;
-				jump = false;
-			}
-
-			if (average > 10) {
+			if (average > 5) {
 				keys.right.pressed = true;
-				lastKey = "right";
+				lastKey = key.RIGHT;
 			}
 
-			if (average < 10) {
+			if (average < 5) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 			}
 
-			if (!player.velocity.y) {
-				jump = true;
+			if (touchedGround) {
+				if (average > 30) {
+					player.velocity.y = -10;
+				}
+
+				if (average < 30) {
+					player.velocity.y = -average / 2;
+				}
+				if (average < 2) {
+					touchedGround = true;
+				}
 			}
 		};
 	})
 	.catch(err => {
 		console.error(err);
 	});
-
-const startButton = document.querySelector(".start-button");
-const howToPlayButton = document.querySelector(".how-to-play-button");
-const closeButton = document.querySelector(".close-button");
-const startPage = document.querySelector(".start-page");
-const modalContainer = document.querySelector(".modal-container");
-const resultModal = document.querySelector(".result-modal");
-
-const levelSelectPage = document.querySelector(".level-page");
-const level1Button = document.querySelector(".level-1");
-const level2Button = document.querySelector(".level-2");
-const level3Button = document.querySelector(".level-3");
 
 const gameResultTitle = document.createElement("p");
 const gameResultSubText = document.createElement("p");
@@ -860,6 +885,30 @@ const gameStartButton = document.createElement("button");
 const gameResultButtonsContainer = document.createElement("div");
 
 function showLevelPage() {
+	if (
+		audio.backgroundMusic.playing() ||
+		audio.gameOver.playing() ||
+		audio.gameWin.playing() ||
+		audio.falling.playing() ||
+		audio.hurt.playing()
+	) {
+		audio.backgroundMusic.stop();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+		audio.falling.stop();
+		audio.hurt.stop();
+	}
+	restart = true;
+	canvas.classList.remove("open");
+	startPage.classList.add("close");
+	modalContainer.classList.remove("open");
+	levelSelectPage.classList.add("open");
+	resultModal.classList.remove("show");
+	percent.classList.remove("show");
+	soundOnButton.classList.remove("open");
+}
+
+function showFirstLevelPage() {
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
@@ -872,28 +921,37 @@ function showLevelPage() {
 function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	resultModal.classList.add("show");
-
 	initLevel1();
-	animate();
+
+	if (!restart) {
+		console.log("재시작");
+		resultModal.classList.remove("show");
+		animate();
+	}
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	resultModal.classList.add("show");
-
 	initLevel2();
-	animate();
+
+	if (!restart) {
+		console.log("재시작");
+		resultModal.classList.remove("show");
+		animate();
+	}
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
-	resultModal.classList.add("show");
-
 	initLevel3();
-	animate();
+
+	if (!restart) {
+		console.log("재시작");
+		resultModal.classList.remove("show");
+		animate();
+	}
 }
 
 function selectLevel(level) {
@@ -903,12 +961,10 @@ function selectLevel(level) {
 	switch (level) {
 		case 1:
 			initLevel1();
-			currentLevel++;
 			break;
 
 		case 2:
 			initLevel2();
-			currentLevel++;
 			break;
 
 		case 3:
@@ -926,77 +982,83 @@ howToPlayButton.addEventListener("click", () => {
 closeButton.addEventListener("click", () => {
 	modalContainer.classList.remove("open");
 });
-startButton.addEventListener("click", showLevelPage);
+startButton.addEventListener("click", showFirstLevelPage);
 
 level1Button.addEventListener("click", startLevel1);
 level2Button.addEventListener("click", startLevel2);
 level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
-	if (gameOver) {
-		gameOver = false;
+	resultModal.appendChild(gameResultTitle);
+	resultModal.appendChild(gameResultSubText);
+	resultModal.appendChild(gameResultButtonsContainer);
+	gameResultButtonsContainer.appendChild(backButton);
+	gameResultButtonsContainer.appendChild(gameStartButton);
 
-		resultModal.appendChild(gameResultTitle);
-		resultModal.appendChild(gameResultSubText);
-		resultModal.appendChild(gameResultButtonsContainer);
-		gameResultButtonsContainer.appendChild(backButton);
-		gameResultButtonsContainer.appendChild(gameStartButton);
+	gameResultTitle.textContent = result.GAME_OVER;
+	gameStartButton.textContent = result.RESTART;
+	backButton.textContent = result.BACK;
+	gameResultSubText.textContent = result.GAME_OVER_SUB_TEXT;
 
-		gameResultTitle.textContent = "Game Over";
-		gameStartButton.textContent = "Restart";
-		backButton.textContent = "Back";
-		gameResultSubText.textContent = "Don't give up and try again.";
+	resultModal.classList.add("show");
+	gameResultTitle.classList.add("game-over");
+	gameResultSubText.classList.add("result-sub-text");
+	gameResultButtonsContainer.classList.add("buttons");
+	gameStartButton.classList.add("play-button");
+	backButton.classList.add("play-button");
 
-		resultModal.classList.add("result-modal");
-		gameResultTitle.classList.add("game-over");
-		gameResultSubText.classList.add("result-sub-text");
-		gameResultButtonsContainer.classList.add("buttons");
-		gameStartButton.classList.add("play-button");
-		backButton.classList.add("play-button");
+	backButton.addEventListener("click", () => {
+		showLevelPage();
+	});
+	gameStartButton.addEventListener("click", () => {
+		resultModal.classList.add("show");
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+		setPercent(0, 0, 0, 1);
+		gravity = 1.5;
+		restart = true;
+		gameOver = true;
 
-		backButton.addEventListener("click", showLevelPage);
-		gameStartButton.addEventListener("click", () => {
-			resultModal.classList.remove("show");
-
-			setTimeout(() => {
-				gravity = 1.5;
-				selectLevel(currentLevel);
-			});
+		setTimeout(() => {
+			selectLevel(currentLevel);
 		});
-	}
+	});
 }
 
 function winGame() {
-	if (gameOver) {
-		gameOver = false;
+	resultModal.appendChild(gameResultTitle);
+	resultModal.appendChild(gameResultSubText);
+	resultModal.appendChild(gameResultButtonsContainer);
+	gameResultButtonsContainer.appendChild(backButton);
+	gameResultButtonsContainer.appendChild(gameStartButton);
 
-		resultModal.appendChild(gameResultTitle);
-		resultModal.appendChild(gameResultSubText);
-		resultModal.appendChild(gameResultButtonsContainer);
-		gameResultButtonsContainer.appendChild(backButton);
-		gameResultButtonsContainer.appendChild(gameStartButton);
+	gameResultTitle.textContent = result.CLEAR;
+	gameStartButton.textContent = result.NEXT_LEVEL;
+	backButton.textContent = result.BACK;
+	gameResultSubText.textContent = result.GAME_CLEAR_SUB_TEXT;
 
-		gameResultTitle.textContent = "Clear";
-		gameStartButton.textContent = "Next";
-		backButton.textContent = "Back";
-		gameResultSubText.textContent = "Do you want to move on to the next level?";
+	resultModal.classList.add("show");
+	gameResultTitle.classList.add("game-win");
+	gameResultSubText.classList.add("result-sub-text");
+	gameResultButtonsContainer.classList.add("buttons");
+	gameStartButton.classList.add("play-button");
+	backButton.classList.add("play-button");
 
-		resultModal.classList.add("result-modal");
-		gameResultTitle.classList.add("game-win");
-		gameResultSubText.classList.add("result-sub-text");
-		gameResultButtonsContainer.classList.add("buttons");
-		gameStartButton.classList.add("play-button");
-		backButton.classList.add("play-button");
+	backButton.addEventListener("click", () => {
+		showLevelPage();
+	});
+	gameStartButton.addEventListener("click", () => {
+		resultModal.classList.add("show");
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+		setPercent(0, 0, 0, 1);
+		gravity = 1.5;
+		currentLevel++;
+		restart = true;
+		gameOver = true;
 
-		backButton.addEventListener("click", showLevelPage);
-		gameStartButton.addEventListener("click", () => {
-			resultModal.classList.remove("show");
-
-			setTimeout(() => {
-				gravity = 1.5;
-				currentLevel++;
-				selectLevel(currentLevel);
-			});
+		setTimeout(() => {
+			selectLevel(currentLevel);
 		});
-	}
+	});
 }
