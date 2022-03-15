@@ -34,6 +34,17 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".how-to-play-button");
+const closeButton = document.querySelector(".close-button");
+const startPage = document.querySelector(".start-page");
+const modalContainer = document.querySelector(".modal-container");
+const resultModal = document.querySelector(".result-modal");
+
+const levelSelectPage = document.querySelector(".level-page");
+const level1Button = document.querySelector(".level-1");
+const level2Button = document.querySelector(".level-2");
+const level3Button = document.querySelector(".level-3");
 
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
@@ -925,7 +936,6 @@ function startLevel1() {
 	initLevel1();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
@@ -937,7 +947,6 @@ function startLevel2() {
 	initLevel2();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
@@ -949,7 +958,6 @@ function startLevel3() {
 	initLevel3();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
