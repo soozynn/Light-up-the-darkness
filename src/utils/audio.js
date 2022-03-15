@@ -30,7 +30,7 @@ export const audio = {
 	}),
 	hurt: new Howl({
 		src: [audioHurt],
-		volume: 0.5,
+		volume: 0.1,
 	}),
 	jump: new Howl({
 		src: [audioJump],

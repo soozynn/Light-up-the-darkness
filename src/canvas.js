@@ -75,13 +75,20 @@ const keys = {
 let gravity = 1.5;
 let scrollOffSet = 0;
 let restart = false;
-let gameOver = false;
+let gameOver = true;
 let flag;
 let currentLevel = 1;
 
 async function initLevel1() {
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
+
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
 
 	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
@@ -178,6 +185,13 @@ async function initLevel1() {
 async function initLevel2() {
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
+
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
 
 	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
@@ -329,6 +343,13 @@ async function initLevel2() {
 async function initLevel3() {
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
+
+	if (audio.backgroundMusic.playing() || audio.gameOver.playing() || audio.gameWin.playing()) {
+		audio.backgroundMusic.stop();
+		audio.backgroundMusic.play();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+	}
 
 	if (!audio.backgroundMusic.playing()) {
 		audio.backgroundMusic.play();
@@ -566,13 +587,11 @@ function animate() {
 			player.velocity.y = 0;
 
 			if (gameOver) {
-				audio.hurt.play();
-			}
-
-			setTimeout(() => {
-				audio.gameOver.play();
 				loseGame();
-			});
+				audio.hurt.play();
+				audio.gameOver.play();
+				gameOver = false;
+			}
 		}
 	});
 
@@ -588,7 +607,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			setPercent(player.position.x, flag.position.x, 800000);
+			setPercent(player.position.x, flag.position.x, 810000);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -599,10 +618,8 @@ function animate() {
 		player.velocity.x = 0;
 
 		if (keys.right.pressed) {
-			console.log(`깃발${flag.position.x}`);
-
 			if (flag.position.x) {
-				setPercent(player.position.x, flag.position.x, 800000);
+				setPercent(player.position.x, flag.position.x, 810000);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -685,7 +702,6 @@ function animate() {
 		}
 	}
 
-	// 지형 인식
 	platforms.forEach(platform => {
 		if (isOnTopOfPlatform({ object: player, platform })) {
 			player.velocity.y = 0;
@@ -776,23 +792,18 @@ function animate() {
 			player.width = player.sprites.stand.width;
 		}
 	}
-
-	if (player.position.y > canvas.height) {
-		if (audio.backgroundMusic.playing()) {
-			audio.backgroundMusic.stop();
-		}
+	console.log(player.position.y, canvas.height);
+	if (player.position.y > 750) {
+		console.log(`떨어지는 위치 ${(player.position.y, canvas.height)}`);
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
 		loseGame();
+		audio.falling.play();
 
-		setTimeout(() => {
-			if (gameOver) {
-				audio.falling.play();
-				audio.gameOver.play();
-				gameOver = false;
-			}
-		});
+		if (audio.backgroundMusic.playing()) {
+			audio.backgroundMusic.stop();
+		}
 	}
 }
 
@@ -868,6 +879,7 @@ function showLevelPage() {
 	resultModal.classList.remove("show");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
+	gameOver = true;
 }
 
 function startLevel1() {
@@ -966,6 +978,7 @@ function loseGame() {
 		setPercent(0, 0, 0, 1);
 		gravity = 1.5;
 		restart = true;
+		gameOver = true;
 
 		setTimeout(() => {
 			selectLevel(currentLevel);
@@ -1001,6 +1014,7 @@ function winGame() {
 		gravity = 1.5;
 		currentLevel++;
 		restart = true;
+		gameOver = true;
 
 		setTimeout(() => {
 			selectLevel(currentLevel);
