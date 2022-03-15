@@ -549,6 +549,7 @@ function animate() {
 			if (gameOver) {
 				audio.gameWin.play();
 				winGame();
+				gameOver = false;
 			}
 		}
 	}
@@ -609,12 +610,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			if (!gameOver) {
-				setPercent(player.position.x, flag.position.x, 810000);
-				return;
-			}
-
-			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+			setPercent(player.position.x, flag.position.x, 825000);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -626,12 +622,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				if (!gameOver) {
-					setPercent(player.position.x, flag.position.x, 810000);
-					return;
-				}
-
-				setPercent(player.position.x, flag.position.x, 810000, 0, 1);
+				setPercent(player.position.x, flag.position.x, 825000);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -804,9 +795,8 @@ function animate() {
 			player.width = player.sprites.stand.width;
 		}
 	}
-	console.log(player.position.y, canvas.height);
+
 	if (player.position.y > 750) {
-		console.log(`떨어지는 위치 ${(player.position.y, canvas.height)}`);
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
@@ -824,7 +814,6 @@ function animate() {
 	}
 }
 
-let touchedGround = true;
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
@@ -850,31 +839,34 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(`볼륨 ${average}`);
-			console.log(`와이 값 ${player.velocity.y}`);
+			console.log(average, player.position.y);
 
-			if (average > 5) {
+			// 감소하고 있는지 증가하고 있는지만 알면되는데..
+			if (average > 10) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (average < 5) {
+			if (player.position.y < 5) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
+				return;
 			}
 
-			if (touchedGround) {
-				if (average > 30) {
-					player.velocity.y = -10;
-				}
+			if (average < 10) {
+				keys.right.pressed = false;
+				player.velocity.y = 0;
+				player.velocity.x = 0;
+				return;
+			}
 
-				if (average < 30) {
-					player.velocity.y = -average / 2;
-				}
-				if (average < 2) {
-					touchedGround = true;
-				}
+			if (player.position.y > 5 && average > 30) {
+				player.velocity.y = -10;
+			}
+
+			if (player.position.y > 5 && average < 30) {
+				player.velocity.y = -average / 2;
 			}
 		};
 	})
@@ -902,6 +894,8 @@ function showLevelPage() {
 		audio.falling.stop();
 		audio.hurt.stop();
 	}
+
+	gameOver = true;
 	restart = true;
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
@@ -928,7 +922,6 @@ function startLevel1() {
 	initLevel1();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
@@ -940,7 +933,6 @@ function startLevel2() {
 	initLevel2();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
@@ -952,7 +944,6 @@ function startLevel3() {
 	initLevel3();
 
 	if (!restart) {
-		console.log("재시작");
 		resultModal.classList.remove("show");
 		animate();
 	}
@@ -993,6 +984,10 @@ level2Button.addEventListener("click", startLevel2);
 level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
+	if (audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.stop();
+	}
+
 	resultModal.appendChild(gameResultTitle);
 	resultModal.appendChild(gameResultSubText);
 	resultModal.appendChild(gameResultButtonsContainer);
@@ -1010,6 +1005,7 @@ function loseGame() {
 	gameResultButtonsContainer.classList.add("buttons");
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
+	gameResultTitle.classList.remove("game-win");
 
 	backButton.addEventListener("click", () => {
 		showLevelPage();
@@ -1030,6 +1026,10 @@ function loseGame() {
 }
 
 function winGame() {
+	if (audio.backgroundMusic.playing()) {
+		audio.backgroundMusic.stop();
+	}
+
 	resultModal.appendChild(gameResultTitle);
 	resultModal.appendChild(gameResultSubText);
 	resultModal.appendChild(gameResultButtonsContainer);
@@ -1047,6 +1047,7 @@ function winGame() {
 	gameResultButtonsContainer.classList.add("buttons");
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
+	gameResultTitle.classList.remove("game-over");
 
 	backButton.addEventListener("click", () => {
 		showLevelPage();

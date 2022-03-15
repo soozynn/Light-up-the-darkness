@@ -5,6 +5,7 @@ import spriteStandLeftImage from "../assets/images/player/idleLeft.png";
 import spriteJumpingRightImage from "../assets/images/player/jumpingRight.png";
 import spriteJumpingLeftImage from "../assets/images/player/jumpingLeft.png";
 import spriteHurtImage from "../assets/images/player/hurt.png";
+import spritesFallingImage from "../assets/images/player/falling.png";
 import { createImage } from "../utils/utils";
 
 export default class Player {
@@ -50,6 +51,11 @@ export default class Player {
 				cropWidth: 32,
 				width: 64,
 			},
+			falling: {
+				right: createImage(spritesFallingImage),
+				cropWidth: 32,
+				width: 64,
+			},
 		};
 
 		this.currentSprite = this.sprites.stand.right;
@@ -76,6 +82,10 @@ export default class Player {
 		}
 
 		if (this.frames > 3.5 && this.currentSprite === this.sprites.stand.right) {
+			this.frames = 0;
+		}
+
+		if (this.frames > 3.5 && this.currentSprite === this.sprites.falling.right) {
 			this.frames = 0;
 		}
 
