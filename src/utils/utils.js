@@ -74,7 +74,9 @@ export function touchObjects({ object1, object2 }) {
 }
 
 let flagPosition;
-export function setPercent(player, flag, distance, restart) {
+export function setPercent(player, flag, distance, restart, gameOver) {
+	if (gameOver) return;
+
 	if (restart) {
 		percent.textContent = `00`;
 		totalPercent = 0;
