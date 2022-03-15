@@ -928,6 +928,7 @@ function showFirstLevelPage() {
 	resultModal.classList.remove("show");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
+	gameOver = true;
 }
 
 function startLevel1() {
