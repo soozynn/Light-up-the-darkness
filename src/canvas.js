@@ -183,6 +183,7 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
+	currentLevel = 2;
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -221,8 +222,8 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 7 + 580,
-		y: 100,
+		x: platformImg.width * 5 + 1000,
+		y: 95,
 		image: flagImg,
 	});
 	player = new Player();
@@ -289,34 +290,28 @@ async function initLevel2() {
 		}),
 	];
 	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
 		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
-		new Platform({
-			x: platformImg.width + 300,
-			y: 762,
-			image: platformImg,
-			block: true,
-		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 762, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -220, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -341,6 +336,7 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
+	currentLevel = 3;
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -838,7 +834,7 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-
+			console.log(average);
 			if (average > 10) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
@@ -859,7 +855,7 @@ navigator.mediaDevices
 			}
 
 			if (player.position.y > 5 && average > 30) {
-				player.velocity.y = -10;
+				player.velocity.y = -5;
 			}
 
 			if (player.position.y > 5 && average < 30) {
