@@ -30,15 +30,5 @@ export const audio = {
 	hurt: new Howl({
 		src: [audioHurt],
 		volume: 0.1,
-<<<<<<< HEAD
-=======
 	}),
-<<<<<<< HEAD
-	jump: new Howl({
-		src: [audioJump],
-		volume: 0.2,
->>>>>>> a3f09f8 (Fix: background audio bug)
-	}),
-=======
->>>>>>> 278f9f4 (Fix: audio 중복 bug)
 };
