@@ -13,6 +13,7 @@ import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
+import { key, result, screen, flagPosition, volume } from "./constants/constants";
 import { audio } from "./utils/audio";
 import { images } from "./utils/image";
 import {
@@ -26,7 +27,6 @@ import {
 	touchObjects,
 	setPercent,
 } from "./utils/utils";
-import { key, result } from "./constants/constants";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -183,6 +183,7 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
+	currentLevel = 2;
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -221,8 +222,8 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 7 + 580,
-		y: 100,
+		x: platformImg.width * 5 + 1000,
+		y: 95,
 		image: flagImg,
 	});
 	player = new Player();
@@ -289,34 +290,28 @@ async function initLevel2() {
 		}),
 	];
 	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
 		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
-		new Platform({
-			x: platformImg.width + 300,
-			y: 762,
-			image: platformImg,
-			block: true,
-		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 762, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 800, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -220, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -341,6 +336,7 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
+	currentLevel = 3;
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -379,8 +375,8 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 11 + 700,
-		y: canvas.height - platformImg.height - flagImg.height - 220,
+		x: platformImg.width * 9 + 700,
+		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
 	player = new Player();
@@ -483,17 +479,10 @@ async function initLevel3() {
 		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 220, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 320, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 420, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 720, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 520, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
@@ -610,7 +599,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			setPercent(player.position.x, flag.position.x, 825000);
+			setPercent(player.position.x, flag.position.x, flagPosition.x);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -622,7 +611,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				setPercent(player.position.x, flag.position.x, 825000);
+				setPercent(player.position.x, flag.position.x, flagPosition.x);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -796,14 +785,20 @@ function animate() {
 		}
 	}
 
-	if (player.position.y > 750) {
+	if (player.position.y < screen.BOTTOM) {
+		keys.right.pressed = false;
+		player.currentSprite = player.sprites.stand.right;
+		player.velocity.y = 0;
+		player.velocity.x = 0;
+	}
+
+	if (player.position.y > screen.CELLING) {
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
 
 		if (gameOver) {
 			loseGame();
-			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
 			audio.falling.play();
 			gameOver = false;
 		}
@@ -839,30 +834,25 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
 
-			if (average > 10) {
+			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (player.position.y < 5) {
+			if (average < volume.SOFT) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 				return;
 			}
 
-			if (average < 10) {
-				keys.right.pressed = false;
-				player.velocity.y = 0;
-				player.velocity.x = 0;
-				return;
+			if (player.position.y > screen.BOTTOM && average > volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
+				player.velocity.y = -5;
 			}
 
-			if (player.position.y > 5 && average > 30) {
-				player.velocity.y = -10;
-			}
-
-			if (player.position.y > 5 && average < 30) {
+			if (player.position.y > screen.BOTTOM && average < volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
 				player.velocity.y = -average / 2;
 			}
 		};
@@ -894,11 +884,11 @@ function showLevelPage() {
 
 	gameOver = true;
 	restart = true;
+	resultModal.classList.remove("show");
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
-	resultModal.classList.remove("show");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
 }
