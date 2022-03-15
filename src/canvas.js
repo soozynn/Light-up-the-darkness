@@ -804,9 +804,8 @@ function animate() {
 			player.width = player.sprites.stand.width;
 		}
 	}
-	console.log(player.position.y, canvas.height);
+
 	if (player.position.y > 750) {
-		console.log(`떨어지는 위치 ${(player.position.y, canvas.height)}`);
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
@@ -848,10 +847,7 @@ navigator.mediaDevices
 		scriptProcessor.onaudioprocess = () => {
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
-
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(`볼륨 ${average}`);
-			console.log(`와이 값 ${player.velocity.y}`);
 
 			if (average > 5) {
 				keys.right.pressed = true;
