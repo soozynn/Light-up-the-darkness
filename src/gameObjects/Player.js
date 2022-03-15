@@ -12,7 +12,7 @@ export default class Player {
 		this.speed = 2;
 		this.position = {
 			x: 100,
-			y: 600,
+			y: 500,
 		};
 		this.velocity = {
 			x: 0,

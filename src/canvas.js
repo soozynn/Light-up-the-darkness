@@ -26,6 +26,7 @@ import {
 	touchObjects,
 	setPercent,
 } from "./utils/utils";
+import { key, result } from "./constants/constants";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -33,6 +34,17 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
+const startButton = document.querySelector(".start-button");
+const howToPlayButton = document.querySelector(".how-to-play-button");
+const closeButton = document.querySelector(".close-button");
+const startPage = document.querySelector(".start-page");
+const modalContainer = document.querySelector(".modal-container");
+const resultModal = document.querySelector(".result-modal");
+
+const levelSelectPage = document.querySelector(".level-page");
+const level1Button = document.querySelector(".level-1");
+const level2Button = document.querySelector(".level-2");
+const level3Button = document.querySelector(".level-3");
 
 canvas.width = 1090;
 canvas.height = innerHeight;
@@ -62,7 +74,8 @@ const keys = {
 
 let gravity = 1.5;
 let scrollOffSet = 0;
-let gameOver = true;
+let restart = false;
+let gameOver = false;
 let flag;
 let currentLevel = 1;
 
@@ -557,17 +570,8 @@ function animate() {
 			}
 
 			setTimeout(() => {
-				if (gameOver) {
-					if (audio.backgroundMusic.playing()) {
-						console.log("재생 중");
-						audio.backgroundMusic.stop();
-					}
-
-					audio.gameOver.play();
-					loseGame();
-
-					gameOver = false;
-				}
+				audio.gameOver.play();
+				loseGame();
 			});
 		}
 	});
@@ -582,7 +586,10 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-		setPercent(player.position.x, flag.position.x, 750000);
+
+		if (flag.position.x) {
+			setPercent(player.position.x, flag.position.x, 800000);
+		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
 		(keys.left.pressed && scrollOffSet === 0 && player.position.x > 0)
@@ -592,7 +599,11 @@ function animate() {
 		player.velocity.x = 0;
 
 		if (keys.right.pressed) {
-			setPercent(player.position.x, flag.position.x, 750000);
+			console.log(`깃발${flag.position.x}`);
+
+			if (flag.position.x) {
+				setPercent(player.position.x, flag.position.x, 800000);
+			}
 
 			for (let i = 0; i < platforms.length; i++) {
 				const platform = platforms[i];
@@ -726,7 +737,7 @@ function animate() {
 	if (player.velocity.y === 0) {
 		if (
 			keys.right.pressed &&
-			lastKey === "right" &&
+			lastKey === key.RIGHT &&
 			player.currentSprite !== player.sprites.run.right
 		) {
 			player.frames = 1;
@@ -737,7 +748,7 @@ function animate() {
 
 		if (
 			keys.left.pressed &&
-			lastKey === "left" &&
+			lastKey === key.LEFT &&
 			player.currentSprite !== player.sprites.run.left
 		) {
 			player.currentSprite = player.sprites.run.left;
@@ -747,7 +758,7 @@ function animate() {
 
 		if (
 			!keys.left.pressed &&
-			lastKey === "left" &&
+			lastKey === key.LEFT &&
 			player.currentSprite !== player.sprites.stand.left
 		) {
 			player.currentSprite = player.sprites.stand.left;
@@ -757,7 +768,7 @@ function animate() {
 
 		if (
 			!keys.right.pressed &&
-			lastKey === "right" &&
+			lastKey === key.RIGHT &&
 			player.currentSprite !== player.sprites.stand.right
 		) {
 			player.currentSprite = player.sprites.stand.right;
@@ -785,7 +796,7 @@ function animate() {
 	}
 }
 
-let jump = true;
+let touchedGround = true;
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
@@ -811,21 +822,12 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(average);
-			// 최상단 안넘게 조절
-			if (average > 35) {
-				player.velocity.y -= average / 2 + 15;
-				jump = false;
-			}
-
-			if (35 > average > 20) {
-				player.velocity.y -= average / 2;
-				jump = false;
-			}
+			console.log(`볼륨 ${average}`);
+			console.log(`와이 값 ${player.velocity.y}`);
 
 			if (average > 5) {
 				keys.right.pressed = true;
-				lastKey = "right";
+				lastKey = key.RIGHT;
 			}
 
 			if (average < 5) {
@@ -834,26 +836,23 @@ navigator.mediaDevices
 				player.velocity.x = 0;
 			}
 
-			if (!player.velocity.y) {
-				jump = true;
+			if (touchedGround) {
+				if (average > 30) {
+					player.velocity.y = -10;
+				}
+
+				if (average < 30) {
+					player.velocity.y = -average / 2;
+				}
+				if (average < 2) {
+					touchedGround = true;
+				}
 			}
 		};
 	})
 	.catch(err => {
 		console.error(err);
 	});
-
-const startButton = document.querySelector(".start-button");
-const howToPlayButton = document.querySelector(".how-to-play-button");
-const closeButton = document.querySelector(".close-button");
-const startPage = document.querySelector(".start-page");
-const modalContainer = document.querySelector(".modal-container");
-const resultModal = document.querySelector(".result-modal");
-
-const levelSelectPage = document.querySelector(".level-page");
-const level1Button = document.querySelector(".level-1");
-const level2Button = document.querySelector(".level-2");
-const level3Button = document.querySelector(".level-3");
 
 const gameResultTitle = document.createElement("p");
 const gameResultSubText = document.createElement("p");
@@ -875,27 +874,33 @@ function startLevel1() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 	resultModal.classList.add("show");
-
 	initLevel1();
-	animate();
+
+	if (!restart) {
+		animate();
+	}
 }
 
 function startLevel2() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 	resultModal.classList.add("show");
-
 	initLevel2();
-	animate();
+
+	if (!restart) {
+		animate();
+	}
 }
 
 function startLevel3() {
 	levelSelectPage.classList.remove("open");
 	canvas.classList.add("open");
 	resultModal.classList.add("show");
-
 	initLevel3();
-	animate();
+
+	if (!restart) {
+		animate();
+	}
 }
 
 function selectLevel(level) {
@@ -905,12 +910,10 @@ function selectLevel(level) {
 	switch (level) {
 		case 1:
 			initLevel1();
-			currentLevel++;
 			break;
 
 		case 2:
 			initLevel2();
-			currentLevel++;
 			break;
 
 		case 3:
@@ -935,8 +938,7 @@ level2Button.addEventListener("click", startLevel2);
 level3Button.addEventListener("click", startLevel3);
 
 function loseGame() {
-	// if (gameOver) {
-	// 	gameOver = false;
+	setPercent(0, 0, 0, 0, 1);
 
 	resultModal.appendChild(gameResultTitle);
 	resultModal.appendChild(gameResultSubText);
@@ -944,12 +946,12 @@ function loseGame() {
 	gameResultButtonsContainer.appendChild(backButton);
 	gameResultButtonsContainer.appendChild(gameStartButton);
 
-	gameResultTitle.textContent = "Game Over";
-	gameStartButton.textContent = "Restart";
-	backButton.textContent = "Back";
-	gameResultSubText.textContent = "Don't give up and try again.";
+	gameResultTitle.textContent = result.GAME_OVER;
+	gameStartButton.textContent = result.RESTART;
+	backButton.textContent = result.BACK;
+	gameResultSubText.textContent = result.GAME_OVER_SUB_TEXT;
 
-	resultModal.classList.add("result-modal");
+	resultModal.classList.add("show");
 	gameResultTitle.classList.add("game-over");
 	gameResultSubText.classList.add("result-sub-text");
 	gameResultButtonsContainer.classList.add("buttons");
@@ -958,53 +960,50 @@ function loseGame() {
 
 	backButton.addEventListener("click", showLevelPage);
 	gameStartButton.addEventListener("click", () => {
-		resultModal.classList.remove("show");
+		resultModal.classList.add("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
 		setPercent(0, 0, 0, 1);
+		gravity = 1.5;
+		restart = true;
 
 		setTimeout(() => {
-			gravity = 1.5;
 			selectLevel(currentLevel);
 		});
 	});
-	// }
 }
 
 function winGame() {
-	if (gameOver) {
-		gameOver = false;
+	resultModal.appendChild(gameResultTitle);
+	resultModal.appendChild(gameResultSubText);
+	resultModal.appendChild(gameResultButtonsContainer);
+	gameResultButtonsContainer.appendChild(backButton);
+	gameResultButtonsContainer.appendChild(gameStartButton);
 
-		resultModal.appendChild(gameResultTitle);
-		resultModal.appendChild(gameResultSubText);
-		resultModal.appendChild(gameResultButtonsContainer);
-		gameResultButtonsContainer.appendChild(backButton);
-		gameResultButtonsContainer.appendChild(gameStartButton);
+	gameResultTitle.textContent = result.CLEAR;
+	gameStartButton.textContent = result.NEXT_LEVEL;
+	backButton.textContent = result.BACK;
+	gameResultSubText.textContent = result.GAME_CLEAR_SUB_TEXT;
 
-		gameResultTitle.textContent = "Clear";
-		gameStartButton.textContent = "Next";
-		backButton.textContent = "Back";
-		gameResultSubText.textContent = "Do you want to move on to the next level?";
+	resultModal.classList.add("show");
+	gameResultTitle.classList.add("game-win");
+	gameResultSubText.classList.add("result-sub-text");
+	gameResultButtonsContainer.classList.add("buttons");
+	gameStartButton.classList.add("play-button");
+	backButton.classList.add("play-button");
 
-		resultModal.classList.add("result-modal");
-		gameResultTitle.classList.add("game-win");
-		gameResultSubText.classList.add("result-sub-text");
-		gameResultButtonsContainer.classList.add("buttons");
-		gameStartButton.classList.add("play-button");
-		backButton.classList.add("play-button");
+	backButton.addEventListener("click", showLevelPage);
+	gameStartButton.addEventListener("click", () => {
+		resultModal.classList.add("show");
+		soundOnButton.classList.remove("close");
+		soundOffButton.classList.remove("open");
+		setPercent(0, 0, 0, 1);
+		gravity = 1.5;
+		currentLevel++;
+		restart = true;
 
-		backButton.addEventListener("click", showLevelPage);
-		gameStartButton.addEventListener("click", () => {
-			resultModal.classList.remove("show");
-			soundOnButton.classList.remove("close");
-			soundOffButton.classList.remove("open");
-			setPercent(0, 0, 0, 1);
-
-			setTimeout(() => {
-				gravity = 1.5;
-				currentLevel++;
-				selectLevel(currentLevel);
-			});
+		setTimeout(() => {
+			selectLevel(currentLevel);
 		});
-	}
+	});
 }
