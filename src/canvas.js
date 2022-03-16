@@ -859,6 +859,20 @@ function showLevelPage() {
 	levelSelectPage.classList.add("open");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
+
+	if (
+		audio.backgroundMusic.playing() ||
+		audio.gameOver.playing() ||
+		audio.gameWin.playing() ||
+		audio.falling.playing() ||
+		audio.hurt.playing()
+	) {
+		audio.backgroundMusic.stop();
+		audio.gameOver.stop();
+		audio.gameWin.stop();
+		audio.falling.stop();
+		audio.hurt.stop();
+	}
 }
 
 function startLevel1() {
@@ -952,6 +966,8 @@ function loseGame() {
 	percent.classList.remove("show");
 
 	backButton.addEventListener("click", () => {
+		resultModal.classList.remove("show");
+
 		if (
 			audio.backgroundMusic.playing() ||
 			audio.gameOver.playing() ||
@@ -973,7 +989,7 @@ function loseGame() {
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
-		resultModal.classList.add("show");
+		resultModal.classList.remove("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
 
@@ -1013,6 +1029,8 @@ function winGame() {
 	gameResultTitle.classList.remove("game-over");
 
 	backButton.addEventListener("click", () => {
+		resultModal.classList.remove("show");
+
 		if (
 			audio.backgroundMusic.playing() ||
 			audio.gameOver.playing() ||
@@ -1034,7 +1052,7 @@ function winGame() {
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
-		resultModal.classList.add("show");
+		resultModal.classList.remove("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
 
