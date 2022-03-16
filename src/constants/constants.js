@@ -14,8 +14,8 @@ export const result = {
 };
 
 export const screen = {
-	CELLING: 750,
-	BOTTOM: 5,
+	BOTTOM: 750,
+	CELLING: 5,
 };
 
 export const flagPosition = {
@@ -23,6 +23,7 @@ export const flagPosition = {
 };
 
 export const volume = {
-	SOFT: 10,
-	LOUD: 30,
+	SOFT: 15,
+	SOFT_LOUD: 20,
+	LOUD: 40,
 };

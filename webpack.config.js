@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
 	mode: "development",
 	entry: {
-		main: "./src/canvas.js",
+		main: path.resolve(__dirname, "./src/canvas.js"),
 	},
 	output: {
 		filename: "[name].js",
@@ -50,7 +50,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "./src/index.html",
+			template: path.resolve(__dirname, "./src/index.html"),
 		}),
 		new CleanWebpackPlugin(),
 	],
