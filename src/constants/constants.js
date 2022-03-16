@@ -23,7 +23,7 @@ export const flagPosition = {
 };
 
 export const volume = {
-	SOFT: 15,
-	SOFT_LOUD: 20,
-	LOUD: 40,
+	SOFT: 10,
+	SOFT_LOUD: 15,
+	LOUD: 20,
 };

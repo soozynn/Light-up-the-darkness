@@ -118,7 +118,7 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 10,
+		x: platformImg.width * 10 - 50,
 		y: 180,
 		image: flagImg,
 	});
@@ -161,9 +161,9 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 7 + 200, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 300, y: 542, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 300, y: 642, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 300, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 742, image: platformImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -222,7 +222,7 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 5 + 850,
+		x: platformImg.width * 5 + 900,
 		y: 95,
 		image: flagImg,
 	});
@@ -302,10 +302,10 @@ async function initLevel2() {
 		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 700, y: 462, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 700, y: 562, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 700, y: 662, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 700, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
@@ -949,6 +949,7 @@ function loseGame() {
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
 	gameResultTitle.classList.remove("game-win");
+	percent.classList.remove("show");
 
 	backButton.addEventListener("click", () => {
 		if (
