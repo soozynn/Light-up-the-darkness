@@ -1,5 +1,5 @@
 const percent = document.getElementById("percent");
-let totalPercent = 0;
+export let totalPercent = 0;
 
 export function createImage(imageSrc) {
 	const image = new Image();

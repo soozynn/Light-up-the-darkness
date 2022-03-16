@@ -6,7 +6,7 @@ import spriteJumpingRightImage from "../assets/images/player/jumpingRight.png";
 import spriteJumpingLeftImage from "../assets/images/player/jumpingLeft.png";
 import spriteHurtImage from "../assets/images/player/hurt.png";
 import spritesFallingImage from "../assets/images/player/falling.png";
-import { createImage } from "../utils/utils";
+import { createImage } from "../js/utils";
 
 export default class Player {
 	constructor() {

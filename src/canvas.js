@@ -14,8 +14,8 @@ import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
 
 import { key, result, screen, flagPosition, volume } from "./constants/constants";
-import { audio } from "./utils/audio";
-import { images } from "./utils/image";
+import { audio } from "./js/audio";
+import { images } from "./js/image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -26,11 +26,7 @@ import {
 	hitSideOfPlatform,
 	touchObjects,
 	setPercent,
-} from "./utils/utils";
-<<<<<<< HEAD
-import { key, result, screen, flagPosition } from "./constants/constants";
-=======
->>>>>>> bd70cc9 (Fix: numerical constantization)
+} from "./js/utils";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -226,7 +222,7 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 5 + 1000,
+		x: platformImg.width * 5 + 700,
 		y: 95,
 		image: flagImg,
 	});
@@ -306,10 +302,10 @@ async function initLevel2() {
 		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 800, y: 462, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 800, y: 562, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 800, y: 662, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 800, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 600, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 600, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 600, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 600, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
@@ -379,7 +375,7 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 9 + 700,
+		x: 7 + 700,
 		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
@@ -483,10 +479,6 @@ async function initLevel3() {
 		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
@@ -789,14 +781,7 @@ function animate() {
 		}
 	}
 
-	if (player.position.y < screen.BOTTOM) {
-		keys.right.pressed = false;
-		player.currentSprite = player.sprites.stand.right;
-		player.velocity.y = 0;
-		player.velocity.x = 0;
-	}
-
-	if (player.position.y > screen.CELLING) {
+	if (player.position.y > screen.BOTTOM) {
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
@@ -850,14 +835,18 @@ navigator.mediaDevices
 				return;
 			}
 
-			if (player.position.y > screen.BOTTOM && average > volume.LOUD) {
-				player.currentSprite = player.sprites.run.right;
-				player.velocity.y = -5;
-			}
+			if (average > 5) {
+				setTimeout(() => {
+					if (player.position.y > screen.CELLING && average > volume.LOUD) {
+						player.currentSprite = player.sprites.run.right;
+						player.velocity.y = -7;
+					}
 
-			if (player.position.y > screen.BOTTOM && average < volume.LOUD) {
-				player.currentSprite = player.sprites.run.right;
-				player.velocity.y = -average / 2;
+					if (player.position.y > screen.CELLING && average < volume.LOUD) {
+						player.currentSprite = player.sprites.run.right;
+						player.velocity.y = -average / 2;
+					}
+				});
 			}
 		};
 	})
@@ -872,37 +861,11 @@ const gameStartButton = document.createElement("button");
 const gameResultButtonsContainer = document.createElement("div");
 
 function showLevelPage() {
-	if (
-		audio.backgroundMusic.playing() ||
-		audio.gameOver.playing() ||
-		audio.gameWin.playing() ||
-		audio.falling.playing() ||
-		audio.hurt.playing()
-	) {
-		audio.backgroundMusic.stop();
-		audio.gameOver.stop();
-		audio.gameWin.stop();
-		audio.falling.stop();
-		audio.hurt.stop();
-	}
-
-	gameOver = true;
-	restart = true;
 	resultModal.classList.remove("show");
 	canvas.classList.remove("open");
 	startPage.classList.add("close");
 	modalContainer.classList.remove("open");
 	levelSelectPage.classList.add("open");
-	percent.classList.remove("show");
-	soundOnButton.classList.remove("open");
-}
-
-function showFirstLevelPage() {
-	canvas.classList.remove("open");
-	startPage.classList.add("close");
-	modalContainer.classList.remove("open");
-	levelSelectPage.classList.add("open");
-	resultModal.classList.remove("show");
 	percent.classList.remove("show");
 	soundOnButton.classList.remove("open");
 }
@@ -913,7 +876,6 @@ function startLevel1() {
 	initLevel1();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -924,7 +886,6 @@ function startLevel2() {
 	initLevel2();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -935,7 +896,6 @@ function startLevel3() {
 	initLevel3();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -943,6 +903,7 @@ function startLevel3() {
 function selectLevel(level) {
 	levelSelectPage.classList.remove("open");
 	resultModal.classList.remove("show");
+	setPercent(0, 0, 0, 1);
 
 	switch (level) {
 		case 1:
@@ -968,7 +929,7 @@ howToPlayButton.addEventListener("click", () => {
 closeButton.addEventListener("click", () => {
 	modalContainer.classList.remove("open");
 });
-startButton.addEventListener("click", showFirstLevelPage);
+startButton.addEventListener("click", showLevelPage);
 
 level1Button.addEventListener("click", startLevel1);
 level2Button.addEventListener("click", startLevel2);
@@ -999,12 +960,30 @@ function loseGame() {
 	gameResultTitle.classList.remove("game-win");
 
 	backButton.addEventListener("click", () => {
+		if (
+			audio.backgroundMusic.playing() ||
+			audio.gameOver.playing() ||
+			audio.gameWin.playing() ||
+			audio.falling.playing() ||
+			audio.hurt.playing()
+		) {
+			audio.backgroundMusic.stop();
+			audio.gameOver.stop();
+			audio.gameWin.stop();
+			audio.falling.stop();
+			audio.hurt.stop();
+		}
+
+		gameOver = true;
+		restart = true;
+		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
 		resultModal.classList.add("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
+
 		setPercent(0, 0, 0, 1);
 		gravity = 1.5;
 		restart = true;
@@ -1041,12 +1020,30 @@ function winGame() {
 	gameResultTitle.classList.remove("game-over");
 
 	backButton.addEventListener("click", () => {
+		if (
+			audio.backgroundMusic.playing() ||
+			audio.gameOver.playing() ||
+			audio.gameWin.playing() ||
+			audio.falling.playing() ||
+			audio.hurt.playing()
+		) {
+			audio.backgroundMusic.stop();
+			audio.gameOver.stop();
+			audio.gameWin.stop();
+			audio.falling.stop();
+			audio.hurt.stop();
+		}
+
+		gameOver = true;
+		restart = true;
+		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
 		resultModal.classList.add("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
+
 		setPercent(0, 0, 0, 1);
 		gravity = 1.5;
 		currentLevel++;
