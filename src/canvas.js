@@ -822,7 +822,7 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(average);
+
 			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
