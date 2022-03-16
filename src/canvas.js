@@ -118,7 +118,7 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 10 + 100,
+		x: platformImg.width * 10,
 		y: 180,
 		image: flagImg,
 	});
@@ -161,9 +161,9 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 7 + 200, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 300, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 300, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 300, y: 742, image: platformImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -222,7 +222,7 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 5 + 700,
+		x: platformImg.width * 5 + 850,
 		y: 95,
 		image: flagImg,
 	});
@@ -302,10 +302,10 @@ async function initLevel2() {
 		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 600, y: 462, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 600, y: 562, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 600, y: 662, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 600, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 700, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 700, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 700, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 700, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
@@ -375,7 +375,7 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: 7 + 700,
+		x: platformImg.width * 7 + 700,
 		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
@@ -822,31 +822,22 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-
+			console.log(average);
 			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (average < volume.SOFT) {
+			if (average < volume.SOFT_LOUD) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 				return;
 			}
 
-			if (average > 5) {
-				setTimeout(() => {
-					if (player.position.y > screen.CELLING && average > volume.LOUD) {
-						player.currentSprite = player.sprites.run.right;
-						player.velocity.y = -7;
-					}
-
-					if (player.position.y > screen.CELLING && average < volume.LOUD) {
-						player.currentSprite = player.sprites.run.right;
-						player.velocity.y = -average / 2;
-					}
-				});
+			if (player.position.y > screen.CELLING && average > volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
+				player.velocity.y = -7;
 			}
 		};
 	})
@@ -976,6 +967,7 @@ function loseGame() {
 
 		gameOver = true;
 		restart = true;
+
 		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
@@ -1036,6 +1028,7 @@ function winGame() {
 
 		gameOver = true;
 		restart = true;
+
 		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
