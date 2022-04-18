@@ -2,19 +2,18 @@
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
 
-import Player from "./gameObjects/Player";
-import Platform from "./gameObjects/Platform";
-import GenericObject from "./gameObjects/GenericObject";
-import Monster from "./gameObjects/Monster";
-import Particle from "./gameObjects/Particle";
-
+import Player from "./objects/Player";
+import Platform from "./objects/Platform";
+import GenericObject from "./objects/GenericObject";
+import Monster from "./objects/Monster";
+import Particle from "./objects/Particle";
 import flagImage from "./assets/images/flag/flag.png";
 import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
-
-import { audio } from "./utils/audio";
-import { images } from "./utils/image";
+import { key, result, screen, flagPosition, volume } from "./constants/constants";
+import { audio } from "./js/audio";
+import { images } from "./js/image";
 import {
 	isOnTopOfPlatform,
 	collisionTop,
@@ -25,8 +24,7 @@ import {
 	hitSideOfPlatform,
 	touchObjects,
 	setPercent,
-} from "./utils/utils";
-import { key, result } from "./constants/constants";
+} from "./js/utils";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -34,18 +32,6 @@ const ctx = canvas.getContext("2d");
 const soundOnButton = document.querySelector(".music-on");
 const soundOffButton = document.querySelector(".music-off");
 const percent = document.querySelector(".percent-container");
-const startButton = document.querySelector(".start-button");
-const howToPlayButton = document.querySelector(".how-to-play-button");
-const closeButton = document.querySelector(".close-button");
-const startPage = document.querySelector(".start-page");
-const modalContainer = document.querySelector(".modal-container");
-const resultModal = document.querySelector(".result-modal");
-
-const levelSelectPage = document.querySelector(".level-page");
-const level1Button = document.querySelector(".level-1");
-const level2Button = document.querySelector(".level-2");
-const level3Button = document.querySelector(".level-3");
-
 const startButton = document.querySelector(".start-button");
 const howToPlayButton = document.querySelector(".how-to-play-button");
 const closeButton = document.querySelector(".close-button");
@@ -130,7 +116,7 @@ async function initLevel1() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 10 + 100,
+		x: platformImg.width * 10 - 50,
 		y: 180,
 		image: flagImg,
 	});
@@ -173,9 +159,9 @@ async function initLevel1() {
 		new Platform({ x: platformImg.width * 7 + 200, y: 542, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 642, image: platformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 200, y: 742, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 542, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 642, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 400, y: 742, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 542, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 642, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 9 + 250, y: 742, image: platformImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -195,6 +181,8 @@ async function initLevel1() {
 }
 
 async function initLevel2() {
+	currentLevel = 2;
+
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -233,8 +221,8 @@ async function initLevel2() {
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
 	flag = new GenericObject({
-		x: platformImg.width * 7 + 580,
-		y: 100,
+		x: platformImg.width * 5 + 900,
+		y: 95,
 		image: flagImg,
 	});
 	player = new Player();
@@ -286,7 +274,7 @@ async function initLevel2() {
 		}),
 		new Monster({
 			position: {
-				x: 4500,
+				x: platformImg.width * 4 + 100,
 				y: 100,
 			},
 			velocity: {
@@ -301,34 +289,28 @@ async function initLevel2() {
 		}),
 	];
 	platforms = [
-		new Platform({
-			x: platformImg.width * 4 + 200 + platformImg.width - smallPlatformImg.width,
-			y: 270,
-			image: smallPlatformImg,
-			block: true,
-		}),
 		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
-		new Platform({
-			x: platformImg.width + 300,
-			y: 762,
-			image: platformImg,
-			block: true,
-		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 762, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 6 + 580, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 762, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -220, image: obstacleImg, block: true }),
 	];
 	genericObjects = [
 		new GenericObject({
@@ -353,6 +335,8 @@ async function initLevel2() {
 }
 
 async function initLevel3() {
+	currentLevel = 3;
+
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -391,8 +375,8 @@ async function initLevel3() {
 	flagImg = await createImageAsync(flagImage);
 
 	flag = new GenericObject({
-		x: platformImg.width * 11 + 700,
-		y: canvas.height - platformImg.height - flagImg.height - 220,
+		x: platformImg.width * 7 + 700,
+		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
 	player = new Player();
@@ -495,17 +479,6 @@ async function initLevel3() {
 		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
 		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 220, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 320, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 420, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 520, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 720, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 9 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 820, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 720, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 620, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 11 + 580, y: 520, image: platformImg, block: true }),
 		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
 		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
 		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
@@ -622,7 +595,7 @@ function animate() {
 		player.velocity.x = player.speed;
 
 		if (flag.position.x) {
-			setPercent(player.position.x, flag.position.x, 825000);
+			setPercent(player.position.x, flag.position.x, flagPosition.x);
 		}
 	} else if (
 		(keys.left.pressed && player.position.x > 100) ||
@@ -634,7 +607,7 @@ function animate() {
 
 		if (keys.right.pressed) {
 			if (flag.position.x) {
-				setPercent(player.position.x, flag.position.x, 825000);
+				setPercent(player.position.x, flag.position.x, flagPosition.x);
 			}
 
 			for (let i = 0; i < platforms.length; i++) {
@@ -808,14 +781,13 @@ function animate() {
 		}
 	}
 
-	if (player.position.y > 750) {
+	if (player.position.y > screen.BOTTOM) {
 		player.currentSprite = player.sprites.hurt.right;
 		player.speed = 0;
 		player.velocity.y = 0;
 
 		if (gameOver) {
 			loseGame();
-			setPercent(player.position.x, flag.position.x, 810000, 0, 1);
 			audio.falling.play();
 			gameOver = false;
 		}
@@ -851,31 +823,21 @@ navigator.mediaDevices
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
 
-			if (average > 10) {
+			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
 			}
 
-			if (player.position.y < 5) {
+			if (average < volume.SOFT_LOUD) {
 				keys.right.pressed = false;
 				player.velocity.y = 0;
 				player.velocity.x = 0;
 				return;
 			}
 
-			if (average < 10) {
-				keys.right.pressed = false;
-				player.velocity.y = 0;
-				player.velocity.x = 0;
-				return;
-			}
-
-			if (player.position.y > 5 && average > 30) {
-				player.velocity.y = -10;
-			}
-
-			if (player.position.y > 5 && average < 30) {
-				player.velocity.y = -average / 2;
+			if (player.position.y > screen.CELLING && average > volume.LOUD) {
+				player.currentSprite = player.sprites.run.right;
+				player.velocity.y = -7;
 			}
 		};
 	})
@@ -890,6 +852,14 @@ const gameStartButton = document.createElement("button");
 const gameResultButtonsContainer = document.createElement("div");
 
 function showLevelPage() {
+	resultModal.classList.remove("show");
+	canvas.classList.remove("open");
+	startPage.classList.add("close");
+	modalContainer.classList.remove("open");
+	levelSelectPage.classList.add("open");
+	percent.classList.remove("show");
+	soundOnButton.classList.remove("open");
+
 	if (
 		audio.backgroundMusic.playing() ||
 		audio.gameOver.playing() ||
@@ -903,26 +873,6 @@ function showLevelPage() {
 		audio.falling.stop();
 		audio.hurt.stop();
 	}
-
-	gameOver = true;
-	restart = true;
-	canvas.classList.remove("open");
-	startPage.classList.add("close");
-	modalContainer.classList.remove("open");
-	levelSelectPage.classList.add("open");
-	resultModal.classList.remove("show");
-	percent.classList.remove("show");
-	soundOnButton.classList.remove("open");
-}
-
-function showFirstLevelPage() {
-	canvas.classList.remove("open");
-	startPage.classList.add("close");
-	modalContainer.classList.remove("open");
-	levelSelectPage.classList.add("open");
-	resultModal.classList.remove("show");
-	percent.classList.remove("show");
-	soundOnButton.classList.remove("open");
 }
 
 function startLevel1() {
@@ -931,7 +881,6 @@ function startLevel1() {
 	initLevel1();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -942,7 +891,6 @@ function startLevel2() {
 	initLevel2();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -953,7 +901,6 @@ function startLevel3() {
 	initLevel3();
 
 	if (!restart) {
-		resultModal.classList.remove("show");
 		animate();
 	}
 }
@@ -961,6 +908,7 @@ function startLevel3() {
 function selectLevel(level) {
 	levelSelectPage.classList.remove("open");
 	resultModal.classList.remove("show");
+	setPercent(0, 0, 0, 1);
 
 	switch (level) {
 		case 1:
@@ -986,7 +934,7 @@ howToPlayButton.addEventListener("click", () => {
 closeButton.addEventListener("click", () => {
 	modalContainer.classList.remove("open");
 });
-startButton.addEventListener("click", showFirstLevelPage);
+startButton.addEventListener("click", showLevelPage);
 
 level1Button.addEventListener("click", startLevel1);
 level2Button.addEventListener("click", startLevel2);
@@ -1015,14 +963,36 @@ function loseGame() {
 	gameStartButton.classList.add("play-button");
 	backButton.classList.add("play-button");
 	gameResultTitle.classList.remove("game-win");
+	percent.classList.remove("show");
 
 	backButton.addEventListener("click", () => {
+		resultModal.classList.remove("show");
+
+		if (
+			audio.backgroundMusic.playing() ||
+			audio.gameOver.playing() ||
+			audio.gameWin.playing() ||
+			audio.falling.playing() ||
+			audio.hurt.playing()
+		) {
+			audio.backgroundMusic.stop();
+			audio.gameOver.stop();
+			audio.gameWin.stop();
+			audio.falling.stop();
+			audio.hurt.stop();
+		}
+
+		gameOver = true;
+		restart = true;
+
+		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
-		resultModal.classList.add("show");
+		resultModal.classList.remove("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
+
 		setPercent(0, 0, 0, 1);
 		gravity = 1.5;
 		restart = true;
@@ -1059,12 +1029,33 @@ function winGame() {
 	gameResultTitle.classList.remove("game-over");
 
 	backButton.addEventListener("click", () => {
+		resultModal.classList.remove("show");
+
+		if (
+			audio.backgroundMusic.playing() ||
+			audio.gameOver.playing() ||
+			audio.gameWin.playing() ||
+			audio.falling.playing() ||
+			audio.hurt.playing()
+		) {
+			audio.backgroundMusic.stop();
+			audio.gameOver.stop();
+			audio.gameWin.stop();
+			audio.falling.stop();
+			audio.hurt.stop();
+		}
+
+		gameOver = true;
+		restart = true;
+
+		setPercent(0, 0, 0, 1);
 		showLevelPage();
 	});
 	gameStartButton.addEventListener("click", () => {
-		resultModal.classList.add("show");
+		resultModal.classList.remove("show");
 		soundOnButton.classList.remove("close");
 		soundOffButton.classList.remove("open");
+
 		setPercent(0, 0, 0, 1);
 		gravity = 1.5;
 		currentLevel++;
