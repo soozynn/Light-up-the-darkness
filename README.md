@@ -4,6 +4,7 @@
 
 유저의 목소리 데시벨을 이용하여 장애물과 몬스터들을 피해 플랫폼 사이를 이동, 점프하여 깃발이 있는 최종 Finish 지점까지 완주해야하는 음성인식 기반의 웹 게임입니다.
 <br>
+<br>
 
 ## 🎶 Motivation
 
@@ -15,15 +16,18 @@
 
 그러다 이전부터 생각해왔던 프레임워크와 라이브러리 없이 Vanilla JavaScript 만을 이용하여 게임을 개발해보면 어떨까? 라는 생각을 기점으로 Vanilla JavaScript 와 canvas 만을 이용하여 프로젝트를 구현하게 되었습니다. 이번 프로젝트를 통해 Vanilla JavaScript의 **OOP, closure, this, 구조 설계**에 대해 많이 고민해볼 수 있었고, 이전에 제대로 정리하지 못했던 자바스크립트의 개념에 대해서도 다시 한번 공부할 수 있었던 시간이었습니다.
 <br>
+<br>
 
 ## 🕹 Game Introduction
 
-####Start Page
+#### Start Page
+
 <img src="README_assets/startPage.png" />
 
 > 게임을 시작하기 전, How to play button을 통해 게임 조작 방법을 알 수 있습니다.
 
-####How to play
+#### How to play
+
 <img src="README_assets/howToPlay.png" />
 
 > 목소리의 볼륨 크기를 통해 캐릭터를 조작할 수 있습니다.
@@ -34,7 +38,8 @@
 
 > 몬스터는 밟아 죽일 수 있지만, 머리 외에 몸통이 먼저 닿을 시 게임은 종료됩니다.
 
-####Level select page
+#### Level select page
+
 <img src="README_assets/levelSelecPage_gif.gif" />
 
 > 게임의 난이도를 선택하여 진행할 수 있습니다.
@@ -58,7 +63,9 @@
 > Level 에 따라 컨셉/지형/몬스터 종류가 다르며, Level 이 높을 수록 몬스터가 많아지고, 지형이 어려워지는 구조입니다.
 
 <br>
+
 ## 🎶 About the difficulties...
+
 ---
 
 ### `Object Orient Programming (OOP)`
@@ -119,19 +126,21 @@ export default class Particle {
 게임 플레이 화면을 보여주기 위해, Vanila Javascript를 기반으로 HTML에 다양한 애니메이션을 보여줄 수 있는 canvas를 사용하였습니다. 원하는 선/도형/이미지를 그리고, 애니메이션 효과를 넣기 위해 requestAnimationFrame 함수를 재귀로 실행해주었습니다.
 
 게임 특성상 다양한 상황(점프 & 낙하 / 충돌 & 접촉 / 캐릭터 사망 등)에서 canvas에 어떻게 이미지를 그려주어야할지 많은 어려움이 있었습니다. 생동감 있는 게임 캐릭터 구현을 위해 Sprites image를 사용하였기 때문에 기본 60fps로 실행되는 requestAnimationFrame 함수에서 이미지 프레임에 맞게 canvas drawing이 실행되도록 프레임 제어 로직이 필요했습니다.
-
 지면 접촉 및 장애물 충돌 구현을 위해 캐릭터 좌표(x, y)와 지면 및 장애물 좌표를 다양한 경우를 고려하여 로직을 만들어야 했습니다. 이처럼 canvas를 다루는게 까다롭고 어려웠지만, 게임, 웹 디자인 등에 쓰이는 canvas의 활용도에 대해 배울 수 있었던 좋은 경험이었습니다.
+<br>
 <br>
 
 ### `Sprites image`
 
 유저에게 보여지는 즐거움을 극대화하고, 현재 게임이 잘 동작하고 있다는 정보를 전달하기 위해 움직이는 캐릭터와 효과를 주었습니다. canvas 의 frame 기능을 최대한 활용하여 로딩 시간을 단축시켰습니다.
 <br>
+<br>
 
 ### `Web Audio API`
 
 음성인식을 위해 Web Api로 제공되는 <b>Audio Context</b>를 사용하였습니다.
 <b>Audio Context의 AnalyserNode</b>를 통해 얻을 수 있는 주파수 데이터가 FFT로 변환되어 제공되는데 이를 원하는 형태로 가공하여 사용하는 것에 어려움이 있어 오픈소스를 개량해서 데시벨의 크기에 따라 캐릭터의 점프 높이를 조절해주었습니다.
+<br>
 <br>
 
 ## 🎶 Schedule
