@@ -2,17 +2,15 @@
 // eslint-disable-next-line max-classes-per-file
 import gsap from "gsap";
 
-import Player from "./gameObjects/Player";
-import Platform from "./gameObjects/Platform";
-import GenericObject from "./gameObjects/GenericObject";
-import Monster from "./gameObjects/Monster";
-import Particle from "./gameObjects/Particle";
-
+import Player from "./objects/Player";
+import Platform from "./objects/Platform";
+import GenericObject from "./objects/GenericObject";
+import Monster from "./objects/Monster";
+import Particle from "./objects/Particle";
 import flagImage from "./assets/images/flag/flag.png";
 import spriteGreenMonster from "./assets/images/monster/walkGreen.png";
 import spriteBrownMonster from "./assets/images/monster/walkBrown.png";
 import spritePurpleMonster from "./assets/images/monster/walkPurple.png";
-
 import { key, result, screen, flagPosition, volume } from "./constants/constants";
 import { audio } from "./js/audio";
 import { images } from "./js/image";
@@ -184,6 +182,7 @@ async function initLevel1() {
 
 async function initLevel2() {
 	currentLevel = 2;
+
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -275,7 +274,7 @@ async function initLevel2() {
 		}),
 		new Monster({
 			position: {
-				x: 4500,
+				x: platformImg.width * 4 + 100,
 				y: 100,
 			},
 			velocity: {
@@ -337,6 +336,7 @@ async function initLevel2() {
 
 async function initLevel3() {
 	currentLevel = 3;
+
 	soundOnButton.classList.add("open");
 	percent.classList.add("show");
 
@@ -822,7 +822,7 @@ navigator.mediaDevices
 			const dataArray = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(dataArray);
 			const average = Math.floor(dataArray.reduce((acc, value) => acc + value) / dataArray.length);
-			console.log(average);
+
 			if (average > volume.SOFT) {
 				keys.right.pressed = true;
 				lastKey = key.RIGHT;
