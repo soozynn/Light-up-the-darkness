@@ -116,29 +116,6 @@ async function initLevel1() {
 	largeObstacleImg = await createImageAsync(images.levels[1].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
 
-	flag = new GenericObject({
-		x: platformImg.width * 10 - 50,
-		y: 180,
-		image: flagImg,
-	});
-	player = new Player();
-	monsters = [
-		new Monster({
-			position: {
-				x: 800,
-				y: 100,
-			},
-			velocity: {
-				x: -0.3,
-				y: 0,
-			},
-			image: createImage(spriteGreenMonster),
-			distance: {
-				limit: 200,
-				traveled: 0,
-			},
-		}),
-	];
 	platforms = [
 		new Platform({ x: -1, y: 742, image: platformImg, block: true }),
 		new Platform({
@@ -177,6 +154,29 @@ async function initLevel1() {
 			image: createImage(images.levels[2].sun),
 		}),
 	];
+	flag = new GenericObject({
+		x: platformImg.width * 10 - 50,
+		y: 180,
+		image: flagImg,
+	});
+	monsters = [
+		new Monster({
+			position: {
+				x: 800,
+				y: 100,
+			},
+			velocity: {
+				x: -0.3,
+				y: 0,
+			},
+			image: createImage(spriteGreenMonster),
+			distance: {
+				limit: 200,
+				traveled: 0,
+			},
+		}),
+	];
+	player = new Player();
 
 	scrollOffSet = 0;
 }
@@ -221,12 +221,54 @@ async function initLevel2() {
 	largeObstacleImg = await createImageAsync(images.levels[2].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
 	mountainsImg = await createImageAsync(images.levels[2].mountain);
+
+	platforms = [
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 2, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 3, y: 770, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 470, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 570, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 462, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 562, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 662, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 750, y: 762, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -170, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5, y: -220, image: obstacleImg, block: true }),
+	];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(images.levels[2].background),
+			currentLevel: 2,
+		}),
+		new GenericObject({
+			x: -1,
+			y: canvas.height - mountainsImg.height,
+			image: createImage(images.levels[2].mountain),
+		}),
+		new GenericObject({
+			x: 50,
+			y: 100,
+			image: createImage(images.levels[2].sun),
+		}),
+	];
 	flag = new GenericObject({
 		x: platformImg.width * 5 + 900,
 		y: 95,
 		image: flagImg,
 	});
-	player = new Player();
 	monsters = [
 		new Monster({
 			position: {
@@ -289,48 +331,7 @@ async function initLevel2() {
 			},
 		}),
 	];
-	platforms = [
-		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width + 100, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 2, y: 470, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 2, y: 570, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 2, y: 670, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 2, y: 770, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 3, y: 770, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 4 + 100, y: 470, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 4 + 100, y: 570, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 4 + 100, y: 670, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 4 + 100, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 750, y: 462, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 750, y: 562, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 750, y: 662, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 750, y: 762, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width + 180, y: -100, image: obstacleImg, block: true }),
-		new Platform({ x: platformImg.width + 180, y: -100, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -170, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 100, y: -220, image: obstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 5, y: -170, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 5, y: -220, image: obstacleImg, block: true }),
-	];
-	genericObjects = [
-		new GenericObject({
-			x: -1,
-			y: -1,
-			image: createImage(images.levels[2].background),
-			currentLevel: 2,
-		}),
-		new GenericObject({
-			x: -1,
-			y: canvas.height - mountainsImg.height,
-			image: createImage(images.levels[2].mountain),
-		}),
-		new GenericObject({
-			x: 50,
-			y: 100,
-			image: createImage(images.levels[2].sun),
-		}),
-	];
+	player = new Player();
 
 	scrollOffSet = 0;
 }
@@ -375,12 +376,46 @@ async function initLevel3() {
 	largeObstacleImg = await createImageAsync(images.levels[3].largeObstacle);
 	flagImg = await createImageAsync(flagImage);
 
+	platforms = [
+		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
+		new Platform({
+			x: platformImg.width - 3,
+			y: 770,
+			image: platformImg,
+			block: true,
+		}),
+		new Platform({ x: platformImg.width * 2 + 100, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 2 + 100, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 342, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
+		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
+		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
+		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
+		new Platform({ x: platformImg.width * 5 + 480, y: -400, image: largeObstacleImg, block: true }),
+	];
+	genericObjects = [
+		new GenericObject({
+			x: -1,
+			y: -1,
+			image: createImage(images.levels[3].background),
+			currentLevel: 3,
+		}),
+	];
 	flag = new GenericObject({
 		x: platformImg.width * 7 + 700,
 		y: canvas.height - platformImg.height - flagImg.height - 240,
 		image: flagImg,
 	});
-	player = new Player();
 	monsters = [
 		new Monster({
 			position: {
@@ -458,41 +493,7 @@ async function initLevel3() {
 			},
 		}),
 	];
-	platforms = [
-		new Platform({ x: -1, y: 762, image: platformImg, block: true }),
-		new Platform({
-			x: platformImg.width - 3,
-			y: 770,
-			image: platformImg,
-			block: true,
-		}),
-		new Platform({ x: platformImg.width * 2 + 100, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 2 + 100, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 470, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 570, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 670, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: 770, image: platformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 342, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 442, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 542, image: smallPlatformImg, block: true }),
-		new Platform({ x: platformImg.width * 7 + 680, y: 642, image: smallPlatformImg, block: true }),
-		new Platform({ x: 600, y: -100, image: obstacleImg, block: true }),
-		new Platform({ x: 600, y: -100, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 3 + 300, y: -400, image: largeObstacleImg, block: true }),
-		new Platform({ x: platformImg.width * 5 + 480, y: -400, image: largeObstacleImg, block: true }),
-	];
-	genericObjects = [
-		new GenericObject({
-			x: -1,
-			y: -1,
-			image: createImage(images.levels[3].background),
-			currentLevel: 3,
-		}),
-	];
+	player = new Player();
 
 	scrollOffSet = 0;
 }
