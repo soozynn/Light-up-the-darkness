@@ -45,8 +45,9 @@ const level1Button = document.querySelector(".level-1");
 const level2Button = document.querySelector(".level-2");
 const level3Button = document.querySelector(".level-3");
 
-canvas.width = 1090;
-canvas.height = innerHeight;
+const { width, height } = canvas.getBoundingClientRect();
+canvas.width = width;
+canvas.height = height;
 
 let platformImg;
 let smallPlatformImg;
